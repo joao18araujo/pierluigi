@@ -25,14 +25,14 @@ trackAchannelA = {
 
 }
 
-trackAchannelB = \relative c {
+trackAchannelB = {
   g,4 c, g c
   | % 2
   g' c' g'' c''
   | % 3
   g' c' a c
   | % 4
-  g, c, d, 
+  g, c, d,
 }
 
 trackA = <<

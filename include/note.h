@@ -1,28 +1,15 @@
+#ifndef NOTE_H
+#define NOTE_H
+
 #include <iostream>
 #include <unordered_map>
 #include <cmath>
 #include <string>
 
-
 using namespace std;
 
 #define BELOW_MIDDLE_C_OCTAVE 3
 #define N_SCALE 12
-
-/*
-   { "c", "bis" },  // pos = 0
-   { "cis", "des" },
-   { "d" },
-   { "dis", "ees" },
-   { "e", "fes" },
-   { "eis", "f" },
-   { "fis", "ges" },
-   { "g" },
-   { "gis", "aes" },
-   { "a" },
-   { "ais", "bes"},
-   { "b", "ces" } // pos = 11
- */
 
 class Note{
 	public:
@@ -73,28 +60,4 @@ class Note{
     }
 };
 
-Note parse_note(Note prev, string s){
-	string accidental = "", modifier = "";
-	string note = "";
-	int duration = 0;
-
-	note += s[0];
-	s.erase(s.begin());
-	for (auto& c : s){
-		if (isdigit(c)){
-			duration *= 10;
-			duration += (c - '0');
-		} else if (isalpha(c))
-			accidental += c;
-		else
-			modifier += c;
-	}
-
-	Note n(prev, note, accidental, modifier, duration);
-
-	return n;
-}
-
-int main(){
-	return 0;
-}
+#endif

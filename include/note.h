@@ -36,6 +36,8 @@ class Note{
 		int octave;
 		int midi_number;
 
+    Note(){}
+
 		Note(Note& prev, const string& note, const string& accidental, const string& modifier, const int& duration) {
 			if(not duration)
 				this->duration = prev.duration;
@@ -52,11 +54,17 @@ class Note{
 					this->octave--;
 			}
 
-      this->midi_number = octave * N_SCALE + notes_with_accidental[this->full_note()];
+      this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental[this->full_note()];
 		}
 
     string full_note(){
       return this->note + this->accidental;
+    }
+
+    string desc(){
+      string s = "Duration: ";
+      s += to_string(duration) + ", note: " + full_note() + to_string(octave) + ", midi_number: " + to_string(midi_number);
+      return s;
     }
 };
 

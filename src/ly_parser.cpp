@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include <cmath>
 #include <string>
+#include <vector>
+#include <fstream>
 #include <note.h>
 
 
@@ -12,7 +14,22 @@ using namespace std;
 
 Note parse_note(Note, string);
 
-int main(){
+int main(int argc, char *argv[]){
+  vector<Note> song;
+
+  if(argc < 2) return -1;
+
+  fstream file(argv[1]);
+  string s;
+
+  Note prev;
+  while(file >> s){
+    cout << "[" << s << "]\n";
+    Note note = parse_note(prev, s);
+    cout << note.desc() << endl;
+    prev = note;
+  }
+
 	return 0;
 }
 

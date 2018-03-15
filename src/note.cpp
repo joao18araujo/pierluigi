@@ -23,6 +23,7 @@ Note::Note(const string& note, const string& accidental, const int& octave, cons
   this->octave = octave;
   this->duration = duration;
   this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental[this->full_note()];
+  this->note_number = (octave + 1) * N_NOTES + notes[this->full_note()];
 }
 
 Note::Note(){
@@ -30,7 +31,8 @@ Note::Note(){
   this->note = "C";
   this->accidental = "";
   this->octave = BELOW_MIDDLE_C_OCTAVE;
-  this->midi_number = 40;
+  this->midi_number = 60;
+  this->note_number = 35;
 }
 
 string Note::full_note(){

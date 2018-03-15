@@ -12,6 +12,7 @@ using std::to_string;
 
 #define BELOW_MIDDLE_C_OCTAVE 3
 #define N_SCALE 12
+#define N_NOTES 7
 
 class Note{
 	public:
@@ -23,6 +24,7 @@ class Note{
     string accidental;
 		int octave;
 		int midi_number;
+    int note_number;
 
     Note();
 		Note(const string& note, const string& accidental, const int& octave, const int& duration);

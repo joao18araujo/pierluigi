@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <note.h>
-#include <note_reader.h>
+#include "note.h"
+#include "interval.h"
+#include "note_reader.h"
 
 
 using namespace std;
@@ -28,7 +29,8 @@ int main(int argc, char *argv[]){
   while(file >> s){
     cout << "[" << s << "]\n";
     Note note = NoteReader::string_to_note(&prev, s);
-    cout << note.description() << endl;
+    Interval interval(&prev, &note);
+    cout << note.description() << " | " << interval.description() << endl;
     prev = note;
   }
 

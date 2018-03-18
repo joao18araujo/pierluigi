@@ -37,7 +37,7 @@ $(TARGET): $(OBJ)
 	@echo Done.
 
 run:
-	$(TARGET)
+	$(TARGET) only_notes.ly
 
 crun:
 	make dist-clean

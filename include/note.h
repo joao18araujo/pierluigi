@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 #include <cmath>
 #include <string>
 
 using std::unordered_map;
+using std::vector;
 using std::string;
 using std::to_string;
 
@@ -16,8 +18,10 @@ using std::to_string;
 
 class Note{
 	public:
-		static unordered_map<string, int> notes_with_accidental;
-		static unordered_map<string, int> notes;
+		static unordered_map<string, int> notes_with_accidental_to_number;
+		static unordered_map<string, int> notes_to_number;
+    static string number_to_notes[10];
+    static string number_to_notes_with_accidental[15];
 
 		int duration;
 		string note;
@@ -27,9 +31,13 @@ class Note{
     int note_number;
 
     Note();
-		Note(const string& note, const string& accidental, const int& octave, const int& duration);
+    Note(int midi_number, int duration = 0);
+		Note(const string& note, const string& accidental, const int& octave, const int duration);
     string full_note();
     string description();
+    void set_full_note(string s);
+    vector<Note> enarmonies();
+
 };
 
 #endif

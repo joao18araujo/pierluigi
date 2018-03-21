@@ -20,9 +20,11 @@ public:
   string qualitative;
   int half_tones;
   bool ascendant;
+  Interval(string s_interval);
   Interval(Note * first, Note * second);
   string description();
 
+  static Note interval_to_note(Note * note, Interval * interval);
 private:
   bool is_perfect_candidate(int diff);
 };

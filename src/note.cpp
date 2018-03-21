@@ -1,6 +1,6 @@
 #include "note.h"
 
-unordered_map<string, int> Note::notes_with_accidental = {
+unordered_map<string, int> Note::notes_with_accidental_to_number = {
   {"c", 0}, {"bis", 0}, {"deses", 0},
   {"cis", 1}, {"des", 1}, {"bisis", 1},
   {"d", 2}, {"cisis", 2}, {"eeses", 2},
@@ -15,15 +15,18 @@ unordered_map<string, int> Note::notes_with_accidental = {
   {"b", 11}, {"ces", 11}, {"aisis", 11}
 };
 
-unordered_map<string, int> Note::notes = {{"c", 0}, {"d", 1}, {"e", 2}, {"f", 3}, {"g", 4}, {"a", 5}, {"b", 6}};
+unordered_map<string, int> Note::notes_to_number = {{"c", 0}, {"d", 1}, {"e", 2}, {"f", 3}, {"g", 4}, {"a", 5}, {"b", 6}};
 
-Note::Note(const string& note, const string& accidental, const int& octave, const int& duration) {
+string Note::number_to_notes[] = {"c", "d", "e", "f", "g", "a", "b"};
+string Note::number_to_notes_with_accidental[] = {"c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "ais", "b"};
+
+Note::Note(const string& note, const string& accidental, const int& octave, const int duration) {
   this->note = note;
   this->accidental = accidental;
   this->octave = octave;
   this->duration = duration;
-  this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental[this->full_note()];
-  this->note_number = (octave + 1) * N_NOTES + notes[this->note];
+  this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
+  this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
 Note::Note(){
@@ -35,6 +38,15 @@ Note::Note(){
   this->note_number = 35;
 }
 
+Note::Note(int midi_number, int duration){
+  this->duration = duration;
+  this->midi_number = midi_number;
+  this->octave = (midi_number / N_SCALE) - 1;
+  string note_with_accidental = number_to_notes_with_accidental[midi_number % N_SCALE];
+  this->set_full_note(note_with_accidental);
+  this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
+}
+
 string Note::full_note(){
   return this->note + this->accidental;
 }
@@ -43,4 +55,22 @@ string Note::description(){
   string s = "Duration: ";
   s += to_string(duration) + ", note: " + full_note() + to_string(octave) + ", midi_number: " + to_string(midi_number)+ ", note_number: " + to_string(note_number);
   return s;
+}
+
+void Note::set_full_note(string s){
+  this->note = "" + s[0];
+  s.erase(s.begin());
+  this->accidental = s;
+}
+
+vector<Note> Note::enarmonies(){
+  vector<Note> v;
+  Note n;
+  for(auto & p : notes_with_accidental_to_number){
+    if(p.first != this->full_note() && p.second == notes_with_accidental_to_number[this->full_note()]){
+      n = *this;
+      n.set_full_note(p.first);
+      v.push_back(n);
+    }
+  }
 }

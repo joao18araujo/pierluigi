@@ -4,6 +4,10 @@ int Interval::expected_semi_tones[] = { 0, 0, 2, 4, 5, 7, 9, 11, 12 };
 string Interval::diminished_classifications[] = {"", "d", "sd", "3xd", "4xd", "5xd"};
 string Interval::augmented_classifications[] = {"", "A", "SA", "3xA", "4xA", "5xA"};
 
+Interval::Interval(string s_interval){
+
+}
+
 Interval::Interval(Note * first, Note * second){
   int note_diff = abs(first->note_number - second->note_number) + 1;
   int note_with_accidental_diff = abs(first->midi_number - second->midi_number);
@@ -49,4 +53,9 @@ bool Interval::is_perfect_candidate(int diff){
 
 string Interval::description(){
   return this->qualitative + to_string(this->quantitative);
+}
+
+Note Interval::interval_to_note(Note * note, Interval * interval){
+  // TODO pegar qualitativo e checar enarmonias
+  return Note();
 }

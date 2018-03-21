@@ -8,14 +8,13 @@
 #include "interval.h"
 #include "note_reader.h"
 
-
 using namespace std;
 
 #define BELOW_MIDDLE_C_OCTAVE 3
 #define N_SCALE 12
 
 int main(int argc, char *argv[]){
-  vector<Note> song;
+  vector<Note *> song;
 
   if(argc < 2){
     cerr << "Missing input file" << endl;
@@ -25,16 +24,22 @@ int main(int argc, char *argv[]){
   fstream file(argv[1]);
   string s;
 
-  Note * prev = new Note();
+  Note * prev = nullptr;
   while(file >> s){
     cout << "[" << s << "] ";
     Note * note = NoteReader::string_to_note(prev, s);
-    Interval * interval = new Interval(prev, note);
-    Note * expected = Interval::interval_to_note(prev, interval);
-    cout << note->description() << " | " << interval->description() << " | ";
-    if(expected) cout << expected->description() << endl;
-    else cout << "nullptr\n";
+    cout << note->description() << " | ";
+
+    if(prev){
+      Interval * interval = new Interval(prev, note);
+      Note * expected = Interval::interval_to_note(prev, interval);
+      cout << interval->description() << " | ";
+      if(expected) cout << expected->description();
+      else cout << "nullptr";
+    }
+    cout << endl;
     prev = note;
+    song.push_back(note);
   }
 
 	return 0;

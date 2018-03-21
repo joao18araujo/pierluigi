@@ -29,13 +29,22 @@ Note::Note(const string& note, const string& accidental, const int& octave, cons
   this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
+Note::Note(Note * note){
+  this->duration = note->duration;
+  this->note = note->note;
+  this->accidental = note->accidental;
+  this->octave = note->octave;
+  this->midi_number = note->midi_number;
+  this->note_number = note->note_number;
+}
+
 Note::Note(){
   this->duration = 0;
   this->note = "C";
   this->accidental = "";
   this->octave = BELOW_MIDDLE_C_OCTAVE;
-  this->midi_number = 60;
-  this->note_number = 35;
+  this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
+  this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
 Note::Note(int midi_number, int duration){
@@ -52,25 +61,30 @@ string Note::full_note(){
 }
 
 string Note::description(){
-  string s = "Duration: ";
-  s += to_string(duration) + ", note: " + full_note() + to_string(octave) + ", midi_number: " + to_string(midi_number)+ ", note_number: " + to_string(note_number);
+  string s = "d:";
+  s += to_string(duration) + ",n:" + full_note() + to_string(octave) + ",mn:" + to_string(midi_number)+ ",nn:" + to_string(note_number);
   return s;
 }
 
 void Note::set_full_note(string s){
-  this->note = "" + s[0];
+  string only_note = "";
+  only_note += s[0];
+  this->note = only_note;
   s.erase(s.begin());
   this->accidental = s;
+  this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
+  this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
-vector<Note> Note::enarmonies(){
-  vector<Note> v;
-  Note n;
+vector<Note *> Note::enarmonies(){
+  vector<Note *> v;
   for(auto & p : notes_with_accidental_to_number){
     if(p.first != this->full_note() && p.second == notes_with_accidental_to_number[this->full_note()]){
-      n = *this;
-      n.set_full_note(p.first);
+      Note * n = new Note(this);
+      n->set_full_note(p.first);
       v.push_back(n);
     }
   }
+
+  return v;
 }

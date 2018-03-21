@@ -44,6 +44,10 @@ crun:
 	make -j
 	make run
 
+reset:
+	make dist-clean
+	make -j
+
 clean:
 	@echo Cleaning...
 	@find . -name *.o -exec rm {} \;

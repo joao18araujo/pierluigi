@@ -31,12 +31,13 @@ class Note{
     int note_number;
 
     Note();
+    Note(Note * note);
     Note(int midi_number, int duration = 0);
 		Note(const string& note, const string& accidental, const int& octave, const int duration);
     string full_note();
     string description();
     void set_full_note(string s);
-    vector<Note> enarmonies();
+    vector<Note *> enarmonies();
 
 };
 

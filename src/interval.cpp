@@ -4,15 +4,12 @@ int Interval::expected_semi_tones[] = { 0, 0, 2, 4, 5, 7, 9, 11, 12 };
 string Interval::diminished_classifications[] = {"", "d", "sd", "3xd", "4xd", "5xd"};
 string Interval::augmented_classifications[] = {"", "A", "SA", "3xA", "4xA", "5xA"};
 
-Interval::Interval(string s_interval){
-
-}
-
 Interval::Interval(Note * first, Note * second){
   int note_diff = abs(first->note_number - second->note_number) + 1;
   int note_with_accidental_diff = abs(first->midi_number - second->midi_number);
   this->quantitative = note_diff;
   this->ascendant = (first->note_number - second->note_number < 0);
+  this->half_tones = note_with_accidental_diff;
 
   if(note_diff > N_NOTES)
     note_diff %= N_NOTES;
@@ -55,7 +52,24 @@ string Interval::description(){
   return this->qualitative + to_string(this->quantitative);
 }
 
-Note Interval::interval_to_note(Note * note, Interval * interval){
+Note * Interval::interval_to_note(Note * note, Interval * interval){
   // TODO pegar qualitativo e checar enarmonias
-  return Note();
+  int midi_number = note->midi_number + interval->half_tones * (interval->ascendant ? 1 : -1);
+  int note_number = note->note_number + (interval->quantitative - 1) * (interval->ascendant ? 1 : -1);
+  Note * n = new Note(midi_number);
+
+  if(n->note_number == note_number){
+    //std::cout<< "\n[" << n->description() << "]\n";
+    return n;
+  }else{
+    vector<Note *> notes = n->enarmonies();
+    for(auto & other_note : notes){
+      //std::cout<< "\n[" << other_note->description() << "]\n";
+      if(other_note->note_number == note_number){
+        return new Note(other_note);
+      }
+    }
+  }
+
+  return nullptr;
 }

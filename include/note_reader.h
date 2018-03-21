@@ -11,7 +11,7 @@ using std::string;
 
 class NoteReader{
 public:
-  static Note string_to_note(Note * prev, string s);
+  static Note * string_to_note(Note * prev, string s);
 };
 
 #endif

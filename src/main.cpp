@@ -25,12 +25,15 @@ int main(int argc, char *argv[]){
   fstream file(argv[1]);
   string s;
 
-  Note prev;
+  Note * prev = new Note();
   while(file >> s){
-    cout << "[" << s << "]\n";
-    Note note = NoteReader::string_to_note(&prev, s);
-    Interval interval(&prev, &note);
-    cout << note.description() << " | " << interval.description() << endl;
+    cout << "[" << s << "] ";
+    Note * note = NoteReader::string_to_note(prev, s);
+    Interval * interval = new Interval(prev, note);
+    Note * expected = Interval::interval_to_note(prev, interval);
+    cout << note->description() << " | " << interval->description() << " | ";
+    if(expected) cout << expected->description() << endl;
+    else cout << "nullptr\n";
     prev = note;
   }
 

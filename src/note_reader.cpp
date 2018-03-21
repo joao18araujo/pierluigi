@@ -1,6 +1,6 @@
 #include "note_reader.h"
 
-Note NoteReader::string_to_note(Note * prev, string s){
+Note * NoteReader::string_to_note(Note * prev, string s){
   string accidental = "", modifier = "";
 	string note = "";
 	int duration = 0;
@@ -28,7 +28,5 @@ Note NoteReader::string_to_note(Note * prev, string s){
   if(not duration && prev)
     duration = prev->duration;
 
-	Note n(note, accidental, octave, duration);
-
-	return n;
+	return new Note(note, accidental, octave, duration);
 }

@@ -39,6 +39,9 @@ $(TARGET): $(OBJ)
 run:
 	$(TARGET) only_notes.ly
 
+twinkle:
+	$(TARGET) twinkle_twinkle_only_notes.ly
+
 crun:
 	make dist-clean
 	make -j

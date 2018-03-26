@@ -24,14 +24,15 @@ public:
   bool ascendant;
 
   Interval(Note * first, Note * second);
-  Interval(string s_interval, bool ascendant);
+  Interval(){}; // TODO: implement empty constructor
+  Interval(string s_interval, bool ascendant = false);
   string description();
   string full_description();
 
-  static Note * interval_to_note(Note * note, Interval * interval);
+  static Note * interval_to_note(Note * note, Interval interval);
 private:
   bool is_perfect_candidate(int diff);
-  void classificate_qualitative();
+  void classify_qualitative();
 };
 
 #endif

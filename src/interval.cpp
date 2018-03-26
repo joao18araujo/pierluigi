@@ -55,7 +55,7 @@ Interval::Interval(Note * first, Note * second){
   this->ascendant = (first->note_number - second->note_number < 0);
   this->half_tones = abs(first->midi_number - second->midi_number);
 
-  classificate_qualitative();
+  classify_qualitative();
 }
 
 bool Interval::is_perfect_candidate(int diff){
@@ -70,10 +70,10 @@ string Interval::full_description(){
   return this->qualitative + to_string(this->quantitative) + "(" + to_string(this->half_tones) + "," + to_string(this->ascendant) + ")";
 }
 
-Note * Interval::interval_to_note(Note * note, Interval * interval){
+Note * Interval::interval_to_note(Note * note, Interval interval){
   // TODO pegar qualitativo e checar enarmonias
-  int midi_number = note->midi_number + interval->half_tones * (interval->ascendant ? 1 : -1);
-  int note_number = note->note_number + (interval->quantitative - 1) * (interval->ascendant ? 1 : -1);
+  int midi_number = note->midi_number + interval.half_tones * (interval.ascendant ? 1 : -1);
+  int note_number = note->note_number + (interval.quantitative - 1) * (interval.ascendant ? 1 : -1);
   Note * n = new Note(midi_number);
 
   if(n->note_number == note_number){
@@ -92,7 +92,7 @@ Note * Interval::interval_to_note(Note * note, Interval * interval){
   return nullptr;
 }
 
-void Interval::classificate_qualitative(){
+void Interval::classify_qualitative(){
   int note_diff = this->quantitative;
   int note_with_accidental_diff = this->half_tones;
 

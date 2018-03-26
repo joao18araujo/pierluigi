@@ -7,6 +7,7 @@
 #include "note.h"
 #include "interval.h"
 #include "note_reader.h"
+#include "counterpoint.h"
 
 using namespace std;
 
@@ -33,7 +34,7 @@ int main(int argc, char *argv[]){
     if(prev){
       Interval * interval = new Interval(prev, note);
       Interval * new_int = new Interval(interval->description(), interval->ascendant);
-      Note * expected = Interval::interval_to_note(prev, interval);
+      Note * expected = Interval::interval_to_note(prev, *interval);
       cout << interval->full_description() << "," << new_int->full_description() << " | ";
       if(expected) cout << expected->description();
       else cout << "nullptr";
@@ -42,6 +43,9 @@ int main(int argc, char *argv[]){
     prev = note;
     song.push_back(note);
   }
+
+  vector <Note *> counterpoint = Counterpoint::generate_first_order_counterpoint(song);
+
 
 	return 0;
 }

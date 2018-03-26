@@ -4,44 +4,58 @@ int Interval::expected_semi_tones[] = { 0, 0, 2, 4, 5, 7, 9, 11, 12 };
 string Interval::diminished_classifications[] = {"", "d", "sd", "3xd", "4xd", "5xd"};
 string Interval::augmented_classifications[] = {"", "A", "SA", "3xA", "4xA", "5xA"};
 
-Interval::Interval(Note * first, Note * second){
-  int note_diff = abs(first->note_number - second->note_number) + 1;
-  int note_with_accidental_diff = abs(first->midi_number - second->midi_number);
-  this->quantitative = note_diff;
-  this->ascendant = (first->note_number - second->note_number < 0);
-  this->half_tones = note_with_accidental_diff;
+string Interval::intervals[][17] = {
+  {"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
+  {"P", "A", "SA", "3xA", "4xA", "", "", "", "", "", "", "", "", "", "", "", "" },
+  {"d", "m", "M", "A", "SA", "3xA", "4xA", "", "", "", "", "", "", "", "", "", "" },
+  {"3xd", "sd", "d", "m", "M", "A", "SA", "3xA", "4xA", "", "", "", "", "", "", "", "" },
+  {"", "4xd", "3xd", "sd", "d", "P", "A", "SA", "3xA", "4xA", "5xA", "", "", "", "", "", "" },
+  {"", "", "5xd", "4xd", "3xd", "sd", "d", "P", "A", "3xA", "4xA", "", "", "", "", "", "" },
+  {"", "", "", "", "4xd", "3xd", "sd", "d", "m", "M", "A", "SA", "3xA", "4xA", "", "", "" },
+  {"", "", "", "", "", "", "4xd", "3xd", "sd", "d", "m", "M", "A", "SA", "3xA", "4xA", "" },
+  {"", "", "", "", "", "", "", "", "4xd", "3xd", "sd", "d", "P", "A", "SA", "3xA", "4xA" }
+};
 
-  if(note_diff > N_NOTES)
-    note_diff %= N_NOTES;
+Interval::Interval(string s_interval, bool ascendant){
+  string s_quantitative = "", s_qualitative = "";
+  bool is_on_number = false;
 
-  if(note_with_accidental_diff > N_SCALE)
-    note_with_accidental_diff %= N_SCALE;
+  this->ascendant = ascendant;
 
-  if(is_perfect_candidate(note_diff)){
-    int expected_for_perfect = Interval::expected_semi_tones[note_diff];
-    int diff = min(5, abs(note_with_accidental_diff - expected_for_perfect));
-    if(note_with_accidental_diff == expected_for_perfect){
-      this->qualitative = "P";
-    }else if(note_with_accidental_diff > expected_for_perfect){
-      this->qualitative = augmented_classifications[diff];
-    }else{
-      this->qualitative = diminished_classifications[diff];
-    }
-  }else{
-    int expected_for_major = Interval::expected_semi_tones[note_diff];
-    int expected_for_minor = expected_for_major - 1;
-    int minor_diff = min(5, abs(note_with_accidental_diff - expected_for_minor));
-    int major_diff = min(5, abs(note_with_accidental_diff - expected_for_major));
-    if(note_with_accidental_diff == expected_for_major){
-      this->qualitative = "M";
-    }else if(note_with_accidental_diff == expected_for_minor){
-      this->qualitative = "m";
-    }else if(note_with_accidental_diff > expected_for_major){
-      this->qualitative = augmented_classifications[major_diff];
-    }else{
-      this->qualitative = diminished_classifications[minor_diff];
+  for(auto & c : s_interval){
+    if(is_on_number)
+      s_quantitative += c;
+    else
+      s_qualitative += c;
+
+    if(c == 'd' || c == 'A' || c == 'm' || c == 'M' || c == 'P'){
+      is_on_number = true;
     }
   }
+
+  this->quantitative = stoi(s_quantitative);
+
+  int note_diff = this->quantitative;
+  int octave_diff = 0;
+  if(note_diff > N_NOTES + 1){
+    octave_diff = (note_diff - 2) / N_NOTES;
+    note_diff %= N_NOTES;
+  }
+
+  for(int i = 0; i < 17; ++i){
+    if(intervals[note_diff][i] == s_qualitative){
+      this->half_tones = i + octave_diff * N_SCALE;
+      this->qualitative = s_qualitative;
+    }
+  }
+}
+
+Interval::Interval(Note * first, Note * second){
+  this->quantitative = abs(first->note_number - second->note_number) + 1;
+  this->ascendant = (first->note_number - second->note_number < 0);
+  this->half_tones = abs(first->midi_number - second->midi_number);
+
+  classificate_qualitative();
 }
 
 bool Interval::is_perfect_candidate(int diff){
@@ -50,6 +64,10 @@ bool Interval::is_perfect_candidate(int diff){
 
 string Interval::description(){
   return this->qualitative + to_string(this->quantitative);
+}
+
+string Interval::full_description(){
+  return this->qualitative + to_string(this->quantitative) + "(" + to_string(this->half_tones) + "," + to_string(this->ascendant) + ")";
 }
 
 Note * Interval::interval_to_note(Note * note, Interval * interval){
@@ -72,4 +90,17 @@ Note * Interval::interval_to_note(Note * note, Interval * interval){
   }
 
   return nullptr;
+}
+
+void Interval::classificate_qualitative(){
+  int note_diff = this->quantitative;
+  int note_with_accidental_diff = this->half_tones;
+
+  if(note_diff > N_NOTES + 1)
+    note_diff %= N_NOTES;
+
+  if(note_with_accidental_diff > N_SCALE)
+    note_with_accidental_diff %= N_SCALE;
+
+  this->qualitative = intervals[note_diff][note_with_accidental_diff];
 }

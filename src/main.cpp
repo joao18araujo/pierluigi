@@ -32,8 +32,9 @@ int main(int argc, char *argv[]){
 
     if(prev){
       Interval * interval = new Interval(prev, note);
+      Interval * new_int = new Interval(interval->description(), interval->ascendant);
       Note * expected = Interval::interval_to_note(prev, interval);
-      cout << interval->description() << " | ";
+      cout << interval->full_description() << "," << new_int->full_description() << " | ";
       if(expected) cout << expected->description();
       else cout << "nullptr";
     }

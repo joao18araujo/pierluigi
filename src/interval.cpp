@@ -67,7 +67,7 @@ string Interval::description(){
 }
 
 string Interval::full_description(){
-  return this->qualitative + to_string(this->quantitative) + "(" + to_string(this->half_tones) + "," + to_string(this->ascendant) + ")";
+  return this->qualitative + to_string(this->quantitative) + "(" + to_string(this->half_tones) + ")";
 }
 
 Note * Interval::interval_to_note(Note * note, Interval interval){

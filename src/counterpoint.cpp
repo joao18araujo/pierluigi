@@ -13,6 +13,8 @@ vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & 
 
   srand(clock());
 
+  int count_imperfects = 0;
+
   Interval current_interval, previous_interval;
   for(unsigned i = 0; i < song.size(); ++i){
     possible_intervals.clear();
@@ -21,7 +23,7 @@ vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & 
     string previous = previous_interval.description();
     if(i == 0 || i == song.size()){
       possible_intervals.push_back(Interval("P1"));
-    }else{
+    }else if(count_imperfects < 4){
       possible_intervals.insert(possible_intervals.begin(), imperfect_consonant_intervals.begin(),  imperfect_consonant_intervals.end());
     }
 
@@ -30,11 +32,18 @@ vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & 
       if(ascendant)
         possible_intervals.push_back(Interval("P5"));
     }
-    int index = rand() % possible_intervals.size();
+    int index = rand() % possible_intervals.size(); // TODO: checar se não é 0
 
     current_interval = possible_intervals[index];
     Note * counterpoint_note = Interval::interval_to_note(note, current_interval);
     counterpoint.push_back(counterpoint_note);
+
+    char interval_qualitative = current_interval.description()[0];
+    if(interval_qualitative == 'M' || interval_qualitative == 'm')
+      count_imperfects++;
+    else
+      count_imperfects = 0;
+
     previous_interval = current_interval;
   }
 

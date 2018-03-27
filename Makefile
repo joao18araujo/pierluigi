@@ -58,5 +58,5 @@ clean:
 	@rm -rf *~ *.o prog out.txt
 
 dist-clean: clean
-	@rm -f $(TARGET)/$(NAME)
+	@rm -f $(TARGET)
 	@rm -rf *.tar.gz $(OBJ_DIR) $(BIN_DIR)

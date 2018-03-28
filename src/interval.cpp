@@ -84,7 +84,7 @@ Note Interval::interval_to_note(Note note, Interval interval){
     for(auto & other_note : notes){
       //std::cout<< "\n[" << other_note.description() << "]\n";
       if(other_note.note_number == note_number){
-        return Note(other_note);
+        return other_note;
       }
     }
   }

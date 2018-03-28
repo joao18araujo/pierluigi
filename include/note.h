@@ -35,6 +35,7 @@ class Note{
     Note(int midi_number, int duration = 0);
 		Note(const string& note, const string& accidental, const int& octave, const int duration);
     string full_note();
+    string full_note_with_octave();
     string description();
     void set_full_note(string s);
     vector<Note *> enarmonies();

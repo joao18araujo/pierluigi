@@ -44,7 +44,20 @@ int main(int argc, char *argv[]){
     song.push_back(note);
   }
 
+  cout << "\nGenerating counterpoint...\n";
   vector <Note *> counterpoint = Counterpoint::generate_first_order_counterpoint(song);
+  if(counterpoint.empty()){
+    cout << "Couldn't generate counterpoint.\n";\
+    return -2;
+  }else{
+    cout << "Successfully generated! " << counterpoint.size() <<" notes\n\n";
+  }
+
+  int size = min(song.size(), counterpoint.size());
+  for(int i = 0; i < size; ++i){
+    Interval in(song[i], counterpoint[i]);
+    cout << song[i]->full_note_with_octave() << " " << counterpoint[i]->full_note_with_octave() << " " << in.description() << endl;
+  }
 
 
 	return 0;

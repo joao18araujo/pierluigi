@@ -60,6 +60,10 @@ string Note::full_note(){
   return this->note + this->accidental;
 }
 
+string Note::full_note_with_octave(){
+  return this->full_note() + to_string(this->octave);
+}
+
 string Note::description(){
   string s = "d:";
   s += to_string(duration) + ",n:" + full_note() + to_string(octave) + ",mn:" + to_string(midi_number)+ ",nn:" + to_string(note_number);

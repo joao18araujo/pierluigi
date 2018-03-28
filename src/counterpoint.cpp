@@ -3,8 +3,8 @@
 #include <cstdlib>
 #include <ctime>
 
-vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & song, bool ascendant){
-  vector <Note *> counterpoint;
+vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song, bool ascendant){
+  vector <Note> counterpoint;
   vector<Interval> consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant), Interval("m3", ascendant), Interval("M3", ascendant), Interval("m6", ascendant), Interval("M6", ascendant), Interval("m10", ascendant), Interval("M10", ascendant)};
   vector<Interval> perfect_consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant)};
   vector<Interval> imperfect_consonant_intervals { Interval("m3", ascendant), Interval("M3", ascendant), Interval("m6", ascendant), Interval("M6", ascendant), Interval("m10", ascendant), Interval("M10", ascendant)};
@@ -17,9 +17,9 @@ vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & 
 
   Interval current_interval, previous_interval, interval;
   Interval melodic_cantus_interval, melodic_counterpoint_interval;
-  Note * previous_note;
-  Note * counterpoint_note;
-  Note * previous_counterpoint_note;
+  Note previous_note;
+  Note counterpoint_note;
+  Note previous_counterpoint_note;
 
   for(unsigned i = 0; i < song.size(); ++i){
     possible_intervals.clear();
@@ -54,7 +54,7 @@ vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & 
       if(ascendant)
         analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
     }
-    if(possible_intervals.empty()) return vector<Note *>();
+    if(possible_intervals.empty()) return vector<Note>();
     int index = rand() % possible_intervals.size(); // TODO: checar se não é 0
 
     current_interval = possible_intervals[index];
@@ -75,7 +75,7 @@ vector<Note *> Counterpoint::generate_first_order_counterpoint(vector<Note *> & 
   return counterpoint;
 }
 
-void Counterpoint::analyse_and_add_interval(bool reverse_movement, vector<Interval> & possible_intervals, Note * previous_counterpoint_note, Note * note, Interval interval){
+void Counterpoint::analyse_and_add_interval(bool reverse_movement, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval){
   if(true)
     possible_intervals.push_back(interval);
 }

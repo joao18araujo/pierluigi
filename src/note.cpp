@@ -21,6 +21,7 @@ string Note::number_to_notes[] = {"c", "d", "e", "f", "g", "a", "b"};
 string Note::number_to_notes_with_accidental[] = {"c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "ais", "b"};
 
 Note::Note(const string& note, const string& accidental, const int& octave, const int duration) {
+  this->valid = true;
   this->note = note;
   this->accidental = accidental;
   this->octave = octave;
@@ -29,16 +30,18 @@ Note::Note(const string& note, const string& accidental, const int& octave, cons
   this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
-Note::Note(Note * note){
-  this->duration = note->duration;
-  this->note = note->note;
-  this->accidental = note->accidental;
-  this->octave = note->octave;
-  this->midi_number = note->midi_number;
-  this->note_number = note->note_number;
+Note::Note(const Note & note){
+  this->valid = true;
+  this->duration = note.duration;
+  this->note = note.note;
+  this->accidental = note.accidental;
+  this->octave = note.octave;
+  this->midi_number = note.midi_number;
+  this->note_number = note.note_number;
 }
 
 Note::Note(){
+  this->valid = false;
   this->duration = 0;
   this->note = "C";
   this->accidental = "";
@@ -48,6 +51,7 @@ Note::Note(){
 }
 
 Note::Note(int midi_number, int duration){
+  this->valid = true;
   this->duration = duration;
   this->midi_number = midi_number;
   this->octave = (midi_number / N_SCALE) - 1;
@@ -80,12 +84,12 @@ void Note::set_full_note(string s){
   this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
-vector<Note *> Note::enarmonies(){
-  vector<Note *> v;
+vector<Note> Note::enarmonies(){
+  vector<Note> v;
   for(auto & p : notes_with_accidental_to_number){
     if(p.first != this->full_note() && p.second == notes_with_accidental_to_number[this->full_note()]){
-      Note * n = new Note(this);
-      n->set_full_note(p.first);
+      Note n(*this);
+      n.set_full_note(p.first);
       v.push_back(n);
     }
   }

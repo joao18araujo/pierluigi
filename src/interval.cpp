@@ -50,10 +50,10 @@ Interval::Interval(string s_interval, bool ascendant){
   }
 }
 
-Interval::Interval(Note * first, Note * second){
-  this->quantitative = abs(first->note_number - second->note_number) + 1;
-  this->ascendant = (first->note_number - second->note_number < 0);
-  this->half_tones = abs(first->midi_number - second->midi_number);
+Interval::Interval(Note first, Note second){
+  this->quantitative = abs(first.note_number - second.note_number) + 1;
+  this->ascendant = (first.note_number - second.note_number < 0);
+  this->half_tones = abs(first.midi_number - second.midi_number);
 
   classify_qualitative();
 }
@@ -70,26 +70,26 @@ string Interval::full_description(){
   return this->qualitative + to_string(this->quantitative) + "(" + to_string(this->half_tones) + ")";
 }
 
-Note * Interval::interval_to_note(Note * note, Interval interval){
+Note Interval::interval_to_note(Note note, Interval interval){
   // TODO pegar qualitativo e checar enarmonias
-  int midi_number = note->midi_number + interval.half_tones * (interval.ascendant ? 1 : -1);
-  int note_number = note->note_number + (interval.quantitative - 1) * (interval.ascendant ? 1 : -1);
-  Note * n = new Note(midi_number);
+  int midi_number = note.midi_number + interval.half_tones * (interval.ascendant ? 1 : -1);
+  int note_number = note.note_number + (interval.quantitative - 1) * (interval.ascendant ? 1 : -1);
+  Note n(midi_number);
 
-  if(n->note_number == note_number){
-    //std::cout<< "\n[" << n->description() << "]\n";
+  if(n.note_number == note_number){
+    //std::cout<< "\n[" << n.description() << "]\n";
     return n;
   }else{
-    vector<Note *> notes = n->enarmonies();
+    vector<Note> notes = n.enarmonies();
     for(auto & other_note : notes){
-      //std::cout<< "\n[" << other_note->description() << "]\n";
-      if(other_note->note_number == note_number){
-        return new Note(other_note);
+      //std::cout<< "\n[" << other_note.description() << "]\n";
+      if(other_note.note_number == note_number){
+        return Note(other_note);
       }
     }
   }
 
-  return nullptr;
+  return Note();
 }
 
 void Interval::classify_qualitative(){

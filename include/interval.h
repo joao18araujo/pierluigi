@@ -23,13 +23,13 @@ public:
   int half_tones;
   bool ascendant;
 
-  Interval(Note * first, Note * second);
+  Interval(Note first, Note second);
   Interval(){}; // TODO: implement empty constructor
   Interval(string s_interval, bool ascendant = false);
   string description();
   string full_description();
 
-  static Note * interval_to_note(Note * note, Interval interval);
+  static Note interval_to_note(Note note, Interval interval);
 private:
   bool is_perfect_candidate(int diff);
   void classify_qualitative();

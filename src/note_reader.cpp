@@ -1,6 +1,6 @@
 #include "note_reader.h"
 
-Note * NoteReader::string_to_note(Note * prev, string s){
+Note NoteReader::string_to_note(Note prev, string s){
   string accidental = "", modifier = "";
 	string note = "";
 	int duration = 0;
@@ -10,7 +10,7 @@ Note * NoteReader::string_to_note(Note * prev, string s){
 	s.erase(s.begin());
 	for (auto& c : s){
 		if (isdigit(c)){
-			duration *= 10;
+			duration= 10;
 			duration += (c - '0');
 		} else if (isalpha(c))
 			accidental += c;
@@ -25,8 +25,8 @@ Note * NoteReader::string_to_note(Note * prev, string s){
       octave--;
   }
 
-  if(not duration && prev)
-    duration = prev->duration;
+  if(not duration)
+    duration = prev.duration;
 
-	return new Note(note, accidental, octave, duration);
+	return Note(note, accidental, octave, duration);
 }

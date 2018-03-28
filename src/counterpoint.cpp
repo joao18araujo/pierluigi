@@ -39,20 +39,20 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
     if(i == 0 || i == song.size() - 1){
       interval = Interval("P1", ascendant);
       counterpoint_note = Interval::interval_to_note(note, interval);
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant));
     }else if(count_imperfects < 4){
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant));
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant));
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant));
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant));
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant));
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant));
     }
 
     if(previous != "P5" && previous != "P8"){
-      analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
+      analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
       if(ascendant)
-        analyse_and_add_interval(reverse_movement, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
+        analyse_and_add_interval(melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
     }
     if(possible_intervals.empty()) return vector<Note>();
     int index = rand() % possible_intervals.size(); // TODO: checar se não é 0
@@ -61,8 +61,8 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
     counterpoint_note = Interval::interval_to_note(note, current_interval);
     counterpoint.push_back(counterpoint_note);
 
-    char interval_qualitative = current_interval.description()[0];
-    if(interval_qualitative == 'M' || interval_qualitative == 'm')
+    string interval_qualitative = current_interval.qualitative;
+    if(interval_qualitative == "M" || interval_qualitative == "m")
       count_imperfects++;
     else
       count_imperfects = 0;
@@ -75,7 +75,9 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
   return counterpoint;
 }
 
-void Counterpoint::analyse_and_add_interval(bool reverse_movement, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval){
-  if(true)
+void Counterpoint::analyse_and_add_interval(bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval){
+  Note next_note = Interval::interval_to_note(note, interval);
+  Interval melodic_interval(previous_counterpoint_note, next_note);
+  if(melodic_ascendant == melodic_interval.ascendant)
     possible_intervals.push_back(interval);
 }

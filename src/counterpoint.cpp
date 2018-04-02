@@ -21,19 +21,16 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
   Note counterpoint_note;
   Note previous_counterpoint_note;
 
+  int times_not_reversed = 0;
   for(unsigned i = 0; i < song.size(); ++i){
     possible_intervals.clear();
     auto note = song[i];
 
     melodic_cantus_interval = Interval(note, previous_note);
-    bool reverse_movement = (rand() % 100 < 80); // 80% de chances de ser movimento contrário
+    bool reverse_movement = true;
+
+    begin:
     bool melodic_ascendant = (reverse_movement ^ melodic_cantus_interval.ascendant);
-
-    if(reverse_movement){
-
-    }else{
-
-    }
 
     string previous = previous_interval.description();
     if(i == 0 || i == song.size() - 1){
@@ -54,8 +51,14 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
       if(ascendant)
         analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
     }
+
+    if(possible_intervals.empty() && reverse_movement && times_not_reversed++ < 3){
+      reverse_movement = false;
+      goto begin;
+    }
+
     if(possible_intervals.empty()) return vector<Note>();
-    int index = rand() % possible_intervals.size(); // TODO: checar se não é 0
+    int index = rand() % possible_intervals.size();
 
     current_interval = possible_intervals[index];
     counterpoint_note = Interval::interval_to_note(note, current_interval);

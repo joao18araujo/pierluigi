@@ -19,7 +19,7 @@ string Interval::intervals[][17] = {
 Interval::Interval(string s_interval, bool ascendant){
   string s_quantitative = "", s_qualitative = "";
   bool is_on_number = false;
-
+  // TODO: avaliar descanso (r4)
   this->ascendant = ascendant;
 
   for(auto & c : s_interval){

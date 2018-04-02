@@ -47,13 +47,14 @@ int main(int argc, char *argv[]){
   cout << "\nGenerating counterpoint...\n";
 
   vector <Note> counterpoint;
-  int cont = 0;
+  int cont = 1;
+  const int tries = 500000;
   do {
     counterpoint = Counterpoint::generate_first_order_counterpoint(song);
-  }while(counterpoint.empty() || ++cont > 50);
+  }while(counterpoint.empty() && cont++ < tries);
 
   if(counterpoint.empty()){
-    cout << "Couldn't generate counterpoint after 50 tries.\n";\
+    cout << "Couldn't generate counterpoint after " << tries << " tries.\n";
     return -2;
   }else{
     cout << "Successfully generated after " << cont <<" try(ies)! " << counterpoint.size() <<" notes\n\n";

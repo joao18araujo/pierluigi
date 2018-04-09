@@ -66,6 +66,12 @@ int main(int argc, char *argv[]){
     cout << song[i].full_note_with_octave() << " " << counterpoint[i].full_note_with_octave() << " " << in.description() << endl;
   }
 
+  cout << endl;
+  for(auto & c : counterpoint){
+    cout << NoteReader::note_to_string(c) << " ";
+  }
+  cout << endl;
+
 
 	return 0;
 }

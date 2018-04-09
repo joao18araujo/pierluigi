@@ -31,5 +31,7 @@
 *.out
 *.app
 bin/
+*.pdf
+*.mid
 
 todo.txt

@@ -10,7 +10,7 @@ Note NoteReader::string_to_note(Note prev, string s){
 	s.erase(s.begin());
 	for (auto& c : s){
 		if (isdigit(c)){
-			duration= 10;
+			duration = 0;
 			duration += (c - '0');
 		} else if (isalpha(c))
 			accidental += c;
@@ -29,4 +29,19 @@ Note NoteReader::string_to_note(Note prev, string s){
     duration = prev.duration;
 
 	return Note(note, accidental, octave, duration);
+}
+
+string NoteReader::note_to_string(Note note){
+  int octave_diff = note.octave - BELOW_MIDDLE_C_OCTAVE;
+  string s = note.full_note();
+  if(octave_diff > 0){
+    while(octave_diff--)
+      s += "\'";
+  }else{
+    while(octave_diff++)
+      s += ",";
+  }
+  s += to_string(note.duration);
+
+  return s;
 }

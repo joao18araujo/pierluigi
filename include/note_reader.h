@@ -8,10 +8,12 @@
 #include "note.h"
 
 using std::string;
+using std::to_string;
 
 class NoteReader{
 public:
   static Note string_to_note(Note prev, string s);
+  static string note_to_string(Note note);
 };
 
 #endif

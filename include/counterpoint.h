@@ -19,7 +19,7 @@ public:
 
   static void analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval);
 
-  static bool solve(unsigned position, int thirds, int sixths, int tenths, int reverse_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant);
+  static bool dfs_generate_first_order_counterpoint(unsigned position, int paralels, int reverse_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant);
 };
 
 #endif

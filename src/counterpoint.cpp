@@ -88,7 +88,14 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
     possible_intervals.push_back(interval);
 }
 
-bool Counterpoint::dfs_generate_first_order_counterpoint(unsigned position, int paralels, int reverse_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant){
+vector<Note> Counterpoint::dfs_generate_first_order_counterpoint(vector<Note> & song, bool ascendant){
+  vector<Note> counterpoint;
+  //TODO colocar parâmetros dinâmicos
+  Counterpoint::solve(0, 0, 0, song, counterpoint, ascendant);
+  return counterpoint;
+}
+
+bool Counterpoint::solve(unsigned position, int paralels, int reverse_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant){
   if(position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());
@@ -166,7 +173,7 @@ bool Counterpoint::dfs_generate_first_order_counterpoint(unsigned position, int 
       rm = reverse_movements + ((melodic_interval.ascendant != melodic_ascendant) ? 1 : 0);
       if(par > 4 || rm > (int) song.size() / 2) continue;
       counterpoint.push_back(c_note);
-      if(dfs_generate_first_order_counterpoint(position + 1, par, rm, song, counterpoint, ascendant)) return true;
+      if(solve(position + 1, par, rm, song, counterpoint, ascendant)) return true;
       counterpoint.pop_back();
     }
   }else{
@@ -179,7 +186,7 @@ bool Counterpoint::dfs_generate_first_order_counterpoint(unsigned position, int 
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       counterpoint.push_back(c_note);
-      if(dfs_generate_first_order_counterpoint(position + 1, paralels, reverse_movements, song, counterpoint, ascendant)) return true;
+      if(solve(position + 1, paralels, reverse_movements, song, counterpoint, ascendant)) return true;
       counterpoint.pop_back();
     }
   }

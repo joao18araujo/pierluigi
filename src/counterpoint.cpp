@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-bool Counterpoint::dp[200][88][20][40];
+bool Counterpoint::dp[201][90][5][101];
 
 vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song, bool ascendant){
   vector <Note> counterpoint;
@@ -88,25 +88,27 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
     possible_intervals.push_back(interval);
 }
 
-vector<Note> Counterpoint::dfs_generate_first_order_counterpoint(vector<Note> & song, bool ascendant){
+vector<Note> Counterpoint::dfs_generate_first_order_counterpoint(vector<Note> & song, bool ascendant, int paralels, int same_movements){
   vector<Note> counterpoint;
-  //TODO colocar parâmetros dinâmicos
-  Counterpoint::solve(0, 0, 0, song, counterpoint, ascendant);
+  if(song.size() > 201 || paralels > 4 || same_movements > 101)
+    return vector<Note>();
+
+  Counterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant);
   return counterpoint;
 }
 
-bool Counterpoint::solve(unsigned position, int paralels, int reverse_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant){
+bool Counterpoint::solve(unsigned position, int paralels, int same_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant){
   if(position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());
   }
 
   if(position >= song.size()){
-    printf("Total: %d %d\n", paralels, reverse_movements);
+    printf("Total: %d %d\n", paralels, same_movements);
     return true;
   }
 
-  if(!dp[position][song[position].midi_number][paralels][reverse_movements]) return false;
+  if(!dp[position][song[position].midi_number][paralels][same_movements]) return false;
 
 
   vector<Interval> possible_intervals;
@@ -141,7 +143,7 @@ bool Counterpoint::solve(unsigned position, int paralels, int reverse_movements,
     random_shuffle(possible_intervals.begin(), possible_intervals.end());
     int size = possible_intervals.size();
 
-    //intervals with reverse movement
+    //intervals with same movement
     if(previous != "P8")
       analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
     if(previous != "P5" && ascendant)
@@ -159,21 +161,22 @@ bool Counterpoint::solve(unsigned position, int paralels, int reverse_movements,
     }
     random_shuffle(possible_intervals.begin() + size, possible_intervals.end());
 
+    //TODO deixar os paralelos por último
     if(possible_intervals.empty()){
-      dp[position - 1][song[position - 1].midi_number][paralels][reverse_movements] = false;
+      dp[position - 1][song[position - 1].midi_number][paralels][same_movements] = false;
       return false;
     }
 
-    int par, rm;
+    int par, sm;
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       Interval melodic_interval(previous_counterpoint_note, note);
 
-      par = paralels + (interval.description() == previous and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
-      rm = reverse_movements + ((melodic_interval.ascendant != melodic_ascendant) ? 1 : 0);
-      if(par > 4 || rm > (int) song.size() / 2) continue;
+      par = paralels - (interval.description() == previous and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
+      sm = same_movements - (melodic_interval.ascendant != melodic_ascendant);
+      if(par < 0 || sm < 0) continue;
       counterpoint.push_back(c_note);
-      if(solve(position + 1, par, rm, song, counterpoint, ascendant)) return true;
+      if(solve(position + 1, par, sm, song, counterpoint, ascendant)) return true;
       counterpoint.pop_back();
     }
   }else{
@@ -186,11 +189,11 @@ bool Counterpoint::solve(unsigned position, int paralels, int reverse_movements,
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       counterpoint.push_back(c_note);
-      if(solve(position + 1, paralels, reverse_movements, song, counterpoint, ascendant)) return true;
+      if(solve(position + 1, paralels, same_movements, song, counterpoint, ascendant)) return true;
       counterpoint.pop_back();
     }
   }
 
-  dp[position][song[position].midi_number][paralels][reverse_movements] = false;
+  dp[position][song[position].midi_number][paralels][same_movements] = false;
   return false;
 }

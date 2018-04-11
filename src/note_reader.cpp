@@ -7,6 +7,7 @@ Note NoteReader::string_to_note(Note prev, string s){
   int octave = BELOW_MIDDLE_C_OCTAVE;
 
 	note += s[0];
+  //TODO lidar com ponto de aumento
 	s.erase(s.begin());
 	for (auto& c : s){
 		if (isdigit(c)){

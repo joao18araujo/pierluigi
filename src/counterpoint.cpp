@@ -91,7 +91,7 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
 bool Counterpoint::dfs_generate_first_order_counterpoint(unsigned position, int paralels, int reverse_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant){
   if(position == 0){
     memset(dp, true, sizeof dp);
-    srand(time(0));
+    srand(clock());
   }
 
   if(position >= song.size()){
@@ -150,18 +150,7 @@ bool Counterpoint::dfs_generate_first_order_counterpoint(unsigned position, int 
       analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant));
       analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant));
     }
-    printf("\nBefore {");
-    for(auto & interval : possible_intervals){
-      printf("%s ", interval.description().c_str());
-    }
-    printf("}\n");
     random_shuffle(possible_intervals.begin() + size, possible_intervals.end());
-    printf("\nAfter {");
-    for(auto & interval : possible_intervals){
-      printf("%s ", interval.description().c_str());
-    }
-    printf("}\n");
-
 
     if(possible_intervals.empty()){
       dp[position - 1][song[position - 1].midi_number][paralels][reverse_movements] = false;
@@ -175,7 +164,7 @@ bool Counterpoint::dfs_generate_first_order_counterpoint(unsigned position, int 
 
       par = paralels + (interval.description() == previous and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
       rm = reverse_movements + ((melodic_interval.ascendant != melodic_ascendant) ? 1 : 0);
-      if(par > 20 || rm > 40) continue;
+      if(par > 4 || rm > (int) song.size() / 2) continue;
       counterpoint.push_back(c_note);
       if(dfs_generate_first_order_counterpoint(position + 1, par, rm, song, counterpoint, ascendant)) return true;
       counterpoint.pop_back();

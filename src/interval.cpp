@@ -82,7 +82,6 @@ Note Interval::interval_to_note(Note note, Interval interval){
   }else{
     vector<Note> notes = n.enarmonies();
     for(auto & other_note : notes){
-      //std::cout<< "\n[" << other_note.description() << "]\n";
       if(other_note.note_number == note_number){
         other_note.duration = note.duration;
         return other_note;

@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 
   cout << "\nGenerating counterpoint...\n";
 
-  vector<Note> counterpoint = Counterpoint::dfs_generate_first_order_counterpoint(song, false, 4, song.size() / 2);
+  vector<Note> counterpoint = Counterpoint::dfs_generate_first_order_counterpoint(song, (argc > 2), 4, song.size());
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";

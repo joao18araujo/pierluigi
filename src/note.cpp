@@ -20,7 +20,7 @@ unordered_map<string, int> Note::notes_to_number = {{"c", 0}, {"d", 1}, {"e", 2}
 string Note::number_to_notes[] = {"c", "d", "e", "f", "g", "a", "b"};
 string Note::number_to_notes_with_accidental[] = {"c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "ais", "b"};
 
-Note::Note(const string& note, const string& accidental, const int& octave, const int duration) {
+Note::Note(const string note, const string accidental, const int octave, const int duration) {
   this->valid = true;
   this->note = note;
   this->accidental = accidental;
@@ -40,6 +40,7 @@ Note::Note(const Note & note){
   this->note_number = note.note_number;
 }
 
+//TODO criar construtor que só recebe uma string
 Note::Note(){
   this->valid = false;
   this->duration = 0;

@@ -34,7 +34,7 @@ class Note{
     Note();
     Note(const Note & note);
     Note(int midi_number, int duration = 0);
-		Note(const string& note, const string& accidental, const int& octave, const int duration);
+		Note(const string note, const string accidental, const int octave = 0, const int duration = 0);
     string full_note();
     string full_note_with_octave();
     string description();

@@ -7,8 +7,8 @@
     source = "http://musescore.com/score/1712921"
     encodingdate = "2018-04-09"
     composer = Composer
-    title = Title
-    }
+    title = Title    
+	}
 
 #(set-global-staff-size 29.0218110236)
 \paper {
@@ -18,7 +18,7 @@
     bottom-margin = 2.2\cm
     left-margin = 1.5\cm
     right-margin = 1.2\cm
-    }
+   	}
 \layout {
     \context { \Score
         autoBeaming = ##f
@@ -46,7 +46,7 @@ PartPOneVoiceOne =  {
     }
 
   PartPTwoVoiceOne =  {
-      \clef "treble" \key c \major \numericTimeSignature\time 4/4 g1 f4 aes4 gis,4 f,4 bes2 f2 b4 cis'4 g,4 c4 fis,2 a,2 f4 aes4 b,4 f,4 b,4 e'4 ais4 e4 bes,4 c4 g,4 a,4 ees,1 a,4 e4 g,4 a,4 b2 bes,2 b4 g4 g4 e4 fis,2 c2 f4 c4 g,4 c4 g,4 f4 fis,4 gis4 g,1
+      \clef "bass" \key g \major \numericTimeSignature\time 4/4 g1 f4 aes4 gis,4 f,4 bes2 f2 b4 cis'4 g,4 c4 fis,2 a,2 f4 aes4 b,4 f,4 b,4 e'4 ais4 e4 bes,4 c4 g,4 a,4 ees,1 a,4 e4 g,4 a,4 b2 bes,2 b4 g4 g4 e4 fis,2 c2 f4 c4 g,4 c4 g,4 f4 fis,4 gis4 g,1
       }
 
 % The score definition

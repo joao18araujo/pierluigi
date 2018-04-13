@@ -104,12 +104,11 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
   }
 
   if(position >= song.size()){
-    printf("Total: %d %d\n", paralels, same_movements);
+    printf("Total: %d %lu\n", paralels, song.size() - same_movements);
     return true;
   }
 
   if(!dp[position][song[position].midi_number][paralels][same_movements]) return false;
-
 
   vector<Interval> possible_intervals;
 
@@ -146,7 +145,7 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
     //intervals with same movement
     if(previous != "P8")
       analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
-    if(previous != "P5" && ascendant)
+    if(previous != "P5")
       analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
 
     if(position == song.size() - 1){

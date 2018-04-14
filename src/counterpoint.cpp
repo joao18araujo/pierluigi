@@ -64,7 +64,7 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
 
     current_interval = possible_intervals[index];
     counterpoint_note = Interval::interval_to_note(note, current_interval);
-    counterpoint.push_back(counterpoint_note);
+    if(note.valid) counterpoint.push_back(counterpoint_note);
 
     string interval_qualitative = current_interval.qualitative;
     if(interval_qualitative == "M" || interval_qualitative == "m")
@@ -84,7 +84,7 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
   Note next_note = Interval::interval_to_note(note, interval);
   Interval melodic_interval(previous_counterpoint_note, next_note);
   bool can_jump = (reverse_movement or melodic_interval.quantitative <= 4 or melodic_interval.quantitative == 8);
-  if(can_jump and melodic_ascendant == melodic_interval.ascendant)
+  if(can_jump and melodic_ascendant == melodic_interval.ascendant and note.valid)
     possible_intervals.push_back(interval);
 }
 
@@ -185,6 +185,7 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
     random_shuffle(possible_intervals.begin(), possible_intervals.end());
 
     //TODO: mudar regra de última e primeira nota para reverse
+    //TODO: analisar note pra não inserir fora de escala ou inválido
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       counterpoint.push_back(c_note);

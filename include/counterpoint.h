@@ -3,6 +3,7 @@
 
 #include "note.h"
 #include "interval.h"
+#include "scale.h"
 #include <vector>
 #include <cstring>
 #include <algorithm>

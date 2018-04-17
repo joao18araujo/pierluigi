@@ -81,7 +81,10 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
 }
 
 void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval){
-  Note next_note = Interval::interval_to_note(note, interval);
+  Note next_note = Scale::interval_to_note_on_scale(note, interval, Scale(Note("g"), "major"));
+  if(!next_note.valid){
+    return;
+  }
   Interval melodic_interval(previous_counterpoint_note, next_note);
   bool can_jump = (reverse_movement or melodic_interval.quantitative <= 4 or melodic_interval.quantitative == 8);
   if(can_jump and melodic_ascendant == melodic_interval.ascendant and note.valid)

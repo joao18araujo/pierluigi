@@ -25,7 +25,7 @@ public:
 
   Interval(Note first, Note second);
   Interval(){}; // TODO: implement empty constructor
-  Interval(string s_interval, bool ascendant = false);
+  Interval(string s_interval, bool ascendant = true);
   string description();
   string full_description();
 

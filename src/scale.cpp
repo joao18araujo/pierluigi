@@ -26,6 +26,7 @@ Scale::Scale(Note note, vector<Interval> intervals){
 void Scale::fill_note_set(Note note, vector<Interval> intervals){
   permitted_notes.clear();
   permitted_notes.insert(note.full_note());
+
   for(auto & interval : intervals){
     note = Interval::interval_to_note(note, interval);
     permitted_notes.insert(note.full_note());

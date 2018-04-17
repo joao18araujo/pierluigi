@@ -1,6 +1,9 @@
 #include "note_reader.h"
 
 Note NoteReader::string_to_note(Note prev, string s){
+  if(!regex_match(s, regex("[a-gr][ies]*[\',]*\\d*\\.*")))
+    return Note();
+
   string accidental = "", modifier = "";
 	string note = "";
 	int duration = 0;

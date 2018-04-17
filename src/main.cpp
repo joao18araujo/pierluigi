@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <regex>
 #include "note.h"
 #include "interval.h"
 #include "note_reader.h"
@@ -27,8 +28,9 @@ int main(int argc, char *argv[]){
 
   Note prev;
   while(file >> s){
-    cout << "[" << s << "] ";
     Note note = NoteReader::string_to_note(prev, s);
+    if(!note.valid) continue;
+    cout << "[" << s << "] ";
     cout << note.description();
 
     if(prev.valid){

@@ -1,24 +1,24 @@
 #include "note.h"
 
 unordered_map<string, int> Note::notes_with_accidental_to_number = {
-  {"c", 0}, {"bis", 0}, {"deses", 0},
-  {"cis", 1}, {"des", 1}, {"bisis", 1},
-  {"d", 2}, {"cisis", 2}, {"eeses", 2},
-  {"dis", 3}, {"ees", 3}, {"feses", 3},
-  {"e", 4}, {"fes", 4}, {"disis", 4},
-  {"eis", 5}, {"f", 5}, {"geses", 5},
-  {"fis", 6}, {"ges", 6}, {"eisis", 6},
-  {"g", 7}, {"fisis", 7}, {"aeses", 7},
-  {"gis", 8}, {"aes", 8},
-  {"a", 9}, {"gisis", 9}, {"beses", 9},
-  {"ais", 10}, {"bes", 10}, {"ceses", 10},
-  {"b", 11}, {"ces", 11}, {"aisis", 11}
+  {"c", 0}, {"b#", 0}, {"d\u266D\u266D", 0},
+  {"c#", 1}, {"d\u266D", 1}, {"b##", 1},
+  {"d", 2}, {"c##", 2}, {"e\u266D\u266D", 2},
+  {"d#", 3}, {"e\u266D", 3}, {"f\u266D\u266D", 3},
+  {"e", 4}, {"f\u266D", 4}, {"d##", 4},
+  {"e#", 5}, {"f", 5}, {"g\u266D\u266D", 5},
+  {"f#", 6}, {"g\u266D", 6}, {"e##", 6},
+  {"g", 7}, {"f##", 7}, {"a\u266D\u266D", 7},
+  {"g#", 8}, {"a\u266D", 8},
+  {"a", 9}, {"g##", 9}, {"b\u266D\u266D", 9},
+  {"a#", 10}, {"b\u266D", 10}, {"c\u266D\u266D", 10},
+  {"b", 11}, {"c\u266D", 11}, {"a##", 11}
 };
 
 unordered_map<string, int> Note::notes_to_number = {{"c", 0}, {"d", 1}, {"e", 2}, {"f", 3}, {"g", 4}, {"a", 5}, {"b", 6}};
 
 string Note::number_to_notes[] = {"c", "d", "e", "f", "g", "a", "b"};
-string Note::number_to_notes_with_accidental[] = {"c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "ais", "b"};
+string Note::number_to_notes_with_accidental[] = {"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"};
 
 Note::Note(const string note, const string accidental, const int octave, const int duration) {
   this->valid = true;

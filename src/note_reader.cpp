@@ -29,12 +29,19 @@ Note NoteReader::string_to_note(Note prev, string s){
   if(not duration)
     duration = prev.duration;
 
+  accidental = regex_replace(accidental, regex("is"), "#");
+  accidental = regex_replace(accidental, regex("es"), "\u266D");
+
 	return Note(note, accidental, octave, duration);
 }
 
 string NoteReader::note_to_string(Note note){
   int octave_diff = note.octave - BELOW_MIDDLE_C_OCTAVE;
   string s = note.full_note();
+
+  s = regex_replace(s, regex("#"), "is");
+  s = regex_replace(s, regex("\u266D"), "es");
+
   if(octave_diff > 0){
     while(octave_diff--)
       s += "\'";

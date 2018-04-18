@@ -23,11 +23,21 @@ string Note::number_to_notes_with_accidental[] = {"c", "c#", "d", "d#", "e", "f"
 Note::Note(const string note, const string accidental, const int octave, const int duration) {
   this->valid = true;
   this->note = note;
+
   this->accidental = accidental;
-  this->octave = octave;
   this->duration = duration;
-  this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
-  this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
+
+  if(note != "r"){
+    this->octave = octave;
+    this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
+    this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
+  }else{
+    this->octave = BELOW_MIDDLE_C_OCTAVE;
+    this->midi_number = 0;
+    this->note_number = 0;
+    //FIXME: deixar midi number como valor inválido, midi number 0 é um do
+  }
+
 }
 
 Note::Note(const Note & note){

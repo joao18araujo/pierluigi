@@ -72,6 +72,10 @@ string Interval::full_description(){
 
 Note Interval::interval_to_note(Note note, Interval interval){
   // TODO pegar qualitativo e checar enarmonias
+  if(note.note == "r"){
+    return note;
+  }
+
   int midi_number = note.midi_number + interval.half_tones * (interval.ascendant ? 1 : -1);
   int note_number = note.note_number + (interval.quantitative - 1) * (interval.ascendant ? 1 : -1);
   Note n(midi_number);

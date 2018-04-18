@@ -26,9 +26,12 @@ int main(int argc, char *argv[]){
   fstream file(argv[1]);
   string s;
 
-  Note prev;
+  Note prev, note;
+
+
+
   while(file >> s){
-    Note note = NoteReader::string_to_note(prev, s);
+    note = NoteReader::string_to_note(prev, s);
     if(!note.valid) continue;
     cout << "[" << s << "] ";
     cout << note.description();

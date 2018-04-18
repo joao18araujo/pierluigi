@@ -6,6 +6,7 @@
 #include <fstream>
 #include <regex>
 #include "note.h"
+#include "scale.h"
 #include "interval.h"
 #include "note_reader.h"
 #include "counterpoint.h"
@@ -24,11 +25,14 @@ int main(int argc, char *argv[]){
   }
 
   fstream file(argv[1]);
-  string s;
+  string s, key, mode;
 
   Note prev, note;
 
-
+  file >> s >> key >> mode;
+  mode.erase(mode.begin());
+  printf("Key: %s %s\n", key.c_str(), mode.c_str());
+  Scale scale(key, mode);
 
   while(file >> s){
     note = NoteReader::string_to_note(prev, s);
@@ -51,7 +55,7 @@ int main(int argc, char *argv[]){
 
   cout << "\nGenerating counterpoint...\n";
 
-  vector<Note> counterpoint = Counterpoint::dfs_generate_first_order_counterpoint(song, (argc > 2), 4, song.size());
+  vector<Note> counterpoint = Counterpoint::dfs_generate_first_order_counterpoint(song, (argc > 2), 4, song.size(), scale);
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";

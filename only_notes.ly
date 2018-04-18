@@ -1,3 +1,4 @@
+\key c \major
 g,4 c, g c
 g' c' g'' c''
 g' c' a c

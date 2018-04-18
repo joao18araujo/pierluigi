@@ -61,7 +61,7 @@ string NoteReader::note_to_string(Note note){
     while(octave_diff++)
       s += ",";
   }
-  s += to_string((note.duration ? 16 / note.duration : note.duration));
+  s += to_string((note.duration ? 16 / note.duration : note.duration)); // printar com pontos
 
   return s;
 }

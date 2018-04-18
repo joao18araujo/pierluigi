@@ -1,3 +1,4 @@
+\key c \major
 d'4 c'8 b8
 c'8 b8 a4 a4 g8 a8
 b4 a8 b8 c'4 b8 g8

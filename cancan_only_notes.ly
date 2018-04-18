@@ -1,3 +1,4 @@
+\key g \major
 g1
 a4 c'4 b4 a4
 d'2 d'2

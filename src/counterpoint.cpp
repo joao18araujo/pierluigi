@@ -5,7 +5,7 @@
 
 bool Counterpoint::dp[201][90][5][101];
 
-vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song, bool ascendant){
+vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song, bool ascendant, Scale & scale){
   vector <Note> counterpoint;
   vector<Interval> consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant), Interval("m3", ascendant), Interval("M3", ascendant), Interval("m6", ascendant), Interval("M6", ascendant), Interval("m10", ascendant), Interval("M10", ascendant)};
   vector<Interval> perfect_consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant)};
@@ -38,20 +38,20 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
     if(i == 0 || i == song.size() - 1){
       interval = Interval("P1", ascendant);
       counterpoint_note = Interval::interval_to_note(note, interval);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant));
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant), scale);
     }else if(count_imperfects < 4){
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant));
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant));
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant));
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant));
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant));
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant));
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant), scale);
     }
 
     if(previous != "P5" && previous != "P8"){
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), scale);
       if(ascendant)
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant), scale);
     }
 
     if(possible_intervals.empty() && reverse_movement && times_not_reversed++ < 3){
@@ -80,8 +80,8 @@ vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song
   return counterpoint;
 }
 
-void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval){
-  Note next_note = Scale::interval_to_note_on_scale(note, interval, Scale(Note("g"), "major"));
+void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval, Scale & scale){
+  Note next_note = Scale::interval_to_note_on_scale(note, interval, scale);
   if(!next_note.valid){
     return;
   }
@@ -91,16 +91,16 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
     possible_intervals.push_back(interval);
 }
 
-vector<Note> Counterpoint::dfs_generate_first_order_counterpoint(vector<Note> & song, bool ascendant, int paralels, int same_movements){
+vector<Note> Counterpoint::dfs_generate_first_order_counterpoint(vector<Note> & song, bool ascendant, int paralels, int same_movements, Scale & scale){
   vector<Note> counterpoint;
   if(song.size() > 201 || paralels > 4 || same_movements > 101)
     return vector<Note>();
 
-  Counterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant);
+  Counterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant, scale);
   return counterpoint;
 }
 
-bool Counterpoint::solve(unsigned position, int paralels, int same_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant){
+bool Counterpoint::solve(unsigned position, int paralels, int same_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant, Scale & scale){
   if(position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());
@@ -128,39 +128,39 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
 
     if(note.note != "r"){
       if(previous != "P8")
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), scale);
 
       if(previous != "P5" && ascendant)
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant), scale);
 
       if(position == song.size() - 1){
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant));
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant), scale);
       }else{
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant));
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant));
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant));
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant));
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant));
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant));
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant), scale);
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant), scale);
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant), scale);
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant), scale);
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant), scale);
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant), scale);
       }
       random_shuffle(possible_intervals.begin(), possible_intervals.end());
       int size = possible_intervals.size();
 
       //intervals with same movement
       if(previous != "P8")
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant));
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), scale);
       if(previous != "P5")
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant));
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant), scale);
 
       if(position == song.size() - 1){
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant));
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant), scale);
       }else{
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant));
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant));
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant));
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant));
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant));
-        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant));
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant), scale);
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant), scale);
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant), scale);
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant), scale);
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant), scale);
+        analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant), scale);
       }
       random_shuffle(possible_intervals.begin() + size, possible_intervals.end());
     }else{
@@ -178,11 +178,11 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
       auto c_note = Interval::interval_to_note(note, interval);
       Interval melodic_interval(previous_counterpoint_note, note);
 
-      par = paralels - (interval.description() == previous and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
+      par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
       sm = same_movements - (melodic_interval.ascendant != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
       counterpoint.push_back(c_note);
-      if(solve(position + 1, par, sm, song, counterpoint, ascendant)) return true;
+      if(solve(position + 1, par, sm, song, counterpoint, ascendant, scale)) return true;
       counterpoint.pop_back();
     }
   }else{
@@ -196,7 +196,7 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       counterpoint.push_back(c_note);
-      if(solve(position + 1, paralels, same_movements, song, counterpoint, ascendant)) return true;
+      if(solve(position + 1, paralels, same_movements, song, counterpoint, ascendant, scale)) return true;
       counterpoint.pop_back();
     }
   }

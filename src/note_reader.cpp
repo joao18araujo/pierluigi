@@ -61,7 +61,23 @@ string NoteReader::note_to_string(Note note){
     while(octave_diff++)
       s += ",";
   }
-  s += to_string((note.duration ? 16 / note.duration : note.duration)); // printar com pontos
+
+  string duration = to_string((note.duration ? 16 / msb(note.duration) : 0));
+  int total_dots = number_of_on_bits(note.duration) - 1;
+  while(total_dots-- > 0){
+    duration += ".";
+  }
+
+  s += duration; // printar com pontos
 
   return s;
+}
+
+
+int NoteReader::msb(int N) {
+  return N ? 1 << (31 - __builtin_clz(N)) : 0;
+}
+
+int NoteReader::number_of_on_bits(int N) {
+  return __builtin_popcount(N);
 }

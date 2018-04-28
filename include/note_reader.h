@@ -17,6 +17,8 @@ class NoteReader{
 public:
   static Note string_to_note(Note prev, string s);
   static string note_to_string(Note note);
+  static int msb(int N);
+  static int number_of_on_bits(int N);
 };
 
 #endif

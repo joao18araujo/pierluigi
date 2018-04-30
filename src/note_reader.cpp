@@ -29,17 +29,18 @@ Note NoteReader::string_to_note(Note prev, string s){
     else if (c == ',')
       octave--;
   }
-  if(not duration)
-    duration = prev.duration;
 
-  duration = (duration ? QUANT / duration : duration);
-  //TODO setar valor mínimo (semicolcheia atualmente)
-
-  int increment = duration / 2;
-  while(dots--){
-    duration += increment;
-    increment /= 2;
+  if(duration){
+    //TODO setar valor mínimo (fusa atualmente)
+    duration = (duration ? QUANT / duration : duration);
+    int increment = duration / 2;
+    while(dots--){
+      duration += increment;
+      increment /= 2;
+    }
   }
+  else
+    duration = prev.duration;
 
   accidental = regex_replace(accidental, regex("is"), "#");
   accidental = regex_replace(accidental, regex("es"), "\u266D");
@@ -68,7 +69,7 @@ string NoteReader::note_to_string(Note note){
     duration += ".";
   }
 
-  s += duration; // printar com pontos
+  s += duration;
 
   return s;
 }

@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-bool Counterpoint::dp[201][90][5][101];
+bool Counterpoint::dp[201][32][90][5][101];
 
 vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song, bool ascendant, Scale & scale){
   vector <Note> counterpoint;
@@ -111,7 +111,7 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
     return true;
   }
 
-  if(!dp[position][song[position].midi_number][paralels][same_movements]) return false;
+  if(!dp[position][0][song[position].midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;
 
@@ -169,7 +169,7 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
 
     //TODO deixar os paralelos por último
     if(possible_intervals.empty()){
-      dp[position - 1][song[position - 1].midi_number][paralels][same_movements] = false;
+      dp[position - 1][0][song[position - 1].midi_number][paralels][same_movements] = false;
       return false;
     }
 
@@ -201,6 +201,6 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
     }
   }
 
-  dp[position][song[position].midi_number][paralels][same_movements] = false;
+  dp[position][0][song[position].midi_number][paralels][same_movements] = false;
   return false;
 }

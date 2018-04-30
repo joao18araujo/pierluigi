@@ -14,8 +14,6 @@ using std::string;
 using std::vector;
 using std::to_string;
 
-#define N_SCALE 12
-
 class Scale{
 	public:
     unordered_set<string> permitted_notes;

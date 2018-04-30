@@ -7,14 +7,12 @@
 #include <cmath>
 #include <string>
 
+#include "constants.h"
+
 using std::unordered_map;
 using std::vector;
 using std::string;
 using std::to_string;
-
-#define BELOW_MIDDLE_C_OCTAVE 3
-#define N_SCALE 12
-#define N_NOTES 7
 
 class Note{
 	public:

@@ -32,7 +32,7 @@ Note NoteReader::string_to_note(Note prev, string s){
   if(not duration)
     duration = prev.duration;
 
-  duration = (duration ? 16 / duration : duration);
+  duration = (duration ? QUANT / duration : duration);
   //TODO setar valor mínimo (semicolcheia atualmente)
 
   int increment = duration / 2;
@@ -62,7 +62,7 @@ string NoteReader::note_to_string(Note note){
       s += ",";
   }
 
-  string duration = to_string((note.duration ? 16 / msb(note.duration) : 0));
+  string duration = to_string((note.duration ? QUANT / msb(note.duration) : 0));
   int total_dots = number_of_on_bits(note.duration) - 1;
   while(total_dots-- > 0){
     duration += ".";

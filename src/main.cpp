@@ -13,9 +13,6 @@
 
 using namespace std;
 
-#define BELOW_MIDDLE_C_OCTAVE 3
-#define N_SCALE 12
-
 int main(int argc, char *argv[]){
   vector<Note> song;
 

@@ -1,11 +1,10 @@
 #ifndef NOTE_READER_H
 #define NOTE_READER_H
 
-#define BELOW_MIDDLE_C_OCTAVE 3
-
 #include <string>
 #include <regex>
 
+#include "constants.h"
 #include "note.h"
 
 using std::string;

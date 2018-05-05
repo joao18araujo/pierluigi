@@ -100,6 +100,20 @@ vector<Note> Counterpoint::dfs_generate_first_order_counterpoint(vector<Note> & 
   return counterpoint;
 }
 
+vector<Note> Counterpoint::dfs_generate_second_order_counterpoint(vector<Note> & song, bool ascendant, int paralels, int same_movements, Scale & scale){
+  vector<Note> counterpoint;
+  if(song.size() > 201 || paralels > 4 || same_movements > 101)
+    return vector<Note>();
+
+  Counterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant, scale);
+  return counterpoint;
+}
+
+bool Counterpoint::is_thesis(unsigned compass_position){
+  //TODO desenvolver de acordo com o tempo
+  return compass_position % 2;
+}
+
 bool Counterpoint::solve(unsigned position, int paralels, int same_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant, Scale & scale){
   if(position == 0){
     memset(dp, true, sizeof dp);
@@ -203,4 +217,32 @@ bool Counterpoint::solve(unsigned position, int paralels, int same_movements, ve
 
   dp[position][0][song[position].midi_number][paralels][same_movements] = false;
   return false;
+}
+
+bool Counterpoint::solve_2(unsigned position, unsigned compass_position, int paralels, int same_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant, Scale & scale){
+  if(position == 0){
+    memset(dp, true, sizeof dp);
+    srand(clock());
+  }
+
+  if(position >= song.size()){
+    printf("Total: %d %lu\n", paralels, song.size() - same_movements);
+    return true;
+  }
+
+  if(!dp[position][compass_position][song[position].midi_number][paralels][same_movements]) return false;
+
+  vector<Interval> possible_intervals;
+
+  Note note = song[position];
+  bool reverse_movement = true;
+
+  if(position || compass_position){
+    //TODO lidar com última nota
+
+  }else{
+    //Primeira nota
+  }
+
+  return true;
 }

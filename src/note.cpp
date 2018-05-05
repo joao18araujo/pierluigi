@@ -81,7 +81,7 @@ string Note::full_note_with_octave(){
 
 string Note::description(){
   string s = "d:";
-  s += to_string(duration) + ",n:" + full_note() + to_string(octave) + ",mn:" + to_string(midi_number)+ ",nn:" + to_string(note_number);
+  s += to_string(duration) + ",n:" + full_note() + to_string(octave) + ",mn:" + to_string(midi_number)+ ",nn:" + to_string(note_number) + ",at:" + to_string(absolute_time);
   return s;
 }
 

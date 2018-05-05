@@ -15,6 +15,7 @@ using namespace std;
 
 int main(int argc, char *argv[]){
   vector<Note> song;
+  int absolute_time = 0;
 
   if(argc < 2){
     cerr << "Missing input file" << endl;
@@ -34,6 +35,10 @@ int main(int argc, char *argv[]){
   while(file >> s){
     note = NoteReader::string_to_note(prev, s);
     if(!note.valid) continue;
+
+    note.absolute_time = absolute_time;
+    absolute_time += note.duration;
+    
     cout << "[" << s << "] ";
     cout << note.description();
 

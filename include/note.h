@@ -22,6 +22,7 @@ class Note{
     static string number_to_notes_with_accidental[15];
 
 		int duration;
+    int absolute_time;
 		string note;
     string accidental;
 		int octave;

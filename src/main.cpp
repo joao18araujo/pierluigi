@@ -23,13 +23,17 @@ int main(int argc, char *argv[]){
   }
 
   fstream file(argv[1]);
-  string s, key, mode;
+  string s, key, mode, compass_time;
+  int times, base_note;
 
   Note prev, note;
 
   file >> s >> key >> mode;
+  file >> s >> compass_time;
+  sscanf(compass_time.c_str(), "%d/%d\n", &times, &base_note);
   mode.erase(mode.begin());
   printf("Key: %s %s\n", key.c_str(), mode.c_str());
+  printf("Time: %d/%d\n", times, base_note);
   Scale scale(key, mode);
 
   while(file >> s){

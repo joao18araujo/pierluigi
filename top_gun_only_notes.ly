@@ -1,4 +1,5 @@
 \key g \major
+\time 4/4
 g4 d'4
 d'4 c'8 b8
 c'8 b8 a4 a4 g8 a8

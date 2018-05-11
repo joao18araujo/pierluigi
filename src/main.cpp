@@ -9,7 +9,7 @@
 #include "scale.h"
 #include "interval.h"
 #include "note_reader.h"
-#include "counterpoint.h"
+#include "first_order_counterpoint.h"
 
 using namespace std;
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
 
     note.absolute_time = absolute_time;
     absolute_time += note.duration;
-    
+
     cout << "[" << s << "] ";
     cout << note.description();
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 
   cout << "\nGenerating counterpoint...\n";
 
-  vector<Note> counterpoint = Counterpoint::dfs_generate_first_order_counterpoint(song, (argc > 2), 4, song.size(), scale);
+  vector<Note> counterpoint = FirstOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size(), scale);
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";

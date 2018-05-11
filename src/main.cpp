@@ -6,6 +6,7 @@
 #include <fstream>
 #include <regex>
 #include "note.h"
+#include "song.h"
 #include "scale.h"
 #include "interval.h"
 #include "note_reader.h"
@@ -14,7 +15,6 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-  vector<Note> song;
   int absolute_time = 0;
 
   if(argc < 2){
@@ -27,14 +27,17 @@ int main(int argc, char *argv[]){
   int times, base_note;
 
   Note prev, note;
+  Song song;
 
   file >> s >> key >> mode;
   file >> s >> compass_time;
   sscanf(compass_time.c_str(), "%d/%d\n", &times, &base_note);
+  song.times = times;
+  song.base_note = base_note;
   mode.erase(mode.begin());
   printf("Key: %s %s\n", key.c_str(), mode.c_str());
   printf("Time: %d/%d\n", times, base_note);
-  Scale scale(key, mode);
+  song.scale = Scale(key, mode);
 
   while(file >> s){
     note = NoteReader::string_to_note(prev, s);
@@ -56,12 +59,12 @@ int main(int argc, char *argv[]){
     }
     cout << endl;
     prev = note;
-    song.push_back(note);
+    song.notes.push_back(note);
   }
 
   cout << "\nGenerating counterpoint...\n";
 
-  vector<Note> counterpoint = FirstOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size(), scale);
+  vector<Note> counterpoint = FirstOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";
@@ -72,8 +75,8 @@ int main(int argc, char *argv[]){
 
   int size = min(song.size(), counterpoint.size());
   for(int i = 0; i < size; ++i){
-    Interval in(song[i], counterpoint[i]);
-    cout << song[i].full_note_with_octave() << " " << counterpoint[i].full_note_with_octave() << " " << in.description() << endl;
+    Interval in(song.notes[i], counterpoint[i]);
+    cout << song.notes[i].full_note_with_octave() << " " << counterpoint[i].full_note_with_octave() << " " << in.description() << endl;
   }
 
   cout << endl;

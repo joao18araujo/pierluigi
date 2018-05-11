@@ -24,7 +24,7 @@
         }
     }
 PartPOneVoiceOne =  {
-    \clef "treble_8" \key c \major \numericTimeSignature\time 4/4 g4 d'4
+    \clef "treble_8" \key g \major \numericTimeSignature\time 4/4 g4 d'4
     d'4 c'8 [ b8 ] | % 2
     c'8 [ b8 ] a4 a4 g8 [ a8 ] | % 3
     b4 a8 [ b8 ] c'4 b8 [ g8 ] | % 4
@@ -44,7 +44,7 @@ PartPOneVoiceOne =  {
     }
 
 PartPTwoVoiceOne =  {
-    \clef "treble_8" \key c \major \numericTimeSignature\time 4/4 d'4 aes8 g8 aes8 dis8 fis,4 c4 g,8 f8 gis4 f8 g8 a4 g,8 e,8 gis4 a,2 ees,4 f4 b4 ees8 b,8 e8 d8 f,4 cis4 e,8 cis8 g4 fis,8 g8 a4 gis,8 g,8 b1 g,4 b4 b4 a,8 g,8 a,8 g,8 fis,4 a,4 e,8 c8 gis4 c8 gis8 aes4 dis8 ees,8 g4 f,4 cis2 g,4 b,4 fis4 ees8 b,8 ees8 b,8 f,4 a,4 ees,8 a,8 d4 g8 a8 bes4 fis8 cis'8 g'2
+    \clef "treble_8" \key g \major \numericTimeSignature\time 4/4 g,4 fis4 b4 a8 b,8 a8 b,8 fis,4 a,4 e,8 fis8 g4 fis8 g8 e4 g,8 g,8 d4 fis,1 b,4 b4 g4 a,8 d8 a8 b,8 fis,4 c4 g,8 c8 g4 a,8 g8 e4 g,8 g,8 b,1 g,4 fis4 b4 c8 g,8 a8 g,8 a,4 c4 e,8 c8 g4 a,8 g8 e4 g,8 g,8 g4 fis,4 a,2 e,4 d4 b4 e8 b,8 e8 g,8 c4 fis4 g,8 c8 g4 d8 a8 fis4 b8 a8 g'2
 
     }
 

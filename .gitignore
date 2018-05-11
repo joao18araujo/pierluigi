@@ -20,6 +20,8 @@
 *.mod
 *.smod
 
+res/*.midi
+
 # Compiled Static libraries
 *.lai
 *.la

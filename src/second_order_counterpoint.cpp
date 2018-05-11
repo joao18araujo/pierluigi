@@ -2,12 +2,12 @@
 
 bool SecondOrderCounterpoint::dp[201][32][90][5][101];
 
-vector<Note> SecondOrderCounterpoint::dfs_generate_counterpoint(vector<Note> & song, bool ascendant, int paralels, int same_movements, Scale & scale){
+vector<Note> SecondOrderCounterpoint::dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements){
   vector<Note> counterpoint;
   if(song.size() > 201 || paralels > 4 || same_movements > 101)
     return vector<Note>();
 
-  SecondOrderCounterpoint::solve(0, 0, paralels, same_movements, song, counterpoint, ascendant, scale);
+  SecondOrderCounterpoint::solve(0, 0, paralels, same_movements, song, counterpoint, ascendant);
   return counterpoint;
 }
 
@@ -18,7 +18,7 @@ bool SecondOrderCounterpoint::is_thesis(unsigned compass_position){
   return compass_position % 2;
 }
 
-bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position, int paralels, int same_movements, vector<Note> & song, vector<Note> & counterpoint, bool ascendant, Scale & scale){
+bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position, int paralels, int same_movements, Song & song, vector<Note> & counterpoint, bool ascendant){
 //   if(position == 0){
 //     memset(dp, true, sizeof dp);
 //     srand(clock());
@@ -43,5 +43,5 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
 //     //Primeira nota
 //   }
 //
-//   return true;
+  return true;
 }

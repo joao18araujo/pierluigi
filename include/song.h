@@ -3,12 +3,15 @@
 
 #include "note.h"
 #include "scale.h"
+#include "compass_time.h"
 
 class Song {
 public:
   vector<Note> notes;
   Scale scale;
-  int times, base_note;
+  CompassTime time;
+
+  Song(Scale s, CompassTime t) : scale(s), time(t) {}
 
   std::vector<Note>::size_type size() { return notes.size(); }
 };

@@ -10,6 +10,7 @@
 #include "scale.h"
 #include "interval.h"
 #include "note_reader.h"
+#include "compass_time.h"
 #include "first_order_counterpoint.h"
 
 using namespace std;
@@ -27,17 +28,14 @@ int main(int argc, char *argv[]){
   int times, base_note;
 
   Note prev, note;
-  Song song;
 
   file >> s >> key >> mode;
   file >> s >> compass_time;
   sscanf(compass_time.c_str(), "%d/%d\n", &times, &base_note);
-  song.times = times;
-  song.base_note = base_note;
   mode.erase(mode.begin());
   printf("Key: %s %s\n", key.c_str(), mode.c_str());
   printf("Time: %d/%d\n", times, base_note);
-  song.scale = Scale(key, mode);
+  Song song(Scale(key, mode), CompassTime(times, base_note));
 
   while(file >> s){
     note = NoteReader::string_to_note(prev, s);

@@ -60,7 +60,7 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
       //intervals with same movement
       if(previous != "P8")
         analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), song.scale);
-      if(previous != "P5")
+      if(previous != "P5" && ascendant)
         analyse_and_add_interval(!reverse_movement, !melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant), song.scale);
 
       if(position == song.size() - 1){

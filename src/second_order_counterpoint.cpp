@@ -69,8 +69,7 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
   Note note = song.notes[position];
 
   if((position || compass_position) && (position < song.size() - 1)){
-
-    auto previous_note = song.notes[position - 1];
+    auto previous_note = song.notes[position - 1 + compass_position];
     auto previous_counterpoint_note = counterpoint.back();
     auto melodic_cantus_interval = Interval(note, previous_note);
     bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
@@ -99,7 +98,7 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
         //intervals with same movement
         if(previous != "P8")
           analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P8", ascendant), song.scale);
-        if(previous != "P5")
+        if(previous != "P5" && ascendant)
           analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P5", ascendant), song.scale);
 
         analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("m3", ascendant), song.scale);
@@ -113,6 +112,7 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
       }else{
         possible_intervals.push_back(Interval("P1"));
       }
+      printf("Aqui 3\n");
     }else{
       //Tempo fraco
       analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P4", ascendant), song.scale);
@@ -123,11 +123,9 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
       // TODO: m9?
     }
 
+    // printf("[%u][%u][%d][%d][%d]\n", position - 1 + compass_position, compass_position, song.notes[position - 1 + compass_position].midi_number, paralels, same_movements);
     if(possible_intervals.empty()){
-      if(compass_position == 0)
-        dp[position - 1][1][song.notes[position - 1].midi_number][paralels][same_movements] = false;
-      else
-        dp[position][0][song.notes[position].midi_number][paralels][same_movements] = false;
+      dp[position - 1 + compass_position][(compass_position+1)%2][song.notes[position - 1 + compass_position].midi_number][paralels][same_movements] = false;
 
       return false;
     }
@@ -148,6 +146,46 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
 
   }else if(position == song.size() - 1){
     //Última nota
+    auto previous_note = song.notes[position - 1];
+    auto previous_counterpoint_note = counterpoint.back();
+    auto melodic_cantus_interval = Interval(note, previous_note);
+    bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
+    auto previous_interval = Interval(previous_note, previous_counterpoint_note);
+    string previous = previous_interval.description();
+
+    if(note.note != "r"){
+      analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P1", ascendant), song.scale);
+      if(previous != "P8")
+        analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P8", ascendant), song.scale);
+      if(previous != "P5" && ascendant)
+        analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P5", ascendant), song.scale);
+
+      random_shuffle(possible_intervals.begin(), possible_intervals.end());
+      int size = possible_intervals.size();
+
+      analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P1", ascendant), song.scale);
+      if(previous != "P8")
+        analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P8", ascendant), song.scale);
+      if(previous != "P5" && ascendant)
+        analyse_and_add_interval(false, !melodic_ascendant, possible_intervals, previous_counterpoint_note, previous_note, note, Interval("P5", ascendant), song.scale);
+
+      random_shuffle(possible_intervals.begin() + size, possible_intervals.end());
+    }else{
+      possible_intervals.push_back(Interval("P1"));
+    }
+
+    int par, sm;
+    for(auto interval : possible_intervals){
+      auto c_note = Interval::interval_to_note(note, interval);
+      Interval melodic_interval(previous_counterpoint_note, note);
+
+      par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
+      sm = same_movements - (melodic_interval.ascendant != melodic_ascendant);
+      if(par < 0 || sm < 0) continue;
+      counterpoint.push_back(c_note);
+      if(solve(position + 1, 0, par, sm, song, counterpoint, ascendant)) return true;
+      counterpoint.pop_back();
+    }
   }else{
     //Primeira nota
     possible_intervals.push_back(Interval("P1", ascendant));
@@ -159,10 +197,11 @@ bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position
       auto c_note = Interval::interval_to_note(note, interval);
       c_note.duration /= 2;
       counterpoint.push_back(c_note);
-      if(solve(position, 1, paralels, same_movements, song, counterpoint, ascendant)) return true;
+      if(solve(position + compass_position, (compass_position + 1)%2, paralels, same_movements, song, counterpoint, ascendant)) return true;
       counterpoint.pop_back();
     }
   }
 
-  return true;
+  dp[position][compass_position][song.notes[position].midi_number][paralels][same_movements] = false;
+  return false;
 }

@@ -12,6 +12,7 @@
 #include "note_reader.h"
 #include "compass_time.h"
 #include "first_order_counterpoint.h"
+#include "second_order_counterpoint.h"
 
 using namespace std;
 
@@ -64,6 +65,12 @@ int main(int argc, char *argv[]){
 
   vector<Note> counterpoint = FirstOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
+  cout << "First order generated\n";
+
+  vector<Note> second_counterpoint = SecondOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+
+  cout << "Second order generated\n";
+
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";
   }else{
@@ -78,7 +85,16 @@ int main(int argc, char *argv[]){
   }
 
   cout << endl;
+
+  cout << "First Order Counterpoint\n";
   for(auto & c : counterpoint){
+    cout << NoteReader::note_to_string(c) << " ";
+  }
+  cout << endl;
+
+  cout << endl;
+  cout << "Second Order Counterpoint\n";
+  for(auto & c : second_counterpoint){
     cout << NoteReader::note_to_string(c) << " ";
   }
   cout << endl;

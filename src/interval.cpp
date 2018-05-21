@@ -57,8 +57,22 @@ Interval::Interval(Note first, Note second){
   classify_qualitative();
 }
 
+bool Interval::operator==(const string & s){
+  return this->description() == s;
+}
+
 bool Interval::is_perfect_candidate(int diff){
   return (diff == 1 || diff == 4 || diff == 5 || diff == 8);
+}
+
+bool Interval::is_dissonant(){
+  int quali = this->quantitative % N_NOTES;
+  // TODO: avaliar baseado nas half notes
+  return quali == 2 || quali == 4 || quali == 7;
+}
+
+bool Interval::is_consonant(){
+  return !is_dissonant();
 }
 
 string Interval::description(){

@@ -33,7 +33,7 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
     auto previous_note = song.notes[position - 1];
     auto previous_counterpoint_note = counterpoint[position - 1];
     auto melodic_cantus_interval = Interval(note, previous_note);
-    bool melodic_ascendant = (reverse_movement ^ melodic_cantus_interval.ascendant);
+    bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
@@ -78,7 +78,6 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
       possible_intervals.push_back(Interval("P1"));
     }
 
-    //TODO deixar os paralelos por último
     if(possible_intervals.empty()){
       dp[position - 1][song.notes[position - 1].midi_number][paralels][same_movements] = false;
       return false;
@@ -102,8 +101,6 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
     if(ascendant) possible_intervals.push_back(Interval("P5", ascendant));
     random_shuffle(possible_intervals.begin(), possible_intervals.end());
 
-    //TODO: mudar regra de última e primeira nota para reverse
-    //TODO: analisar note pra não inserir fora de escala ou inválido
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       counterpoint.push_back(c_note);

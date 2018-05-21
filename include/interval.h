@@ -29,7 +29,12 @@ public:
   string description();
   string full_description();
 
+  bool is_dissonant();
+  bool is_consonant();
+
   static Note interval_to_note(Note note, Interval interval);
+  bool operator==(const string & s);
+
 private:
   bool is_perfect_candidate(int diff);
   void classify_qualitative();

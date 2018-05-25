@@ -11,6 +11,7 @@ public:
   Scale scale;
   CompassTime time;
 
+  Song() {}
   Song(Scale s, CompassTime t) : scale(s), time(t) {}
 
   std::vector<Note>::size_type size() { return notes.size(); }

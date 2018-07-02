@@ -18,11 +18,12 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
   }
 
   if(position >= song.size()){
-    printf("Total: %d %lu\n", paralels, song.size() - same_movements);
+    // printf("Total: %d %lu\n", paralels, song.size() - same_movements);
     return true;
   }
 
-  if(!dp[position][song.notes[position].midi_number][paralels][same_movements]) return false;
+  printf("size: %d\n", (int) counterpoint.size());
+  if(position && !dp[position][counterpoint.back().midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;
 
@@ -31,8 +32,8 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
 
   if(position){
     auto previous_note = song.notes[position - 1];
-    auto previous_counterpoint_note = counterpoint[position - 1];
-    auto melodic_cantus_interval = Interval(note, previous_note);
+    auto previous_counterpoint_note = counterpoint.back();
+    auto melodic_cantus_interval = Interval(previous_note, note);
     bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
@@ -79,7 +80,7 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
     }
 
     if(possible_intervals.empty()){
-      dp[position - 1][song.notes[position - 1].midi_number][paralels][same_movements] = false;
+      dp[position][counterpoint.back().midi_number][paralels][same_movements] = false;
       return false;
     }
 
@@ -109,6 +110,6 @@ bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_mov
     }
   }
 
-  dp[position][song.notes[position].midi_number][paralels][same_movements] = false;
+  dp[position][counterpoint.back().midi_number][paralels][same_movements] = false;
   return false;
 }

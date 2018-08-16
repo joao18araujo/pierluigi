@@ -1,12 +1,16 @@
 NAME = prog
+TEST_NAME = tests
 
 SRC_DIR = src
 INC_DIR = include
 OBJ_DIR = obj
 LIB_DIR = libs
 BIN_DIR = bin
+TEST_DIR = test
+TEST_OBJ_DIR = $(TEST_DIR)/$(OBJ_DIR)
 
 TARGET = $(BIN_DIR)/$(NAME)
+TESTS = $(TEST_DIR)/$(TEST_NAME)
 
 CC = g++
 CFLAGS = -pedantic -std=c++11 -MMD -g3 -g -fPIC\
@@ -19,7 +23,11 @@ INCLUDES = -Iinclude
 LIBS =  -L/usr/local/lib
 
 SRC = ${wildcard $(SRC_DIR)/*.cpp}
+SRC_WO_MAIN = ${wildcard $(SRC_DIR)/[^m]*.cpp}
+TEST = ${wildcard $(TEST_DIR)/*.cpp}
 OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.cpp=.o}}}
+OBJ_WO_MAIN = ${addprefix $(TEST_OBJ_DIR)/, ${notdir ${SRC_WO_MAIN:.cpp=.o}}}
+TEST_OBJ = ${addprefix $(TEST_OBJ_DIR)/, ${notdir ${TEST:.cpp=.o}}}
 
 .PHONY: clean depend dist-clean dist
 
@@ -35,6 +43,24 @@ $(TARGET): $(OBJ)
 	@echo Building $@
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $@ $(LIBS)
 	@echo Done.
+
+tests:
+	@mkdir -p $(TEST_OBJ_DIR)
+	$(MAKE) $(TESTS)
+
+$(TESTS): $(OBJ_WO_MAIN) $(TEST_OBJ)
+	@echo Building $@
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_WO_MAIN) $(TEST_OBJ) -o $@ $(LIBS)
+	@echo Done.
+
+$(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
+	@echo Building $@
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+
+$(TEST_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@echo Building $@
+	@$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
+
 
 run:
 	$(TARGET) only_notes.ly

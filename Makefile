@@ -45,6 +45,7 @@ $(TARGET): $(OBJ)
 	@echo Done.
 
 tests:
+	make clean
 	@mkdir -p $(TEST_OBJ_DIR)
 	$(MAKE) $(TESTS)
 
@@ -64,6 +65,9 @@ $(TEST_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 run:
 	$(TARGET) only_notes.ly
+
+run-test:
+	$(TESTS) --success
 
 twinkle:
 	$(TARGET) twinkle_twinkle_only_notes.ly

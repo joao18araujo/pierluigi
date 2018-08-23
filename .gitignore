@@ -35,5 +35,6 @@ res/*.midi
 bin/
 *.pdf
 *.mid
+test/tests
 
 todo.txt

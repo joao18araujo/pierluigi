@@ -1,8 +1,10 @@
 #include "note.h"
 
 unordered_map<string, int> Note::notes_with_accidental_to_number = {
-  {"c", 0}, {"b#", 0}, {"d\u266D\u266D", 0},
-  {"c#", 1}, {"d\u266D", 1}, {"b##", 1},
+  {"c\u266D\u266D", -2},
+  {"c\u266D", -1},
+  {"c", 0}, {"d\u266D\u266D", 0},
+  {"c#", 1}, {"d\u266D", 1},
   {"d", 2}, {"c##", 2}, {"e\u266D\u266D", 2},
   {"d#", 3}, {"e\u266D", 3}, {"f\u266D\u266D", 3},
   {"e", 4}, {"f\u266D", 4}, {"d##", 4},
@@ -11,8 +13,10 @@ unordered_map<string, int> Note::notes_with_accidental_to_number = {
   {"g", 7}, {"f##", 7}, {"a\u266D\u266D", 7},
   {"g#", 8}, {"a\u266D", 8},
   {"a", 9}, {"g##", 9}, {"b\u266D\u266D", 9},
-  {"a#", 10}, {"b\u266D", 10}, {"c\u266D\u266D", 10},
-  {"b", 11}, {"c\u266D", 11}, {"a##", 11}
+  {"a#", 10}, {"b\u266D", 10},
+  {"b", 11}, {"a##", 11},
+  {"b#", 12},
+  {"b##", 13}
 };
 
 unordered_map<string, int> Note::notes_to_number = {{"c", 0}, {"d", 1}, {"e", 2}, {"f", 3}, {"g", 4}, {"a", 5}, {"b", 6}};
@@ -54,7 +58,7 @@ Note::Note(const Note & note){
 Note::Note(){
   this->valid = false;
   this->duration = 0;
-  this->note = "C";
+  this->note = "c";
   this->accidental = "";
   this->octave = BELOW_MIDDLE_C_OCTAVE;
   this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
@@ -98,8 +102,15 @@ void Note::set_full_note(string s){
 vector<Note> Note::enarmonies(){
   vector<Note> v;
   for(auto & p : notes_with_accidental_to_number){
-    if(p.first != this->full_note() && p.second == notes_with_accidental_to_number[this->full_note()]){
+    int note_position = notes_with_accidental_to_number[this->full_note()];
+    if(p.first != this->full_note() &&
+      (p.second % N_SCALE) == (note_position % N_SCALE)){
       Note n(*this);
+      if(note_position > p.second)
+        n.octave++;
+      else if(note_position < p.second)
+        n.octave--;
+
       n.set_full_note(p.first);
       v.push_back(n);
     }

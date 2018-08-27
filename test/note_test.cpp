@@ -2,7 +2,7 @@
 
 #include "note.h"
 
-TEST_CASE( "Note can be constructed with midi number", "[single-file]" ) {
+TEST_CASE("Note can be constructed with midi number", "[single-file]"){
   Note note;
   note = Note(59, 4);
   REQUIRE(note.note == "b");
@@ -107,7 +107,7 @@ TEST_CASE( "Note can be constructed with midi number", "[single-file]" ) {
   REQUIRE(note.note_number == 42);
 }
 
-TEST_CASE( "Note can be constructed with a string", "[single-file]" ) {
+TEST_CASE("Note can be constructed with a string", "[single-file]"){
   Note note;
   note = Note("b", "", 3, 4);
   REQUIRE(note.duration == 4);
@@ -163,7 +163,7 @@ TEST_CASE( "Note can be constructed with a string", "[single-file]" ) {
   REQUIRE(note.note_number == 38);
 }
 
-TEST_CASE( "Each note has one or more enarmonies", "[single-file]" ) {
+TEST_CASE("Each note has one or more enarmonies", "[single-file]"){
   Note note;
   note = Note("c", "", 4);
   auto enarmonies = note.enarmonies();

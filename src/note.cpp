@@ -36,10 +36,9 @@ Note::Note(const string note, const string accidental, const int octave, const i
     this->midi_number = (octave + 1) * N_SCALE + notes_with_accidental_to_number[this->full_note()];
     this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
   }else{
-    this->octave = BELOW_MIDDLE_C_OCTAVE;
+    this->octave = 0;
     this->midi_number = 0;
     this->note_number = 0;
-    //FIXME: deixar midi number como valor inválido, midi number 0 é um do
   }
 
 }

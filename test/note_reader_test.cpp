@@ -162,6 +162,14 @@ TEST_CASE("Note Reader can receive a string in lilypond format and return a note
     note_2 = NoteReader::string_to_note(note, "c");
     REQUIRE(note.duration == note_2.duration);
   }
+
+  SECTION("when is a rest"){
+    Note note = NoteReader::string_to_note(Note(), "r4");
+    REQUIRE(note.note == "r");
+    REQUIRE(note.midi_number == 0);
+    REQUIRE(note.note_number == 0);
+    REQUIRE(note.octave == 0);
+  }
 }
 
 TEST_CASE("Note Reader can receive a note and return a string", "[single-file]"){

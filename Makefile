@@ -67,7 +67,7 @@ run:
 	$(TARGET) only_notes.ly
 
 run-test:
-	$(TESTS) --success
+	$(TESTS)
 
 twinkle:
 	$(TARGET) twinkle_twinkle_only_notes.ly

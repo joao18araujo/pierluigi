@@ -16,7 +16,7 @@ using std::regex;
 using std::regex_replace;
 using std::stringstream;
 
-class NoteReader{
+class SongReader{
 public:
   static Note string_to_note(Note prev, string s);
   static string note_to_string(Note note);

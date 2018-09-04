@@ -9,7 +9,7 @@
 #include "song.h"
 #include "scale.h"
 #include "interval.h"
-#include "note_reader.h"
+#include "song_reader.h"
 #include "compass_time.h"
 #include "first_order_counterpoint.h"
 #include "second_order_counterpoint.h"
@@ -29,15 +29,15 @@ int main(int argc, char *argv[]){
   Note prev, note;
 
   getline(file, line);
-  Scale scale = NoteReader::string_to_scale(line);
+  Scale scale = SongReader::string_to_scale(line);
 
   getline(file, line);
-  CompassTime compass_time = NoteReader::string_to_compass_time(line);
+  CompassTime compass_time = SongReader::string_to_compass_time(line);
 
   Song song(scale, compass_time);
 
   while(file >> s_note){
-    note = NoteReader::string_to_note(prev, s_note);
+    note = SongReader::string_to_note(prev, s_note);
     if(!note.valid) continue;
 
     note.absolute_time = absolute_time;
@@ -86,14 +86,14 @@ int main(int argc, char *argv[]){
 
   cout << "First Order Counterpoint\n";
   for(auto & c : counterpoint){
-    cout << NoteReader::note_to_string(c) << " ";
+    cout << SongReader::note_to_string(c) << " ";
   }
   cout << endl;
 
   cout << endl;
   cout << "Second Order Counterpoint\n";
   for(auto & c : second_counterpoint){
-    cout << NoteReader::note_to_string(c) << " ";
+    cout << SongReader::note_to_string(c) << " ";
   }
   cout << endl;
 

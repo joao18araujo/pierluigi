@@ -1,6 +1,6 @@
-#include "note_reader.h"
+#include "song_reader.h"
 
-Note NoteReader::string_to_note(Note prev, string s){
+Note SongReader::string_to_note(Note prev, string s){
   if(!regex_match(s, regex("[a-gr][ies]*[\',]*\\d*\\.*")))
     return Note();
 
@@ -48,7 +48,7 @@ Note NoteReader::string_to_note(Note prev, string s){
 	return Note(note, accidental, octave, duration);
 }
 
-string NoteReader::note_to_string(Note note){
+string SongReader::note_to_string(Note note){
   int octave_diff = note.octave - BELOW_MIDDLE_C_OCTAVE;
   string s = note.full_note();
 
@@ -74,7 +74,7 @@ string NoteReader::note_to_string(Note note){
   return s;
 }
 
-Scale NoteReader::string_to_scale(string line){
+Scale SongReader::string_to_scale(string line){
   if(!regex_match(line, regex("\\\\key [a-g] \\\\(major|minor)")))
     return Scale();
 
@@ -86,7 +86,7 @@ Scale NoteReader::string_to_scale(string line){
   return Scale(key, mode);
 }
 
-CompassTime NoteReader::string_to_compass_time(string line){
+CompassTime SongReader::string_to_compass_time(string line){
   if(!regex_match(line, regex("\\\\time \\d+\\/\\d+")))
     return CompassTime();
 
@@ -96,10 +96,10 @@ CompassTime NoteReader::string_to_compass_time(string line){
   return CompassTime(times, base_note);
 }
 
-int NoteReader::msb(int N) {
+int SongReader::msb(int N) {
   return N ? 1 << (31 - __builtin_clz(N)) : 0;
 }
 
-int NoteReader::number_of_on_bits(int N) {
+int SongReader::number_of_on_bits(int N) {
   return __builtin_popcount(N);
 }

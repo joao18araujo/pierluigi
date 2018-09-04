@@ -69,6 +69,10 @@ run:
 run-test:
 	$(TESTS)
 
+ctest:
+	make tests
+	make run-test
+
 twinkle:
 	$(TARGET) twinkle_twinkle_only_notes.ly
 

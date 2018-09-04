@@ -74,6 +74,27 @@ string NoteReader::note_to_string(Note note){
   return s;
 }
 
+Scale NoteReader::string_to_scale(string line){
+  if(!regex_match(line, regex("\\\\key [a-g] \\\\(major|minor)")))
+    return Scale();
+
+  stringstream scale_line(line);
+  string identificator, key, mode;
+  scale_line >> identificator >> key >> mode;
+  mode.erase(mode.begin());
+  printf("Key: %s %s\n", key.c_str(), mode.c_str());
+  return Scale(key, mode);
+}
+
+CompassTime NoteReader::string_to_compass_time(string line){
+  if(!regex_match(line, regex("\\\\time \\d+\\/\\d+")))
+    return CompassTime();
+
+  int times, base_note;
+  sscanf(line.c_str(), "\\time %d/%d\n", &times, &base_note);
+  printf("Time: %d/%d\n", times, base_note);
+  return CompassTime(times, base_note);
+}
 
 int NoteReader::msb(int N) {
   return N ? 1 << (31 - __builtin_clz(N)) : 0;

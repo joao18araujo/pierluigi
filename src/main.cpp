@@ -25,27 +25,25 @@ int main(int argc, char *argv[]){
   }
 
   fstream file(argv[1]);
-  string s, key, mode, compass_time;
-  int times, base_note;
-
+  string line, s_note;
   Note prev, note;
 
-  file >> s >> key >> mode;
-  file >> s >> compass_time;
-  sscanf(compass_time.c_str(), "%d/%d\n", &times, &base_note);
-  mode.erase(mode.begin());
-  printf("Key: %s %s\n", key.c_str(), mode.c_str());
-  printf("Time: %d/%d\n", times, base_note);
-  Song song(Scale(key, mode), CompassTime(times, base_note));
+  getline(file, line);
+  Scale scale = NoteReader::string_to_scale(line);
 
-  while(file >> s){
-    note = NoteReader::string_to_note(prev, s);
+  getline(file, line);
+  CompassTime compass_time = NoteReader::string_to_compass_time(line);
+
+  Song song(scale, compass_time);
+
+  while(file >> s_note){
+    note = NoteReader::string_to_note(prev, s_note);
     if(!note.valid) continue;
 
     note.absolute_time = absolute_time;
     absolute_time += note.duration;
 
-    cout << "[" << s << "] ";
+    cout << "[" << s_note << "] ";
     cout << note.description();
 
     if(prev.valid){

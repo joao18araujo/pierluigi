@@ -21,7 +21,7 @@ class Scale{
     static Note interval_to_note_on_scale(Note note, Interval interval, Scale scale);
 
     Scale();
-    Scale(Note first_note, string mode); //TODO mudar nome do atributo
+    Scale(Note first_note, string mode);
     Scale(Note first_note, vector<Interval> intervals);
 
     bool is_valid_note(Note note);

@@ -45,7 +45,7 @@ $(TARGET): $(OBJ)
 	@echo Done.
 
 tests:
-	make clean
+	@find . -name catch_main.o -exec rm {} \;
 	@mkdir -p $(TEST_OBJ_DIR)
 	$(MAKE) $(TESTS)
 

@@ -57,8 +57,8 @@ Interval::Interval(Note first, Note second){
   classify_qualitative();
 }
 
-bool Interval::operator==(const string & s){
-  return this->description() == s;
+bool Interval::operator==(const string & s) const{
+  return description() == s;
 }
 
 bool Interval::is_perfect_candidate(int diff){
@@ -75,11 +75,11 @@ bool Interval::is_consonant(){
   return !is_dissonant();
 }
 
-string Interval::description(){
+string Interval::description() const{
   return this->qualitative + to_string(this->quantitative);
 }
 
-string Interval::full_description(){
+string Interval::full_description() const{
   return this->qualitative + to_string(this->quantitative) + "(" + to_string(this->half_tones) + ")";
 }
 
@@ -113,11 +113,13 @@ void Interval::classify_qualitative(){
   int note_diff = this->quantitative;
   int note_with_accidental_diff = this->half_tones;
 
-  if(note_diff > N_NOTES + 1)
-    note_diff %= N_NOTES;
+  // printf("%d %d x ", note_diff, note_with_accidental_diff);
+  while(note_diff > N_NOTES + 1)
+    note_diff -= N_NOTES;
 
-  if(note_with_accidental_diff > N_SCALE)
-    note_with_accidental_diff %= N_SCALE;
+  while(note_with_accidental_diff > min(expected_semi_tones[note_diff] + 5, 16))
+    note_with_accidental_diff -= N_SCALE;
 
+  // printf("%d %d\n", note_diff, note_with_accidental_diff);
   this->qualitative = intervals[note_diff][note_with_accidental_diff];
 }

@@ -26,14 +26,14 @@ public:
   Interval(Note first, Note second);
   Interval(){}; // TODO: implement empty constructor
   Interval(string s_interval, bool ascendant = true);
-  string description();
-  string full_description();
+  string description() const;
+  string full_description() const;
 
   bool is_dissonant();
   bool is_consonant();
 
   static Note interval_to_note(Note note, Interval interval);
-  bool operator==(const string & s);
+  bool operator==(const string & s) const;
 
 private:
   bool is_perfect_candidate(int diff);

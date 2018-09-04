@@ -66,9 +66,11 @@ bool Interval::is_perfect_candidate(int diff){
 }
 
 bool Interval::is_dissonant(){
-  int quali = this->quantitative % N_NOTES;
+  int quant = this->quantitative;
+  while(quant > N_NOTES + 1)
+    quant -= N_NOTES;
   // TODO: avaliar baseado nas half notes
-  return quali == 2 || quali == 4 || quali == 7;
+  return quant == 2 || quant == 4 || quant == 7;
 }
 
 bool Interval::is_consonant(){

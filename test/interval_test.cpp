@@ -173,48 +173,128 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
 }
 
 TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
+  Interval interval;
   SECTION("when is ascendant"){
+    interval = Interval("P4", true);
+    REQUIRE(interval.qualitative == "P");
+    REQUIRE(interval.quantitative == 4);
+    REQUIRE(interval.half_tones == 5);
+    REQUIRE(interval.ascendant == true);
   }
 
   SECTION("when is descendant"){
+    interval = Interval("3xA8", false);
+    REQUIRE(interval.qualitative == "3xA");
+    REQUIRE(interval.quantitative == 8);
+    REQUIRE(interval.half_tones == 15);
+    REQUIRE(interval.ascendant == false);
   }
 
   SECTION("when is unison"){
-
+    interval = Interval("P1");
+    REQUIRE(interval.qualitative == "P");
+    REQUIRE(interval.quantitative == 1);
+    REQUIRE(interval.half_tones == 0);
+    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.is_consonant() == true);
   }
 
   SECTION("when is major or minor second"){
+    interval = Interval("m2");
+    REQUIRE(interval.qualitative == "m");
+    REQUIRE(interval.quantitative == 2);
+    REQUIRE(interval.half_tones == 1);
+    REQUIRE(interval.is_consonant() == false);
 
+    interval = Interval("M2");
+    REQUIRE(interval.qualitative == "M");
+    REQUIRE(interval.quantitative == 2);
+    REQUIRE(interval.half_tones == 2);
+    REQUIRE(interval.is_consonant() == false);
   }
 
   SECTION("when is major or minor third"){
+    interval = Interval("m3");
+    REQUIRE(interval.qualitative == "m");
+    REQUIRE(interval.quantitative == 3);
+    REQUIRE(interval.half_tones == 3);
+    REQUIRE(interval.is_consonant() == true);
 
+    interval = Interval("M3");
+    REQUIRE(interval.qualitative == "M");
+    REQUIRE(interval.quantitative == 3);
+    REQUIRE(interval.half_tones == 4);
+    REQUIRE(interval.is_consonant() == true);
   }
 
   SECTION("when is perfect fourth"){
-
+    interval = Interval("P4");
+    REQUIRE(interval.qualitative == "P");
+    REQUIRE(interval.quantitative == 4);
+    REQUIRE(interval.half_tones == 5);
+    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.is_consonant() == false);
   }
 
   SECTION("when is perfect fifth"){
-
+    interval = Interval("P5");
+    REQUIRE(interval.qualitative == "P");
+    REQUIRE(interval.quantitative == 5);
+    REQUIRE(interval.half_tones == 7);
+    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.is_consonant() == true);
   }
 
   SECTION("when is major or minor sixth"){
+    interval = Interval("m6");
+    REQUIRE(interval.qualitative == "m");
+    REQUIRE(interval.quantitative == 6);
+    REQUIRE(interval.half_tones == 8);
+    REQUIRE(interval.is_consonant() == true);
 
+    interval = Interval("M6");
+    REQUIRE(interval.qualitative == "M");
+    REQUIRE(interval.quantitative == 6);
+    REQUIRE(interval.half_tones == 9);
+    REQUIRE(interval.is_consonant() == true);
   }
 
 
   SECTION("when is major or minor seventh"){
+    interval = Interval("m7");
+    REQUIRE(interval.qualitative == "m");
+    REQUIRE(interval.quantitative == 7);
+    REQUIRE(interval.half_tones == 10);
+    REQUIRE(interval.is_consonant() == false);
 
+    interval = Interval("M7");
+    REQUIRE(interval.qualitative == "M");
+    REQUIRE(interval.quantitative == 7);
+    REQUIRE(interval.half_tones == 11);
+    REQUIRE(interval.is_consonant() == false);
   }
 
   SECTION("when is octave"){
-
+    interval = Interval("P8");
+    REQUIRE(interval.qualitative == "P");
+    REQUIRE(interval.quantitative == 8);
+    REQUIRE(interval.half_tones == 12);
+    REQUIRE(interval.is_consonant() == true);
   }
 
 
   SECTION("when is compound"){
+    interval = Interval("P12");
+    REQUIRE(interval.qualitative == "P");
+    REQUIRE(interval.quantitative == 12);
+    REQUIRE(interval.half_tones == 19);
+    REQUIRE(interval.is_consonant() == true);
 
+    interval = Interval("M14");
+    REQUIRE(interval.qualitative == "M");
+    REQUIRE(interval.quantitative == 14);
+    REQUIRE(interval.half_tones == 25);
+    REQUIRE(interval.is_consonant() == true);
   }
 
 

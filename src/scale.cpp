@@ -11,6 +11,8 @@ Scale::Scale(){
 }
 
 Scale::Scale(Note note, string mode){
+  this->base_note = note;
+  this->mode = mode;
   if(mode == "major"){
     Interval m2 = Interval("m2");
     Interval M2 = Interval("M2");
@@ -25,6 +27,8 @@ Scale::Scale(Note note, string mode){
 }
 
 Scale::Scale(Note note, vector<Interval> intervals){
+  this->base_note = note;
+  this->mode = "custom";
   fill_note_set(note, intervals);
 }
 

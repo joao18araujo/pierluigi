@@ -30,9 +30,11 @@ int main(int argc, char *argv[]){
 
   getline(file, line);
   Scale scale = SongReader::string_to_scale(line);
+  printf("Key: %s %s\n", scale.base_note.note.c_str(), scale.mode.c_str());
 
   getline(file, line);
   CompassTime compass_time = SongReader::string_to_compass_time(line);
+  printf("Time: %d/%d\n", compass_time.times, compass_time.base_note);
 
   Song song(scale, compass_time);
 

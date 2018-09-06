@@ -22,7 +22,7 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
     return true;
   }
 
-  printf("size: %d\n", (int) counterpoint.size());
+  // printf("size: %d\n", (int) counterpoint.size());
   if(position && !dp[position][counterpoint.back().midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;

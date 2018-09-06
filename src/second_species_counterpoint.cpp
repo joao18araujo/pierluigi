@@ -64,7 +64,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
   }
 
   if(position >= song->size()){
-    printf("Total: %d %lu\n", paralels, song->size() - same_movements);
+    // printf("Total: %d %lu\n", paralels, song->size() - same_movements);
     return true;
   }
 

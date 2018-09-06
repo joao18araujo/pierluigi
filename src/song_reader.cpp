@@ -82,7 +82,6 @@ Scale SongReader::string_to_scale(string line){
   string identificator, key, mode;
   scale_line >> identificator >> key >> mode;
   mode.erase(mode.begin());
-  printf("Key: %s %s\n", key.c_str(), mode.c_str());
   return Scale(key, mode);
 }
 
@@ -92,7 +91,6 @@ CompassTime SongReader::string_to_compass_time(string line){
 
   int times, base_note;
   sscanf(line.c_str(), "\\time %d/%d\n", &times, &base_note);
-  printf("Time: %d/%d\n", times, base_note);
   return CompassTime(times, base_note);
 }
 

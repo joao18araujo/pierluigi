@@ -17,6 +17,8 @@ using std::to_string;
 class Scale{
 	public:
     unordered_set<string> permitted_notes;
+    Note base_note;
+    string mode;
 
     static Note interval_to_note_on_scale(Note note, Interval interval, Scale scale);
 

@@ -16,6 +16,11 @@ Scale::Scale(Note note, string mode){
     Interval M2 = Interval("M2");
     vector<Interval> intervals {M2, M2, m2, M2, M2, M2};
     fill_note_set(note, intervals);
+  }else if(mode == "minor"){
+    Interval m2 = Interval("m2");
+    Interval M2 = Interval("M2");
+    vector<Interval> intervals {M2, m2, M2, M2, m2, M2};
+    fill_note_set(note, intervals);
   }
 }
 

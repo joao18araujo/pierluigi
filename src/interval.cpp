@@ -33,8 +33,6 @@ Interval::Interval(string s_interval, bool ascendant){
     }
   }
 
-  printf("[%s] [%s][%s]\n", s_interval.c_str(), s_qualitative.c_str(), s_quantitative.c_str());
-
   this->quantitative = stoi(s_quantitative);
 
   int note_diff = this->quantitative;

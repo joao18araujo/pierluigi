@@ -267,3 +267,104 @@ TEST_CASE("Song Reader can receive a note and return a string", "[single-file]")
     REQUIRE(s == "c4..");
   }
 }
+
+
+TEST_CASE("Song Reader can receive a string and return a scale", "[single-file]"){
+  Scale scale;
+  scale = SongReader::string_to_scale("\\key c \\major");
+  REQUIRE(scale.is_valid_note(Note("c")) == true);
+  REQUIRE(scale.is_valid_note(Note("c#")) == false);
+  REQUIRE(scale.is_valid_note(Note("d")) == true);
+  REQUIRE(scale.is_valid_note(Note("d#")) == false);
+  REQUIRE(scale.is_valid_note(Note("e")) == true);
+  REQUIRE(scale.is_valid_note(Note("f")) == true);
+  REQUIRE(scale.is_valid_note(Note("f#")) == false);
+  REQUIRE(scale.is_valid_note(Note("g")) == true);
+  REQUIRE(scale.is_valid_note(Note("g#")) == false);
+  REQUIRE(scale.is_valid_note(Note("a")) == true);
+  REQUIRE(scale.is_valid_note(Note("a#")) == false);
+  REQUIRE(scale.is_valid_note(Note("b")) == true);
+
+  scale = SongReader::string_to_scale("\\key a \\minor");
+  REQUIRE(scale.is_valid_note(Note("c")) == true);
+  REQUIRE(scale.is_valid_note(Note("c#")) == false);
+  REQUIRE(scale.is_valid_note(Note("d")) == true);
+  REQUIRE(scale.is_valid_note(Note("d#")) == false);
+  REQUIRE(scale.is_valid_note(Note("e")) == true);
+  REQUIRE(scale.is_valid_note(Note("f")) == true);
+  REQUIRE(scale.is_valid_note(Note("f#")) == false);
+  REQUIRE(scale.is_valid_note(Note("g")) == true);
+  REQUIRE(scale.is_valid_note(Note("g#")) == false);
+  REQUIRE(scale.is_valid_note(Note("a")) == true);
+  REQUIRE(scale.is_valid_note(Note("a#")) == false);
+  REQUIRE(scale.is_valid_note(Note("b")) == true);
+
+  scale = SongReader::string_to_scale("\\key f \\major");
+  REQUIRE(scale.is_valid_note(Note("f")) == true);
+  REQUIRE(scale.is_valid_note(Note("g")) == true);
+  REQUIRE(scale.is_valid_note(Note("g#")) == false);
+  REQUIRE(scale.is_valid_note(Note("a")) == true);
+  REQUIRE(scale.is_valid_note(Note("a#")) == false);
+  REQUIRE(scale.is_valid_note(Note("b\u266D")) == true);
+  REQUIRE(scale.is_valid_note(Note("b")) == false);
+  REQUIRE(scale.is_valid_note(Note("c")) == true);
+  REQUIRE(scale.is_valid_note(Note("c#")) == false);
+  REQUIRE(scale.is_valid_note(Note("d")) == true);
+  REQUIRE(scale.is_valid_note(Note("d#")) == false);
+  REQUIRE(scale.is_valid_note(Note("e")) == true);
+  REQUIRE(scale.is_valid_note(Note("e#")) == false);
+
+  scale = SongReader::string_to_scale("\\key g \\major");
+  REQUIRE(scale.is_valid_note(Note("g")) == true);
+  REQUIRE(scale.is_valid_note(Note("a")) == true);
+  REQUIRE(scale.is_valid_note(Note("a#")) == false);
+  REQUIRE(scale.is_valid_note(Note("b")) == true);
+  REQUIRE(scale.is_valid_note(Note("b#")) == false);
+  REQUIRE(scale.is_valid_note(Note("c")) == true);
+  REQUIRE(scale.is_valid_note(Note("c#")) == false);
+  REQUIRE(scale.is_valid_note(Note("d")) == true);
+  REQUIRE(scale.is_valid_note(Note("d#")) == false);
+  REQUIRE(scale.is_valid_note(Note("e")) == true);
+  REQUIRE(scale.is_valid_note(Note("f")) == false);
+  REQUIRE(scale.is_valid_note(Note("f#")) == true);
+}
+
+TEST_CASE("Song Reader can receive a string and return a compass time", "[single-file]"){
+  CompassTime compass_time;
+  compass_time = SongReader::string_to_compass_time("\\time 4/4");
+  REQUIRE(compass_time.times == 4);
+  REQUIRE(compass_time.base_note == 4);
+  REQUIRE(compass_time.base_note_duration() == 8);
+  REQUIRE(compass_time.compass_duration() == 32);
+
+  compass_time = SongReader::string_to_compass_time("\\time 3/4");
+  REQUIRE(compass_time.times == 3);
+  REQUIRE(compass_time.base_note == 4);
+  REQUIRE(compass_time.base_note_duration() == 8);
+  REQUIRE(compass_time.compass_duration() == 24);
+
+  compass_time = SongReader::string_to_compass_time("\\time 2/4");
+  REQUIRE(compass_time.times == 2);
+  REQUIRE(compass_time.base_note == 4);
+  REQUIRE(compass_time.base_note_duration() == 8);
+  REQUIRE(compass_time.compass_duration() == 16);
+
+  compass_time = SongReader::string_to_compass_time("\\time 2/2");
+  REQUIRE(compass_time.times == 2);
+  REQUIRE(compass_time.base_note == 2);
+  REQUIRE(compass_time.base_note_duration() == 16);
+  REQUIRE(compass_time.compass_duration() == 32);
+
+
+  compass_time = SongReader::string_to_compass_time("\\time 5/4");
+  REQUIRE(compass_time.times == 5);
+  REQUIRE(compass_time.base_note == 4);
+  REQUIRE(compass_time.base_note_duration() == 8);
+  REQUIRE(compass_time.compass_duration() == 40);
+
+  compass_time = SongReader::string_to_compass_time("\\time 9/8");
+  REQUIRE(compass_time.times == 9);
+  REQUIRE(compass_time.base_note == 8);
+  REQUIRE(compass_time.base_note_duration() == 4);
+  REQUIRE(compass_time.compass_duration() == 36);
+}

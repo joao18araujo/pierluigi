@@ -3,7 +3,7 @@
 
 #include "counterpoint.h"
 
-class FirstOrderCounterpoint : public Counterpoint {
+class FirstSpeciesCounterpoint : public Counterpoint {
 public:
   static bool dp[201][90][5][101];
   static vector<Note> dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements);

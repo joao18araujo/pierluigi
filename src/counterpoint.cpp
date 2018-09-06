@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-vector<Note> Counterpoint::generate_first_order_counterpoint(vector<Note> & song, bool ascendant, Scale & scale){
+vector<Note> Counterpoint::generate_first_species_counterpoint(vector<Note> & song, bool ascendant, Scale & scale){
   vector <Note> counterpoint;
   vector<Interval> consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant), Interval("m3", ascendant), Interval("M3", ascendant), Interval("m6", ascendant), Interval("M6", ascendant), Interval("m10", ascendant), Interval("M10", ascendant)};
   vector<Interval> perfect_consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant)};

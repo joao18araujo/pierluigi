@@ -1,19 +1,19 @@
-#include "second_order_counterpoint.h"
+#include "second_species_counterpoint.h"
 
-bool SecondOrderCounterpoint::dp[201][32][90][5][101];
-vector<Note> SecondOrderCounterpoint::counterpoint;
-Song * SecondOrderCounterpoint::song;
+bool SecondSpeciesCounterpoint::dp[201][32][90][5][101];
+vector<Note> SecondSpeciesCounterpoint::counterpoint;
+Song * SecondSpeciesCounterpoint::song;
 
-vector<Note> SecondOrderCounterpoint::dfs_generate_counterpoint(Song & c_song, bool ascendant, int paralels, int same_movements){
+vector<Note> SecondSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool ascendant, int paralels, int same_movements){
   song = &c_song;
   if(song->size() > 201 || paralels > 4 || same_movements > 101)
     return vector<Note>();
 
-  SecondOrderCounterpoint::solve(0, 0, paralels, same_movements, ascendant);
+  SecondSpeciesCounterpoint::solve(0, 0, paralels, same_movements, ascendant);
   return counterpoint;
 }
 
-void SecondOrderCounterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_note, Note note, Interval interval){
+void SecondSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_note, Note note, Interval interval){
   Note next_note;
   auto previous_counterpoint_note = counterpoint.back();
 
@@ -43,7 +43,7 @@ void SecondOrderCounterpoint::analyse_and_add_interval(bool reverse_movement, bo
     possible_intervals.push_back(interval);
 }
 
-bool SecondOrderCounterpoint::is_thesis(Note & note, int offset){
+bool SecondSpeciesCounterpoint::is_thesis(Note & note, int offset){
   // printf("%d %d\n", song->time.compass_duration(), song->time.base_note_duration());
   int compass_position = (note.absolute_time + offset) % song->time.compass_duration();
   int time = compass_position / song->time.base_note_duration() + 1;
@@ -57,7 +57,7 @@ bool SecondOrderCounterpoint::is_thesis(Note & note, int offset){
   return true;
 }
 
-bool SecondOrderCounterpoint::solve(unsigned position, unsigned compass_position, int paralels, int same_movements, bool ascendant){
+bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_position, int paralels, int same_movements, bool ascendant){
   if(position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());

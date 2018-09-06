@@ -11,8 +11,8 @@
 #include "interval.h"
 #include "song_reader.h"
 #include "compass_time.h"
-#include "first_order_counterpoint.h"
-#include "second_order_counterpoint.h"
+#include "first_species_counterpoint.h"
+#include "second_species_counterpoint.h"
 
 using namespace std;
 
@@ -61,13 +61,13 @@ int main(int argc, char *argv[]){
 
   cout << "\nGenerating counterpoint...\n";
 
-  vector<Note> counterpoint = FirstOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  vector<Note> counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
-  cout << "First order generated\n";
+  cout << "First species generated\n";
 
-  vector<Note> second_counterpoint = SecondOrderCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  vector<Note> second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
-  cout << "Second order generated\n";
+  cout << "Second species generated\n";
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";
@@ -84,14 +84,14 @@ int main(int argc, char *argv[]){
 
   cout << endl;
 
-  cout << "First Order Counterpoint\n";
+  cout << "First Species Counterpoint\n";
   for(auto & c : counterpoint){
     cout << SongReader::note_to_string(c) << " ";
   }
   cout << endl;
 
   cout << endl;
-  cout << "Second Order Counterpoint\n";
+  cout << "Second Species Counterpoint\n";
   for(auto & c : second_counterpoint){
     cout << SongReader::note_to_string(c) << " ";
   }

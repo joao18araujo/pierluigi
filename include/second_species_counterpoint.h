@@ -3,7 +3,7 @@
 
 #include "counterpoint.h"
 
-class SecondOrderCounterpoint : public Counterpoint {
+class SecondSpeciesCounterpoint : public Counterpoint {
 public:
   static bool dp[201][32][90][5][101];
   static vector<Note> counterpoint;

@@ -1,17 +1,17 @@
-#include "first_order_counterpoint.h"
+#include "first_species_counterpoint.h"
 
-bool FirstOrderCounterpoint::dp[201][90][5][101];
+bool FirstSpeciesCounterpoint::dp[201][90][5][101];
 
-vector<Note> FirstOrderCounterpoint::dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements){
+vector<Note> FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements){
   vector<Note> counterpoint;
   if(song.size() > 201 || paralels > 4 || same_movements > 101)
     return vector<Note>();
 
-  FirstOrderCounterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant);
+  FirstSpeciesCounterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant);
   return counterpoint;
 }
 
-bool FirstOrderCounterpoint::solve(unsigned position, int paralels, int same_movements, Song & song, vector<Note> & counterpoint, bool ascendant){
+bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_movements, Song & song, vector<Note> & counterpoint, bool ascendant){
   if(position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());

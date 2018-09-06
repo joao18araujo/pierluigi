@@ -356,4 +356,24 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
 }
 
 TEST_CASE("Interval class can return a note, given an interval and a note", "[single-file]"){
+    Note base_note = Note("c");
+    Note note = Note("e");
+    Interval interval = Interval("P5");
+    Interval augmented_interval = Interval("A5");
+    Interval diminished_interval = Interval("d5");
+    Note new_note = Interval::interval_to_note(note, interval);
+    REQUIRE(new_note.valid == true);
+    REQUIRE(new_note.full_note() == "b");
+
+    new_note = Interval::interval_to_note(note, diminished_interval);
+    REQUIRE(new_note.valid == true);
+    REQUIRE(new_note.full_note() == "b\u266D");
+
+    new_note = Interval::interval_to_note(note, interval);
+    REQUIRE(new_note.valid == true);
+    REQUIRE(new_note.full_note() == "b");
+
+    new_note = Interval::interval_to_note(note, augmented_interval);
+    REQUIRE(new_note.valid == true);
+    REQUIRE(new_note.full_note() == "b#");
 }

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cmath>
+#include <unordered_set>
 #include <cctype>
 
 #include "note.h"
@@ -10,6 +11,7 @@
 using std::string;
 using std::to_string;
 using std::min;
+using std::unordered_set;
 
 class Interval{
 public:
@@ -17,6 +19,7 @@ public:
   static string diminished_classifications[10];
   static string augmented_classifications[10];
   static string intervals[9][17];
+  static unordered_set<int> dissonant_half_tones;
 
   int quantitative;
   string qualitative;

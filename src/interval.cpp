@@ -3,6 +3,7 @@
 int Interval::expected_semi_tones[] = { 0, 0, 2, 4, 5, 7, 9, 11, 12 };
 string Interval::diminished_classifications[] = {"", "d", "sd", "3xd", "4xd", "5xd"};
 string Interval::augmented_classifications[] = {"", "A", "SA", "3xA", "4xA", "5xA"};
+unordered_set<int> Interval::dissonant_half_tones = {1, 2, 5, 6, 10, 11};
 
 string Interval::intervals[][17] = {
   {"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
@@ -32,13 +33,16 @@ Interval::Interval(string s_interval, bool ascendant){
     }
   }
 
+  printf("[%s] [%s][%s]\n", s_interval.c_str(), s_qualitative.c_str(), s_quantitative.c_str());
+
   this->quantitative = stoi(s_quantitative);
 
   int note_diff = this->quantitative;
   int octave_diff = 0;
   if(note_diff > N_NOTES + 1){
     octave_diff = (note_diff - 2) / N_NOTES;
-    note_diff %= N_NOTES;
+    while(note_diff > N_NOTES + 1)
+      note_diff -= N_NOTES;
   }
 
   for(int i = 0; i < 17; ++i){
@@ -66,11 +70,16 @@ bool Interval::is_perfect_candidate(int diff){
 }
 
 bool Interval::is_dissonant(){
-  int quant = this->quantitative;
-  while(quant > N_NOTES + 1)
-    quant -= N_NOTES;
+  // int quant = this->quantitative;
+  int note_with_accidental_diff = this->half_tones;
+  while(note_with_accidental_diff > N_SCALE)
+    note_with_accidental_diff -= N_SCALE;
+
+
+  // while(quant > N_NOTES + 1)
+  //   quant -= N_NOTES;
   // TODO: avaliar baseado nas half notes
-  return quant == 2 || quant == 4 || quant == 7;
+  return dissonant_half_tones.find(note_with_accidental_diff) != dissonant_half_tones.end();
 }
 
 bool Interval::is_consonant(){

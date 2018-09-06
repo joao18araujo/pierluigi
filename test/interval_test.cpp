@@ -293,17 +293,65 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     interval = Interval("M14");
     REQUIRE(interval.qualitative == "M");
     REQUIRE(interval.quantitative == 14);
-    REQUIRE(interval.half_tones == 25);
-    REQUIRE(interval.is_consonant() == true);
+    REQUIRE(interval.half_tones == 23);
+    REQUIRE(interval.is_consonant() == false);
   }
 
 
   SECTION("when is augmented"){
+    interval = Interval("A4", false);
+    REQUIRE(interval.qualitative == "A");
+    REQUIRE(interval.quantitative == 4);
+    REQUIRE(interval.half_tones == 6);
+    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.is_consonant() == false);
 
+    interval = Interval("A5", false);
+    REQUIRE(interval.qualitative == "A");
+    REQUIRE(interval.quantitative == 5);
+    REQUIRE(interval.half_tones == 8);
+    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.is_consonant() == true);
+
+    interval = Interval("A8");
+    REQUIRE(interval.qualitative == "A");
+    REQUIRE(interval.quantitative == 8);
+    REQUIRE(interval.half_tones == 13);
+    REQUIRE(interval.is_consonant() == false);
+
+    interval = Interval("3xA8");
+    REQUIRE(interval.qualitative == "3xA");
+    REQUIRE(interval.quantitative == 8);
+    REQUIRE(interval.half_tones == 15);
+    REQUIRE(interval.is_consonant() == true);
   }
 
   SECTION("when is diminished"){
+    interval = Interval("d4", false);
+    REQUIRE(interval.qualitative == "d");
+    REQUIRE(interval.quantitative == 4);
+    REQUIRE(interval.half_tones == 4);
+    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.is_consonant() == true);
 
+    interval = Interval("d5", false);
+    REQUIRE(interval.qualitative == "d");
+    REQUIRE(interval.quantitative == 5);
+    REQUIRE(interval.half_tones == 6);
+    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.is_consonant() == false);
+
+    interval = Interval("d8");
+    REQUIRE(interval.qualitative == "d");
+    REQUIRE(interval.quantitative == 8);
+    REQUIRE(interval.half_tones == 11);
+    REQUIRE(interval.is_consonant() == false);
+
+    interval = Interval("3xd8");
+    REQUIRE(interval.qualitative == "3xd");
+    REQUIRE(interval.quantitative == 8);
+    REQUIRE(interval.half_tones == 9);
+    REQUIRE(interval.is_consonant() == true);
   }
 }
 

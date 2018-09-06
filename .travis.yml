@@ -1,0 +1,21 @@
+sudo: required
+dist: trusty
+language: cpp
+
+compiler:
+   - g++
+
+install:
+  - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
+  - g++ --version
+
+script:
+  - make ctest
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-5
+    - g++-5

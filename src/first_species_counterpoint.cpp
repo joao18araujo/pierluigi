@@ -2,12 +2,12 @@
 
 bool FirstSpeciesCounterpoint::dp[201][90][5][101];
 
-vector<Note> FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements){
-  vector<Note> counterpoint;
+Song FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements){
+  Song counterpoint;
   if(song.size() > 201 || paralels > 4 || same_movements > 101)
-    return vector<Note>();
+    return Song();
 
-  FirstSpeciesCounterpoint::solve(0, paralels, same_movements, song, counterpoint, ascendant);
+  FirstSpeciesCounterpoint::solve(0, paralels, same_movements, song, counterpoint.notes, ascendant);
   return counterpoint;
 }
 

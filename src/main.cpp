@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 
   cout << "First species generated\n";
 
-  vector<Note> second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  Song second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
   cout << "Second species generated\n";
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 
   cout << endl;
   cout << "Second Species Counterpoint\n";
-  for(auto & c : second_counterpoint){
+  for(auto & c : second_counterpoint.notes){
     cout << SongReader::note_to_string(c) << " ";
   }
   cout << endl;

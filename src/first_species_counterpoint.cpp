@@ -34,7 +34,7 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
     auto previous_note = song.notes[position - 1];
     auto previous_counterpoint_note = counterpoint.back();
     auto melodic_cantus_interval = Interval(previous_note, note);
-    bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
+    bool melodic_ascendant = !melodic_cantus_interval.ascendant();
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
@@ -90,7 +90,7 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
       Interval melodic_interval(previous_counterpoint_note, note);
 
       par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
-      sm = same_movements - (melodic_interval.ascendant != melodic_ascendant);
+      sm = same_movements - (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
       counterpoint.push_back(c_note);
       if(solve(position + 1, par, sm, song, counterpoint, ascendant)) return true;

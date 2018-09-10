@@ -11,7 +11,9 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     second = Note("g", "", 4);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "P5");
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
+    REQUIRE(interval.ascendant() == true);
+    REQUIRE(interval.descendant() == false);
   }
 
   SECTION("when is descendant"){
@@ -19,7 +21,9 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     second = Note("c", "", 4);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "P5");
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
+    REQUIRE(interval.ascendant() == false);
+    REQUIRE(interval.descendant() == true);
   }
 
   SECTION("when is unison"){
@@ -36,14 +40,18 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "m2");
     REQUIRE(interval.half_tones == 1);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
+    REQUIRE(interval.ascendant() == true);
+    REQUIRE(interval.descendant() == false);
 
     first = Note("d", "", 4);
     second = Note("c", "", 4);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "M2");
     REQUIRE(interval.half_tones == 2);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
+    REQUIRE(interval.ascendant() == false);
+    REQUIRE(interval.descendant() == true);
   }
 
   SECTION("when is major or minor third"){
@@ -52,14 +60,14 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "m3");
     REQUIRE(interval.half_tones == 3);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
 
     first = Note("e", "", 4);
     second = Note("c", "", 4);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "M3");
     REQUIRE(interval.half_tones == 4);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
   }
 
   SECTION("when is perfect fourth"){
@@ -84,14 +92,14 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "m6");
     REQUIRE(interval.half_tones == 8);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
 
     first = Note("a", "", 4);
     second = Note("c", "", 4);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "M6");
     REQUIRE(interval.half_tones == 9);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
   }
 
 
@@ -101,14 +109,14 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "m7");
     REQUIRE(interval.half_tones == 10);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
 
     first = Note("b", "", 4);
     second = Note("c", "", 4);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "M7");
     REQUIRE(interval.half_tones == 11);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
   }
 
   SECTION("when is octave"){
@@ -126,14 +134,14 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "M14");
     REQUIRE(interval.half_tones == 23);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
 
     first = Note("c", "", 4);
     second = Note("c", "", 6);
     interval = Interval(first, second);
     REQUIRE(interval.description() == "P15");
     REQUIRE(interval.half_tones == 24);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
   }
 
 
@@ -143,7 +151,7 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "A4");
     REQUIRE(interval.half_tones == 6);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
 
 
     first = Note("c", "", 4);
@@ -151,7 +159,7 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "A8");
     REQUIRE(interval.half_tones == 13);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
   }
 
   SECTION("when is diminished"){
@@ -160,7 +168,7 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "d4");
     REQUIRE(interval.half_tones == 4);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
 
 
     first = Note("c", "", 4);
@@ -168,7 +176,7 @@ TEST_CASE("Interval can be created from two notes", "[single-file]"){
     interval = Interval(first, second);
     REQUIRE(interval.description() == "d8");
     REQUIRE(interval.half_tones == 11);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
   }
 }
 
@@ -179,7 +187,7 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "P");
     REQUIRE(interval.quantitative == 4);
     REQUIRE(interval.half_tones == 5);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
   }
 
   SECTION("when is descendant"){
@@ -187,7 +195,7 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "3xA");
     REQUIRE(interval.quantitative == 8);
     REQUIRE(interval.half_tones == 15);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
   }
 
   SECTION("when is unison"){
@@ -195,7 +203,7 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "P");
     REQUIRE(interval.quantitative == 1);
     REQUIRE(interval.half_tones == 0);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
     REQUIRE(interval.is_consonant() == true);
   }
 
@@ -232,7 +240,7 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "P");
     REQUIRE(interval.quantitative == 4);
     REQUIRE(interval.half_tones == 5);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
     REQUIRE(interval.is_consonant() == false);
   }
 
@@ -241,7 +249,7 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "P");
     REQUIRE(interval.quantitative == 5);
     REQUIRE(interval.half_tones == 7);
-    REQUIRE(interval.ascendant == true);
+    REQUIRE(interval.direction == 1);
     REQUIRE(interval.is_consonant() == true);
   }
 
@@ -303,14 +311,14 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "A");
     REQUIRE(interval.quantitative == 4);
     REQUIRE(interval.half_tones == 6);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
     REQUIRE(interval.is_consonant() == false);
 
     interval = Interval("A5", false);
     REQUIRE(interval.qualitative == "A");
     REQUIRE(interval.quantitative == 5);
     REQUIRE(interval.half_tones == 8);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
     REQUIRE(interval.is_consonant() == true);
 
     interval = Interval("A8");
@@ -331,14 +339,14 @@ TEST_CASE("Interval can be created from string and boolean", "[single-file]"){
     REQUIRE(interval.qualitative == "d");
     REQUIRE(interval.quantitative == 4);
     REQUIRE(interval.half_tones == 4);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
     REQUIRE(interval.is_consonant() == true);
 
     interval = Interval("d5", false);
     REQUIRE(interval.qualitative == "d");
     REQUIRE(interval.quantitative == 5);
     REQUIRE(interval.half_tones == 6);
-    REQUIRE(interval.ascendant == false);
+    REQUIRE(interval.direction == -1);
     REQUIRE(interval.is_consonant() == false);
 
     interval = Interval("d8");

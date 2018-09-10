@@ -38,7 +38,7 @@ void SecondSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, 
                   melodic_interval.quantitative <= 4 or
                   melodic_interval.quantitative == 8);
 
-  if(((can_jump and melodic_ascendant == melodic_interval.ascendant and note.valid) or
+  if(((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or
       previous_counterpoint_note.note == "r") and is_valid_or_passing)
     possible_intervals.push_back(interval);
 }
@@ -78,7 +78,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     auto previous_note = song->notes[position - 1 + compass_position];
     auto previous_counterpoint_note = counterpoint.notes.back();
     auto melodic_cantus_interval = Interval(note, previous_note);
-    bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
+    bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
@@ -141,7 +141,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
       Interval melodic_interval(previous_counterpoint_note, note);
 
       par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
-      sm = same_movements - (melodic_interval.ascendant != melodic_ascendant);
+      sm = same_movements - (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
       counterpoint.notes.push_back(c_note);
       if(solve(position + compass_position, (compass_position + 1)%2, par, sm, ascendant, counterpoint)) return true;
@@ -153,7 +153,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     auto previous_note = song->notes[position - 1];
     auto previous_counterpoint_note = counterpoint.notes.back();
     auto melodic_cantus_interval = Interval(note, previous_note);
-    bool melodic_ascendant = !melodic_cantus_interval.ascendant; // XOR with true
+    bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
@@ -184,7 +184,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
       Interval melodic_interval(previous_counterpoint_note, note);
 
       par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
-      sm = same_movements - (melodic_interval.ascendant != melodic_ascendant);
+      sm = same_movements -  (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
       counterpoint.notes.push_back(c_note);
       if(solve(position + 1, 0, par, sm, ascendant, counterpoint)) return true;

@@ -20,7 +20,7 @@ string Interval::intervals[][17] = {
 Interval::Interval(string s_interval, bool ascendant){
   string s_quantitative = "", s_qualitative = "";
   bool is_on_number = false;
-  this->ascendant = ascendant;
+  this->direction = (ascendant ? 1 : -1);
 
   for(auto & c : s_interval){
     if(is_on_number)
@@ -53,7 +53,8 @@ Interval::Interval(string s_interval, bool ascendant){
 
 Interval::Interval(Note first, Note second){
   this->quantitative = abs(first.note_number - second.note_number) + 1;
-  this->ascendant = (first.note_number - second.note_number < 0);
+  int diff = second.note_number - first.note_number;
+  this->direction = (diff ? diff/abs(diff) : 0);
   this->half_tones = abs(first.midi_number - second.midi_number);
 
   classify_qualitative();
@@ -98,8 +99,8 @@ Note Interval::interval_to_note(Note note, Interval interval){
     return note;
   }
 
-  int midi_number = note.midi_number + interval.half_tones * (interval.ascendant ? 1 : -1);
-  int note_number = note.note_number + (interval.quantitative - 1) * (interval.ascendant ? 1 : -1);
+  int midi_number = note.midi_number + interval.half_tones * interval.direction;
+  int note_number = note.note_number + (interval.quantitative - 1) * interval.direction;
   Note n(midi_number);
 
   if(n.note_number == note_number){
@@ -131,4 +132,20 @@ void Interval::classify_qualitative(){
 
   // printf("%d %d\n", note_diff, note_with_accidental_diff);
   this->qualitative = intervals[note_diff][note_with_accidental_diff];
+}
+
+bool Interval::ascendant(){
+  return this->direction > 0;
+}
+
+bool Interval::descendant(){
+  return this->direction < 0;
+}
+
+bool Interval::ascendant_or_unison(){
+  return this->direction >= 0;
+}
+
+bool Interval::descendant_or_unison(){
+  return this->direction <= 0;
 }

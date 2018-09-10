@@ -24,7 +24,7 @@ public:
   int quantitative;
   string qualitative;
   int half_tones;
-  bool ascendant;
+  short direction;
 
   Interval(Note first, Note second);
   Interval(){}; // TODO: implement empty constructor
@@ -34,6 +34,11 @@ public:
 
   bool is_dissonant();
   bool is_consonant();
+
+  bool ascendant();
+  bool descendant();
+  bool ascendant_or_unison();
+  bool descendant_or_unison();
 
   static Note interval_to_note(Note note, Interval interval);
   bool operator==(const string & s) const;

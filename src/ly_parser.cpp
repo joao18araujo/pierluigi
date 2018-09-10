@@ -28,7 +28,7 @@ Song LyParser::read_file(string file_path){
 
     if(prev.valid){
       Interval interval(prev, note);
-      Interval new_int(interval.description(), interval.ascendant);
+      Interval new_int(interval.description(), interval.direction);
       Note expected = Interval::interval_to_note(prev,interval);
       std::cout << " | " << interval.full_description() << "," << new_int.full_description() << " | ";
       if(expected.valid) std::cout << expected.description();

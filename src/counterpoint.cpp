@@ -30,7 +30,8 @@ vector<Note> Counterpoint::generate_first_species_counterpoint(vector<Note> & so
     bool reverse_movement = true;
 
     begin:
-    bool melodic_ascendant = (reverse_movement ^ melodic_cantus_interval.ascendant);
+    bool melodic_ascendant = melodic_cantus_interval.ascendant();
+    if(reverse_movement) melodic_ascendant = !melodic_ascendant;
 
     string previous = previous_interval.description();
     if(i == 0 || i == song.size() - 1){
@@ -85,6 +86,6 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
   }
   Interval melodic_interval(previous_counterpoint_note, next_note);
   bool can_jump = (reverse_movement or melodic_interval.quantitative <= 4 or melodic_interval.quantitative == 8);
-  if((can_jump and melodic_ascendant == melodic_interval.ascendant and note.valid) or previous_counterpoint_note.note == "r")
+  if((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or previous_counterpoint_note.note == "r")
     possible_intervals.push_back(interval);
 }

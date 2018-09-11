@@ -4,7 +4,7 @@
 #include "ly_parser.h"
 
 TEST_CASE("First Species Counterpoint returns a counterpoint with only consonant intervals", "[single-file]"){
-    Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+    Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
     Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
     Interval interval;
 
@@ -19,7 +19,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint with only consonant
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that starts and ends on perfect consonants", "[single-file]"){
   Song counterpoint;
-  Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+  Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
   Interval interval;
 
   SECTION("not having fifth if is descendant"){
@@ -54,7 +54,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint that starts and end
 }
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that only has unison at the beggining or the end", "[single-file]"){
-  Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+  Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
   Interval interval;
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
   int size = counterpoint.size();
@@ -65,7 +65,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint that only has uniso
 }
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that doesn't have paralels fifths or octaves", "[single-file]"){
-    Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+    Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
     Interval interval, previous_interval;
     Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
     int size = counterpoint.size();
@@ -80,7 +80,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint that doesn't have p
 }
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that only have no more than 11th as intervals", "[single-file]"){
-  Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+  Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
   Interval interval;
 
@@ -93,7 +93,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint that only have no m
 }
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that only have no more than four consecutive paralels 3th or 6th", "[single-file]"){
-  Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+  Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
   Interval interval, previous_interval;
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
   int size = counterpoint.size(), paralels = 0;
@@ -110,7 +110,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint that only have no m
 }
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that don't have leaps bigger than a 4th, unless it's an octave or reverse movement", "[single-file]"){
-  Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+  Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
   Interval interval, cantus_firmus_interval;
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
   int size = counterpoint.size();
@@ -123,7 +123,7 @@ TEST_CASE("First Species Counterpoint returns a counterpoint that don't have lea
 }
 
 TEST_CASE("First Species Counterpoint returns a counterpoint that prioritizes reverse movement", "[single-file]"){
-  Song song = LyParser::read_file("twinkle_twinkle_only_notes.ly", false);
+  Song song = LyParser::read_file("res/twinkle_twinkle_only_notes.ly", false);
   Interval interval, cantus_firmus_interval;
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size() / 2);
   int size = counterpoint.size();

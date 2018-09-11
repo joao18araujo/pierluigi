@@ -6,6 +6,11 @@ Song LyParser::read_file(string file_path, bool print){
   Note prev, note;
   int absolute_time = 0;
 
+  if(!file.is_open()){
+    std::cerr << "Error: File not found\n";
+    exit(-1);
+  }
+
   getline(file, line);
   Scale scale = SongReader::string_to_scale(line);
   if(print) printf("Key: %s %s\n", scale.base_note.note.c_str(), scale.mode.c_str());

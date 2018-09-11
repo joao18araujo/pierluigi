@@ -64,7 +64,7 @@ $(TEST_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 run:
-	$(TARGET) only_notes.ly
+	$(TARGET) res/only_notes.ly
 
 run-test:
 	$(TESTS)
@@ -74,11 +74,16 @@ ctest:
 	make run-test
 
 twinkle:
-	$(TARGET) twinkle_twinkle_only_notes.ly
+	$(TARGET) res/twinkle_twinkle_only_notes.ly
 
 crun:
 	make dist-clean
 	make -j
+	make run
+
+scrun:
+	make dist-clean
+	make
 	make run
 
 reset:

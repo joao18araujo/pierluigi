@@ -9,7 +9,7 @@
 
 class LyParser{
 public:
-  static Song read_file(string file_path);
+  static Song read_file(string file_path, bool print = true);
 };
 
 #endif

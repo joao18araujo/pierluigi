@@ -89,6 +89,7 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
       auto c_note = Interval::interval_to_note(note, interval);
       Interval melodic_interval(previous_counterpoint_note, note);
 
+      // FIXME confirmar regra de sextas paralelas
       par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
       sm = same_movements - (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;

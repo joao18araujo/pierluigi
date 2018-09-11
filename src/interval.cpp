@@ -64,6 +64,10 @@ bool Interval::operator==(const string & s) const{
   return description() == s;
 }
 
+bool Interval::operator!=(const string & s) const{
+  return description() != s;
+}
+
 bool Interval::is_perfect_candidate(int diff){
   return (diff == 1 || diff == 4 || diff == 5 || diff == 8);
 }

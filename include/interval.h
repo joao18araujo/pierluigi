@@ -42,6 +42,7 @@ public:
 
   static Note interval_to_note(Note note, Interval interval);
   bool operator==(const string & s) const;
+  bool operator!=(const string & s) const;
 
 private:
   bool is_perfect_candidate(int diff);

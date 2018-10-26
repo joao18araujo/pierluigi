@@ -10,6 +10,8 @@ Song SecondSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool as
     return Song();
 
   SecondSpeciesCounterpoint::solve(0, 0, paralels, same_movements, ascendant, counterpoint);
+  SecondSpeciesCounterpoint::add_trailing_rests(counterpoint);
+
   return counterpoint;
 }
 
@@ -63,7 +65,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     srand(clock());
   }
 
-  if(position >= song->size()){
+  if(position >= song->size_without_rest()){
     // printf("Total: %d %lu\n", paralels, song->size() - same_movements);
     return true;
   }
@@ -74,7 +76,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
 
   Note note = song->notes[position];
 
-  if((position || compass_position) && (position < song->size() - 1)){
+  if((position || compass_position) && (position < song->size_without_rest() - 1)){
     auto previous_note = song->notes[position - 1 + compass_position];
     auto previous_counterpoint_note = counterpoint.notes.back();
     auto melodic_cantus_interval = Interval(note, previous_note);
@@ -148,7 +150,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
       counterpoint.notes.pop_back();
     }
 
-  }else if(position == song->size() - 1){
+  }else if(position == song->size_without_rest() - 1){
     //Última nota
     auto previous_note = song->notes[position - 1];
     auto previous_counterpoint_note = counterpoint.notes.back();
@@ -208,4 +210,11 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
 
   dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements] = false;
   return false;
+}
+
+void SecondSpeciesCounterpoint::add_trailing_rests(Song & counterpoint){
+  unsigned size = song->size();
+  for(unsigned i = song->size_without_rest() - 1; i < size; ++i){
+    counterpoint.notes.push_back(song->notes[i]);
+  }
 }

@@ -14,7 +14,9 @@ public:
   Song() {}
   Song(Scale s, CompassTime t) : scale(s), time(t) {}
 
-  std::vector<Note>::size_type size() { return notes.size(); }
+  unsigned size();
+  unsigned size_without_rest();
+  unsigned trailing_rests();
 };
 
 #endif

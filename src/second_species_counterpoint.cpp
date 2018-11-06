@@ -194,10 +194,3 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
   dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements] = false;
   return false;
 }
-
-void SecondSpeciesCounterpoint::add_trailing_rests(Song & counterpoint){
-  unsigned size = song->size();
-  for(unsigned i = song->size_without_rest() - 1; i < size; ++i){
-    counterpoint.notes.push_back(song->notes[i]);
-  }
-}

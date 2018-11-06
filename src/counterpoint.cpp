@@ -107,3 +107,10 @@ bool Counterpoint::is_thesis(Note & note, int offset){
 
   return true;
 }
+
+void Counterpoint::add_trailing_rests(Song & counterpoint){
+  unsigned size = song->size();
+  for(unsigned i = song->size_without_rest(); i < size; ++i){
+    counterpoint.notes.push_back(song->notes[i]);
+  }
+}

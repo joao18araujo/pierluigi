@@ -10,6 +10,7 @@
 #include "ly_parser.h"
 #include "first_species_counterpoint.h"
 #include "second_species_counterpoint.h"
+#include "third_species_counterpoint.h"
 
 using namespace std;
 
@@ -32,6 +33,10 @@ int main(int argc, char *argv[]){
 
   cout << "Second species generated\n";
 
+  Song third_counterpoint = ThirdSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+
+  cout << "Third species generated\n";
+
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";
   }else{
@@ -52,6 +57,7 @@ int main(int argc, char *argv[]){
     cout << SongReader::note_to_string(c) << " ";
   }
   cout << endl;
+  printf("Size: %d\n", (int) counterpoint.size());
 
   cout << endl;
   cout << "Second Species Counterpoint\n";
@@ -59,7 +65,15 @@ int main(int argc, char *argv[]){
     cout << SongReader::note_to_string(c) << " ";
   }
   cout << endl;
+  printf("Size: %d\n", (int) second_counterpoint.size());
 
+  cout << endl;
+  cout << "Third Species Counterpoint\n";
+  for(auto & c : third_counterpoint.notes){
+    cout << SongReader::note_to_string(c) << " ";
+  }
+  cout << endl;
+  printf("Size: %d\n", (int) third_counterpoint.size());
 
 	return 0;
 }

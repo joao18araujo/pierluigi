@@ -3,7 +3,11 @@
 #include <cstdlib>
 #include <ctime>
 
-vector<Note> Counterpoint::generate_first_species_counterpoint(vector<Note> & song, bool ascendant, Scale & scale){
+bool Counterpoint::dp[201][32][90][5][101];
+Song * Counterpoint::song;
+
+vector<Note> Counterpoint::generate_first_species_counterpoint(Song & c_song, bool ascendant){
+  song = &c_song;
   vector <Note> counterpoint;
   vector<Interval> consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant), Interval("m3", ascendant), Interval("M3", ascendant), Interval("m6", ascendant), Interval("M6", ascendant), Interval("m10", ascendant), Interval("M10", ascendant)};
   vector<Interval> perfect_consonant_intervals {Interval("P1", ascendant), Interval("P8", ascendant), Interval("P5", ascendant)};
@@ -22,9 +26,9 @@ vector<Note> Counterpoint::generate_first_species_counterpoint(vector<Note> & so
   Note previous_counterpoint_note;
 
   int times_not_reversed = 0;
-  for(unsigned i = 0; i < song.size(); ++i){
+  for(unsigned i = 0; i < song->size(); ++i){
     possible_intervals.clear();
-    auto note = song[i];
+    auto note = song->notes[i];
 
     melodic_cantus_interval = Interval(previous_note, note);
     bool reverse_movement = true;
@@ -34,23 +38,23 @@ vector<Note> Counterpoint::generate_first_species_counterpoint(vector<Note> & so
     if(reverse_movement) melodic_ascendant = !melodic_ascendant;
 
     string previous = previous_interval.description();
-    if(i == 0 || i == song.size() - 1){
+    if(i == 0 || i == song->size() - 1){
       interval = Interval("P1", ascendant);
       counterpoint_note = Interval::interval_to_note(note, interval);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P1", ascendant), nullptr);
     }else if(count_imperfects < 4){
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant), scale);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant), scale);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant), scale);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant), scale);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant), scale);
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m3", ascendant), nullptr);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M3", ascendant), nullptr);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m6", ascendant), nullptr);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M6", ascendant), nullptr);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("m10", ascendant), nullptr);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("M10", ascendant), nullptr);
     }
 
     if(previous != "P5" && previous != "P8"){
-      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), scale);
+      analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), nullptr);
       if(ascendant)
-        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant), scale);
+        analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P5", ascendant), nullptr);
     }
 
     if(possible_intervals.empty() && reverse_movement && times_not_reversed++ < 3){
@@ -79,8 +83,8 @@ vector<Note> Counterpoint::generate_first_species_counterpoint(vector<Note> & so
   return counterpoint;
 }
 
-void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval, Scale & scale){
-  Note next_note = Scale::interval_to_note_on_scale(note, interval, scale);
+void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval, Song *){
+  Note next_note = Scale::interval_to_note_on_scale(note, interval, song->scale);
   if(!next_note.valid){
     return;
   }
@@ -88,4 +92,18 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
   bool can_jump = (reverse_movement or melodic_interval.quantitative <= 4 or melodic_interval.quantitative == 8);
   if((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or previous_counterpoint_note.note == "r")
     possible_intervals.push_back(interval);
+}
+
+bool Counterpoint::is_thesis(Note & note, int offset){
+  // printf("%d %d\n", song->time.compass_duration(), song->time.base_note_duration());
+  int compass_position = (note.absolute_time + offset) % song->time.compass_duration();
+  int time = compass_position / song->time.base_note_duration() + 1;
+
+  if(song->time.times == 4){
+    return (time == 1 || time == 3);
+  }else if(song->time.times == 2 || song->time.times == 3){
+    return time ==  1;
+  }
+
+  return true;
 }

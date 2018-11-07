@@ -29,16 +29,23 @@ void ThirdSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, b
 
   Interval melodic_interval(previous_counterpoint_note, next_note);
 
-  bool is_valid_or_passing = (interval.is_consonant() and previous_interval.is_consonant()) or
-                             (melodic_interval == "m2") or
-                             (melodic_interval == "M2");
+  bool is_valid_passing_or_neighbor = true;
+  if(interval.is_dissonant()){
+    is_valid_passing_or_neighbor = (melodic_interval == "m2" or melodic_interval == "M2");
+  }else if(previous_interval.is_dissonant()){
+    auto pre_previous_counterpoint_note = counterpoint->notes[counterpoint->size() - 2];
+    Interval previous_melodic_interval(pre_previous_counterpoint_note, previous_counterpoint_note);
+    bool passing = melodic_interval.ascendant() == previous_melodic_interval.ascendant();
+    bool neighbor = (pre_previous_counterpoint_note.full_note_with_octave() == next_note.full_note_with_octave() and melodic_interval.ascendant());
+    is_valid_passing_or_neighbor = (passing || neighbor) && (melodic_interval == "m2" or melodic_interval == "M2");
+  }
 
   bool can_jump = (reverse_movement or
                   melodic_interval.quantitative <= 4 or
                   melodic_interval.quantitative == 8);
 
   if(((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or
-      previous_counterpoint_note.note == "r") and is_valid_or_passing)
+      previous_counterpoint_note.note == "r") and is_valid_passing_or_neighbor)
     possible_intervals.push_back(interval);
 }
 
@@ -52,10 +59,6 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     // printf("Total: %d %lu\n", paralels, song->size() - same_movements);
     return true;
   }
-
-  printf("tentou 5\n");
-  printf("%d\n", (int)dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements]);
-  printf("tentou 6\n");
 
   if(!dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements]) return false;
 
@@ -118,9 +121,7 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
 
     // printf("[%u][%u][%d][%d][%d]\n", position - 1 + compass_position, compass_position, song->notes[position - 1 + compass_position].midi_number, paralels, same_movements);
     if(possible_intervals.empty()){
-      printf("tentou 1\n");
       dp[position - 1 + (compass_position != 0)][(compass_position + 1)%4][song->notes[position - 1 + (compass_position != 0)].midi_number][paralels][same_movements] = false;
-      printf("tentou 2\n");
 
       return false;
     }
@@ -197,8 +198,6 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     }
   }
 
-  printf("tentou 3\n");
   dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements] = false;
-  printf("tentou 4\n");
   return false;
 }

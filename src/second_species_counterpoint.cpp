@@ -29,9 +29,15 @@ void SecondSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, 
 
   Interval melodic_interval(previous_counterpoint_note, next_note);
 
-  bool is_valid_or_passing = (interval.is_consonant() and previous_interval.is_consonant()) or
-                             (melodic_interval == "m2") or
-                             (melodic_interval == "M2");
+  bool is_valid_or_passing = true;
+  if(interval.is_dissonant()){
+    is_valid_or_passing = (melodic_interval == "m2" or melodic_interval == "M2");
+  }else if(previous_interval.is_dissonant()){
+    auto pre_previous_counterpoint_note = counterpoint->notes[counterpoint->size() - 2];
+    Interval previous_melodic_interval(pre_previous_counterpoint_note, previous_counterpoint_note);
+    is_valid_or_passing = (melodic_interval.ascendant() == previous_melodic_interval.ascendant())
+                          && (melodic_interval == "m2" or melodic_interval == "M2");
+  }
 
   bool can_jump = (reverse_movement or
                   melodic_interval.quantitative <= 4 or

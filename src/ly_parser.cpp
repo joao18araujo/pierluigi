@@ -85,9 +85,11 @@ void LyParser::convert_file_to_simple_format(string file_path, string output_pat
       if(note.valid){
         prev = note;
         note_count++;
-        if(note_count > 1 and note_count%10 == 1) s_notes += "\n";
-        s_notes += SongReader::note_to_string(note) + " ";
-
+        if(note_count > 1){
+          if(note_count % 10 == 1) s_notes += "\n";
+          else s_notes += " ";
+        }
+        s_notes += SongReader::note_to_string(note);
       }
     }
 

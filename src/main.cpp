@@ -23,11 +23,11 @@ int main(int argc, char *argv[]){
 
   Song song = LyParser::read_file(argv[1]);
 
-  LyParser::convert_file_to_simple_format("res/86829-Turkey_in_the_Straw.ly", "res/out1.ly");
+  LyParser::convert_file_to_simple_format("res/86829-Turkey_in_the_Straw.ly", "res/out_1.ly");
 
-  LyParser::convert_file_to_simple_format("res/1675666-Top_Gun_Theme.ly", "res/out2.ly");
+  LyParser::convert_file_to_simple_format("res/1675666-Top_Gun_Theme.ly", "res/out_2.ly");
 
-  LyParser::convert_file_to_simple_format("res/only_notes.ly", "res/out3.ly");
+  LyParser::convert_file_to_simple_format("res/only_notes.ly", "res/out_3.ly");
 
   cout << "\nGenerating counterpoint...\n";
 

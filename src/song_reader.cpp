@@ -57,12 +57,14 @@ string SongReader::note_to_string(Note note){
   s = regex_replace(s, regex("#"), "is");
   s = regex_replace(s, regex("\u266D"), "es");
 
-  if(octave_diff > 0){
-    while(octave_diff--)
-      s += "\'";
-  }else{
-    while(octave_diff++)
-      s += ",";
+  if(note.note != "r"){
+    if(octave_diff > 0){
+      while(octave_diff--)
+        s += "\'";
+    }else{
+      while(octave_diff++)
+        s += ",";
+    }
   }
 
   string duration = to_string((note.duration ? QUANT / msb(note.duration) : 0));

@@ -45,7 +45,9 @@ Note SongReader::string_to_note(Note prev, string s){
   accidental = regex_replace(accidental, regex("is"), "#");
   accidental = regex_replace(accidental, regex("es"), "\u266D");
 
-	return Note(note, accidental, octave, duration);
+	Note n(note, accidental, octave, duration);
+  n.valid = (duration != 0);
+  return n;
 }
 
 string SongReader::note_to_string(Note note){
@@ -85,6 +87,10 @@ Scale SongReader::string_to_scale(string line){
   return Scale(key, mode);
 }
 
+string SongReader::scale_to_string(Scale scale){
+  return "\\key " + scale.base_note.note + " \\" + scale.mode;
+}
+
 CompassTime SongReader::string_to_compass_time(string line){
   if(!regex_match(line, regex("\\\\time \\d+\\/\\d+")))
     return CompassTime();
@@ -92,6 +98,10 @@ CompassTime SongReader::string_to_compass_time(string line){
   int times, base_note;
   sscanf(line.c_str(), "\\time %d/%d\n", &times, &base_note);
   return CompassTime(times, base_note);
+}
+
+string SongReader::compass_time_to_string(CompassTime compass_time){
+  return "\\time " + to_string(compass_time.times) + "/" + to_string(compass_time.base_note);
 }
 
 int SongReader::msb(int N) {

@@ -23,6 +23,12 @@ int main(int argc, char *argv[]){
 
   Song song = LyParser::read_file(argv[1]);
 
+  LyParser::convert_file_to_simple_format("res/86829-Turkey_in_the_Straw.ly", "res/out1.ly");
+
+  LyParser::convert_file_to_simple_format("res/1675666-Top_Gun_Theme.ly", "res/out2.ly");
+
+  LyParser::convert_file_to_simple_format("res/only_notes.ly", "res/out3.ly");
+
   cout << "\nGenerating counterpoint...\n";
 
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());

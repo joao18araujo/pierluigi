@@ -46,5 +46,68 @@ Song LyParser::read_file(string file_path, bool print){
     song.notes.push_back(note);
   }
 
+  file.close();
   return song;
+}
+
+void LyParser::convert_file_to_simple_format(string file_path, string output_path) {
+  std::fstream file(file_path);
+
+  string line, s;
+
+  if(!file.is_open()){
+    std::cerr << "Error: File not found\n";
+    exit(-2);
+  }
+
+  string s_scale = "", s_time = "", s_notes = "";
+  Note note, prev;
+  int note_count = 0;
+  while(file >> s){
+    if(s == "\\key" && s_scale == ""){
+      string key, mode;
+      file >> key >> mode;
+      Scale scale = SongReader::string_to_scale(s + " " + key + " " + mode);
+      s_scale = SongReader::scale_to_string(scale);
+    }else if(s == "\\time" or s == "\\numericTimeSignature\\time"){
+      string time_and_note;
+      file >> time_and_note;
+      CompassTime compass_time = SongReader::string_to_compass_time("\\time " + time_and_note);
+      s_time = SongReader::compass_time_to_string(compass_time);
+    }else if(s == "\\relative"){
+      if(s_scale == ""){
+        std::cerr << "Error: Lilypond with relative pitches\n";
+        file.close();
+        exit(-5);
+      }
+    }else{
+      note = SongReader::string_to_note(prev, s);
+      if(note.valid){
+        prev = note;
+        note_count++;
+        if(note_count > 1 and note_count%10 == 1) s_notes += "\n";
+        s_notes += SongReader::note_to_string(note) + " ";
+
+      }
+    }
+
+    if(s == "}" and s_notes != "") break;
+  }
+
+  if(s_scale == ""){
+    std::cerr << "Error: Lilypond without scale\n";
+    file.close();
+    exit(-3);
+  }
+
+  if(s_time == ""){
+    std::cerr << "Error: Lilypond without time\n";
+    file.close();
+    exit(-4);
+  }
+
+  std::ofstream output(output_path);
+  output << s_scale << std::endl;
+  output << s_time << std::endl;
+  output << s_notes << std::endl;
 }

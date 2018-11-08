@@ -10,6 +10,7 @@
 class LyParser{
 public:
   static Song read_file(string file_path, bool print = true);
+  static void convert_file_to_simple_format(string file_path,string output_path = "res/out.ly");
 };
 
 #endif

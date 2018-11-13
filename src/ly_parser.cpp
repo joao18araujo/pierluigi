@@ -1,5 +1,9 @@
 #include "ly_parser.h"
 
+#include <stack>
+
+using std::stack;
+
 Song LyParser::read_file(string file_path, bool print){
   std::fstream file(file_path);
   string line, s_note;
@@ -112,4 +116,75 @@ void LyParser::convert_file_to_simple_format(string file_path, string output_pat
   output << s_scale << std::endl;
   output << s_time << std::endl;
   output << s_notes << std::endl;
+}
+
+
+void LyParser::add_counterpoint_to_lilypond(Song & song, string file_path, string output_path){
+  std::fstream file(file_path);
+  std::ofstream output(output_path);
+
+  string line, s;
+
+  if(!file.is_open()){
+    std::cerr << "Error: File not found\n";
+    exit(-2);
+  }
+
+  string s_scale = "", s_time = "", s_notes = "";
+  Note note, prev;
+  int score_end_position, layout_end_position;
+
+  while(file >> s){
+    if(s == "\\layout" || s == "\\layout{") {
+      int opened = (s == "\\layout{");
+      while(file >> s){
+        if(s.find("{") != string::npos){
+          opened++;
+        } else if(s.find("}") != string::npos){
+          opened--;
+          if(opened <= 0) break;
+        }
+      }
+      break;
+    }
+  }
+
+  while(file >> s){
+    if(!layout_end_position) layout_end_position = file.tellg();
+    if(s == "\\score" || s == "\\score{") {
+      int opened = (s == "\\score{");
+      while(file >> s){
+        if(s.find("<<") != string::npos){
+          opened++;
+        } else if(s.find(">>") != string::npos){
+          opened--;
+          if(opened <= 0){
+            score_end_position = file.tellg();
+            break;
+          }
+        }
+      }
+      break;
+    }
+  }
+
+  file.seekg(0);
+
+  bool printed_notes = false;
+  bool printed_staff = false;
+  while(getline(file, s)){
+    if(file.tellg() >= layout_end_position and not printed_notes){
+      output << SongReader::song_to_voice_string(song);
+      printed_notes = true;
+    }
+
+    if(file.tellg() >= score_end_position and not printed_staff){
+      output << SongReader::new_staff_string();
+      printed_staff = true;
+    }
+    output << s << std::endl;
+  }
+
+  output.close();
+  file.close();
 }

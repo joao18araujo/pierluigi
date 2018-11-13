@@ -29,6 +29,8 @@ int main(int argc, char *argv[]){
 
   LyParser::convert_file_to_simple_format("res/only_notes.ly", "res/out_3.ly");
 
+  LyParser::add_counterpoint_to_lilypond(song, "res/86829-Turkey_in_the_Straw.ly", "res/counterpoint_1.ly");
+
   cout << "\nGenerating counterpoint...\n";
 
   Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());

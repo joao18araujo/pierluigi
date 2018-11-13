@@ -113,3 +113,29 @@ int SongReader::msb(int N) {
 int SongReader::number_of_on_bits(int N) {
   return __builtin_popcount(N);
 }
+
+string SongReader::song_to_voice_string(Song & song){
+  string counterpoint_voice = "\n\nCounterpointVoice = {\n\t" +
+          scale_to_string(song.scale) + " " +
+          compass_time_to_string(song.time) + "\n\t";
+
+  Note prev;
+  int note_count = 0;
+  for(auto note : song.notes){
+    prev = note;
+    note_count++;
+    if(note_count > 1){
+      if(note_count % 10 == 1) counterpoint_voice += "\n\t";
+      else counterpoint_voice += " ";
+    }
+    counterpoint_voice += SongReader::note_to_string(note);
+  }
+
+  counterpoint_voice += "\n}\n\n";
+
+  return counterpoint_voice;
+}
+
+string SongReader::new_staff_string(){
+  return "\n\n\t\t\\new Staff <<\n\t\t\t\\set Staff.instrumentName = \"Piano\"\n\t\t\t\\set Staff.shortInstrumentName = \"Pno.\"\n\t\t\t\\context Staff <<\n\t\t\t\t\\context Voice = \"CounterpointVoice\" { \\CounterpointVoice }\n\t\t\t>>\n\t\t>>\n\n";
+}

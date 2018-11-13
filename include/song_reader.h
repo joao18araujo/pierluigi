@@ -8,6 +8,7 @@
 #include "constants.h"
 #include "note.h"
 #include "scale.h"
+#include "song.h"
 #include "compass_time.h"
 
 using std::string;
@@ -25,6 +26,9 @@ public:
   static string scale_to_string(Scale scale);
   static CompassTime string_to_compass_time(string line);
   static string compass_time_to_string(CompassTime compass_time);
+
+  static string song_to_voice_string(Song & song);
+  static string new_staff_string();
 
   static int msb(int N);
   static int number_of_on_bits(int N);

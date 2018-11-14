@@ -74,11 +74,11 @@ Note::Note(int midi_number, int duration){
   this->note_number = (octave + 1) * N_NOTES + notes_to_number[this->note];
 }
 
-string Note::full_note(){
+string Note::full_note() const{
   return this->note + this->accidental;
 }
 
-string Note::full_note_with_octave(){
+string Note::full_note_with_octave() const{
   return this->full_note() + to_string(this->octave);
 }
 
@@ -116,4 +116,12 @@ vector<Note> Note::enarmonies(){
   }
 
   return v;
+}
+
+bool Note::operator==(const Note & note) const{
+  return full_note_with_octave() == note.full_note_with_octave();
+}
+
+bool Note::operator!=(const Note & note) const{
+  return full_note_with_octave() != note.full_note_with_octave();
 }

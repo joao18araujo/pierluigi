@@ -11,6 +11,7 @@
 #include "first_species_counterpoint.h"
 #include "second_species_counterpoint.h"
 #include "third_species_counterpoint.h"
+#include "fourth_species_counterpoint.h"
 
 using namespace std;
 
@@ -44,6 +45,10 @@ int main(int argc, char *argv[]){
   Song third_counterpoint = ThirdSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
   cout << "Third species generated\n";
+
+  Song fourth_counterpoint = FourthSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+
+    cout << "Fourth species generated\n";
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";
@@ -82,6 +87,14 @@ int main(int argc, char *argv[]){
   }
   cout << endl;
   printf("Size: %d\n", (int) third_counterpoint.size());
+
+  cout << endl;
+  cout << "Fourth Species Counterpoint\n";
+  for(auto & c : fourth_counterpoint.notes){
+    cout << SongReader::note_to_string(c) << " ";
+  }
+  cout << endl;
+  printf("Size: %d\n", (int) fourth_counterpoint.size());
 
 	return 0;
 }

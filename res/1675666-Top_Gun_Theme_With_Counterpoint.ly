@@ -23,20 +23,6 @@
         autoBeaming = ##f
         }
     }
-
-
-CounterpointVoice = {
-	\key c \ \time 4/4
-	g4 b,4 b4 a8 g8 e8 g8 fis4 fis,4 e8
-	a,8 g,4 c8 g,8 a,4 g8 g,8 g,4 c2. e4
-	b,4 fis4 c8 d8 c8 d8 fis4 c4 e8 c8
-	b,4 fis8 b,8 a,4 b,8 e8 b,1 e4 d4 fis4
-	c8 g8 a,8 d8 fis4 c4 e8 fis,8 b,4 c8
-	g,8 c4 d8 e8 d4 fis4 fis,2 b,4 b,4 d4
-	e8 g8 a,8 d8 fis4 c4 e8 c8 g,4 d8
-	a,8 d4 b8 g8 g2
-}
-
 PartPOneVoiceOne =  {
     \clef "treble_8" \key g \major \numericTimeSignature\time 4/4 g4 d'4
     d'4 c'8 [ b8 ] | % 2
@@ -57,6 +43,12 @@ PartPOneVoiceOne =  {
     g'2 ^\fermata -4 \bar "|."
     }
 
+PartPTwoVoiceOne =  {
+    \clef "treble_8" \key g \major \numericTimeSignature\time 4/4 g,4 fis4 b4 a8 b,8 a8 b,8 fis,4 a,4 e,8 fis8 g4 fis8 g8 e4 g,8 g,8 d4 fis,1 b,4 b4 g4 a,8 d8 a8 b,8 fis,4 c4 g,8 c8 g4 a,8 g8 e4 g,8 g,8 b,1 g,4 fis4 b4 c8 g,8 a8 g,8 a,4 c4 e,8 c8 g4 a,8 g8 e4 g,8 g,8 g4 fis,4 a,2 e,4 d4 b4 e8 b,8 e8 g,8 c4 fis4 g,8 c8 g4 d8 a8 fis4 b8 a8 g'2
+
+    }
+
+
 % The score definition
 \score {
     <<
@@ -68,15 +60,13 @@ PartPOneVoiceOne =  {
                 >>
             >>
 
-
-
 		\new Staff <<
-			\set Staff.instrumentName = "Piano"
-			\set Staff.shortInstrumentName = "Pno."
-			\context Staff <<
-				\context Voice = "CounterpointVoice" { \CounterpointVoice }
-			>>
-		>>
+            \set Staff.instrumentName = "Classical Guitar"
+            \set Staff.shortInstrumentName = "Guit."
+            \context Staff <<
+                \context Voice = "PartPTwoVoiceOne" { \PartPTwoVoiceOne }
+                >>
+            >>
 
         >>
     \layout {}

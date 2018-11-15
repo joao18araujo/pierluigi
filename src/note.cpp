@@ -24,12 +24,13 @@ unordered_map<string, int> Note::notes_to_number = {{"c", 0}, {"d", 1}, {"e", 2}
 string Note::number_to_notes[] = {"c", "d", "e", "f", "g", "a", "b"};
 string Note::number_to_notes_with_accidental[] = {"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"};
 
-Note::Note(const string note, const string accidental, const int octave, const int duration) {
+Note::Note(const string note, const string accidental, const int octave, const int duration, bool linked) {
   this->valid = true;
   this->note = note;
 
   this->accidental = accidental;
   this->duration = duration;
+  this->linked = linked;
 
   if(note != "r"){
     this->octave = octave;

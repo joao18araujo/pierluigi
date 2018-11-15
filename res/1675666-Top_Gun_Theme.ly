@@ -43,12 +43,6 @@ PartPOneVoiceOne =  {
     g'2 ^\fermata -4 \bar "|."
     }
 
-PartPTwoVoiceOne =  {
-    \clef "treble_8" \key g \major \numericTimeSignature\time 4/4 g,4 fis4 b4 a8 b,8 a8 b,8 fis,4 a,4 e,8 fis8 g4 fis8 g8 e4 g,8 g,8 d4 fis,1 b,4 b4 g4 a,8 d8 a8 b,8 fis,4 c4 g,8 c8 g4 a,8 g8 e4 g,8 g,8 b,1 g,4 fis4 b4 c8 g,8 a8 g,8 a,4 c4 e,8 c8 g4 a,8 g8 e4 g,8 g,8 g4 fis,4 a,2 e,4 d4 b4 e8 b,8 e8 g,8 c4 fis4 g,8 c8 g4 d8 a8 fis4 b8 a8 g'2
-
-    }
-
-
 % The score definition
 \score {
     <<
@@ -57,14 +51,6 @@ PartPTwoVoiceOne =  {
             \set Staff.shortInstrumentName = "Guit."
             \context Staff <<
                 \context Voice = "PartPOneVoiceOne" { \PartPOneVoiceOne }
-                >>
-            >>
-
-		\new Staff <<
-            \set Staff.instrumentName = "Classical Guitar"
-            \set Staff.shortInstrumentName = "Guit."
-            \context Staff <<
-                \context Voice = "PartPTwoVoiceOne" { \PartPTwoVoiceOne }
                 >>
             >>
 

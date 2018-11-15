@@ -29,6 +29,7 @@ class Note{
 		int midi_number;
     int note_number;
     bool valid = true;
+    bool linked = false;
 
     bool operator==(const Note & note) const;
     bool operator!=(const Note & note) const;
@@ -36,7 +37,7 @@ class Note{
     Note();
     Note(const Note & note);
     Note(int midi_number, int duration = 0);
-		Note(const string note, const string accidental = "", const int octave = 0, const int duration = 0);
+		Note(const string note, const string accidental = "", const int octave = 0, const int duration = 0, bool linked = true);
     string full_note() const;
     string full_note_with_octave() const;
     string description();

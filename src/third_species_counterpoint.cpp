@@ -121,7 +121,7 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
 
     // printf("[%u][%u][%d][%d][%d]\n", position - 1 + compass_position, compass_position, song->notes[position - 1 + compass_position].midi_number, paralels, same_movements);
     if(possible_intervals.empty()){
-      dp[position - 1 + (compass_position != 0)][(compass_position + 1)%4][song->notes[position - 1 + (compass_position != 0)].midi_number][paralels][same_movements] = false;
+      dp[position - 1 + (compass_position != 0)][(compass_position + 3)%4][song->notes[position - 1 + (compass_position != 0)].midi_number][paralels][same_movements] = false;
 
       return false;
     }

@@ -26,15 +26,22 @@
 
 
 CounterpointVoice = {
-	\key c \ \time 4/4
-	g4 b,4 b4 a8 g8 e8 g8 fis4 fis,4 e8
-	a,8 g,4 c8 g,8 a,4 g8 g,8 g,4 c2. e4
-	b,4 fis4 c8 d8 c8 d8 fis4 c4 e8 c8
-	b,4 fis8 b,8 a,4 b,8 e8 b,1 e4 d4 fis4
-	c8 g8 a,8 d8 fis4 c4 e8 fis,8 b,4 c8
-	g,8 c4 d8 e8 d4 fis4 fis,2 b,4 b,4 d4
-	e8 g8 a,8 d8 fis4 c4 e8 c8 g,4 d8
-	a,8 d4 b8 g8 g2
+	\key g \major \time 4/4
+	g,8 b,8 fis8 b8 b,8 b8 e16 a16 b,16 g16
+	a16 a,16 g,16 d16 c8 fis8 fis,8 a,8 e,16 g,16
+	fis16 c16 g8 g,8 a,16 fis16 d16 g16 e8 a8
+	d16 g16 g,16 e16 d8 g8 c4. fis4. e,8 g,8
+	b,8 fis8 b8 fis8 c16 a16 g,16 g16 e16 a16
+	b,16 g16 a,8 c8 fis8 fis,8 g,16 e16 c16 fis16
+	d8 g8 a,16 fis16 d16 g16 e8 a8 d16 g16
+	b,16 e16 fis2 b2 b,8 e8 fis8 b8 fis8 b8
+	c16 e16 g,16 b,16 a16 a,16 b,16 d16 a,8 c8
+	fis8 c8 g,16 e16 c16 fis16 d8 g8 c16 fis16
+	d16 g16 e8 a8 d16 g16 b,16 e16 b,8 d8
+	a,8 fis8 fis,4 a,4 e,8 g,8 b8 b,8 d8 b8
+	e16 a16 b,16 g16 e16 a16 g,16 b,16 fis,8 c8
+	fis8 c8 e,16 g,16 fis16 fis,16 b,8 g8 d16 g16
+	e16 a16 fis8 b8 b,16 b16 g16 c'16 g'2
 }
 
 PartPOneVoiceOne =  {

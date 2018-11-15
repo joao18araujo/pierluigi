@@ -175,6 +175,7 @@ void LyParser::add_counterpoint_to_lilypond(Song & song, string file_path, strin
   while(getline(file, s)){
     if(file.tellg() >= layout_end_position and not printed_notes){
       output << SongReader::song_to_voice_string(song);
+      std::cout << "{ " << SongReader::song_to_voice_string(song) << " }\n";
       printed_notes = true;
     }
 

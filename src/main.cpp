@@ -22,7 +22,6 @@ int main(int argc, char *argv[]){
     return -1;
   }
 
-  Song song = LyParser::read_file(argv[1]);
 
   LyParser::convert_file_to_simple_format("res/86829-Turkey_in_the_Straw.ly", "res/out_1.ly");
 
@@ -30,7 +29,10 @@ int main(int argc, char *argv[]){
 
   LyParser::convert_file_to_simple_format("res/only_notes.ly", "res/out_3.ly");
 
-  LyParser::add_counterpoint_to_lilypond(song, "res/86829-Turkey_in_the_Straw.ly", "res/counterpoint_1.ly");
+  Song song = LyParser::read_file("res/out_2.ly");
+
+
+
 
   cout << "\nGenerating counterpoint...\n";
 
@@ -49,6 +51,12 @@ int main(int argc, char *argv[]){
   Song fourth_counterpoint = FourthSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
 
     cout << "Fourth species generated\n";
+
+  LyParser::add_counterpoint_to_lilypond(counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_1.ly");
+  LyParser::add_counterpoint_to_lilypond(second_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_2.ly");
+  LyParser::add_counterpoint_to_lilypond(third_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_3.ly");
+  LyParser::add_counterpoint_to_lilypond(fourth_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_4.ly");
+
 
   if(counterpoint.size()){
     cout << "Successfully generated counterpoint! " << counterpoint.size() <<" notes\n\n";

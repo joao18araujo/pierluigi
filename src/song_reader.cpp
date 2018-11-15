@@ -1,13 +1,14 @@
 #include "song_reader.h"
 
 Note SongReader::string_to_note(Note prev, string s){
-  if(!regex_match(s, regex("[a-gr][ies]*[\',]*\\d*\\.*")))
+  if(!regex_match(s, regex("[a-gr][ies]*[\',]*\\d*\\.*~?")))
     return Note();
 
   string accidental = "", modifier = "";
 	string note = "";
 	int duration = 0, dots = 0;
   int octave = BELOW_MIDDLE_C_OCTAVE;
+  bool linked = false;
 
 	note += s[0];
 	s.erase(s.begin());
@@ -19,6 +20,8 @@ Note SongReader::string_to_note(Note prev, string s){
 			accidental += c;
 		else if(c == '.')
       dots++;
+    else if(c == '~')
+        linked = true;
     else
 			modifier += c;
 	}
@@ -45,7 +48,7 @@ Note SongReader::string_to_note(Note prev, string s){
   accidental = regex_replace(accidental, regex("is"), "#");
   accidental = regex_replace(accidental, regex("es"), "\u266D");
 
-	Note n(note, accidental, octave, duration);
+	Note n(note, accidental, octave, duration, linked);
   n.valid = (duration != 0);
   return n;
 }
@@ -74,6 +77,8 @@ string SongReader::note_to_string(Note note){
   }
 
   s += duration;
+
+  if(note.linked) s += "~";
 
   return s;
 }

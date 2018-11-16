@@ -43,6 +43,7 @@ class Note{
     string description();
     void set_full_note(string s);
     vector<Note> enarmonies();
+    bool rest();
 
 };
 

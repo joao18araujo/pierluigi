@@ -36,19 +36,19 @@ int main(int argc, char *argv[]){
 
   cout << "\nGenerating counterpoint...\n";
 
-  Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
 
   cout << "First species generated\n";
 
-  Song second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  Song second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
 
   cout << "Second species generated\n";
 
-  Song third_counterpoint = ThirdSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  Song third_counterpoint = ThirdSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
 
   cout << "Third species generated\n";
 
-  Song fourth_counterpoint = FourthSpeciesCounterpoint::dfs_generate_counterpoint(song, (argc > 2), 4, song.size());
+  Song fourth_counterpoint = FourthSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
 
     cout << "Fourth species generated\n";
 

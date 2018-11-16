@@ -26,6 +26,7 @@ public:
   static string scale_to_string(Scale scale);
   static CompassTime string_to_compass_time(string line);
   static string compass_time_to_string(CompassTime compass_time);
+  static string song_clef_to_string(Song & song);
 
   static string song_to_voice_string(Song & song);
   static string new_staff_string();

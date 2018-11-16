@@ -22,6 +22,7 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
   }
 
   // printf("size: %d\n", (int) counterpoint.size());
+  // if(position) printf("[%d][%d][%d][%d][%d]\n", position, 0, counterpoint.back().midi_number, paralels, same_movements);
   if(position && !dp[position][0][counterpoint.back().midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;
@@ -37,7 +38,7 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
-    if(note.note != "r"){
+    if(not note.rest()){
       if(previous != "P8")
         analyse_and_add_interval(reverse_movement, melodic_ascendant, possible_intervals, previous_counterpoint_note, note, Interval("P8", ascendant), nullptr);
 

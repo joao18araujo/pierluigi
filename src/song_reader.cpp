@@ -60,7 +60,7 @@ string SongReader::note_to_string(Note note){
   s = regex_replace(s, regex("#"), "is");
   s = regex_replace(s, regex("\u266D"), "es");
 
-  if(note.note != "r"){
+  if(not note.rest()){
     if(octave_diff > 0){
       while(octave_diff--)
         s += "\'";
@@ -79,8 +79,7 @@ string SongReader::note_to_string(Note note){
   s += duration;
 
   if(note.linked){
-    s += "~";
-    printf("linked");
+    s = "~ " + s;
   }
 
   return s;
@@ -122,8 +121,31 @@ int SongReader::number_of_on_bits(int N) {
   return __builtin_popcount(N);
 }
 
+string SongReader::song_clef_to_string(Song & song) {
+  int total_midi = 0, total_notes = 0;
+  for(auto note : song.notes) {
+    if(not note.rest()) {
+      total_midi += note.midi_number;
+      total_notes++;
+    }
+  }
+
+  Note treble("g", "", 4);
+  Note bass("f", "", 3);
+
+  double mid = total_notes ? (1.0 * total_midi) / total_notes : 0;
+  string clef;
+  if(treble.midi_number - mid <= mid - bass.midi_number)
+    clef = "treble";
+  else
+    clef = "bass";
+
+  return "\\clef " + clef;
+}
+
 string SongReader::song_to_voice_string(Song & song){
   string counterpoint_voice = "\n\nCounterpointVoice = {\n\t" +
+          song_clef_to_string(song) + " " +
           scale_to_string(song.scale) + " " +
           compass_time_to_string(song.time) + "\n\t";
 

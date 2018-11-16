@@ -26,22 +26,22 @@
 
 
 CounterpointVoice = {
-	\key g \major \time 4/4
-	r8 e,8 cis'8 b8 c'8 bes8 ~ bes16 a16 ~ a16 g16
-	bes,16 a,16 ~ a,16 gis,16 ~ gis,8 f,8 gis,8 fis,8 ~ fis,16 e,16
-	gis16 f16 a8 g8 ~ g16 f16 a16 g16 bes,8 aes,8
-	ais16 gis16 f,16 e,16 ais8 g8 ~ g4. f4. ~ f8 e8
-	cis8 b,8 cis8 b,8 ~ b,16 aes,16 ais,16 g,16 b16 aes16
-	ais,16 gis,16 ~ gis,8 fis,8 gis,8 fis,8 ~ fis,16 ees,16 g16 fis16
-	ais8 gis8 ~ gis16 f16 ais16 g16 b,8 aes,8 ais,16 g,16
-	fis16 ees16 c2 b,2 f,8 ees,8 c'8 b8 c8 b,8
-	~ b,16 aes,16 ais,16 gis,16 b,16 aes,16 a,16 g,16 ~ g,8 f,8
-	g,8 f,8 ~ f,16 ees,16 g16 f16 a,8 gis,8 ~ gis,16 f,16
-	ais16 gis16 b8 a8 ~ a16 gis16 fis,16 e,16 a,8 g,8
-	~ g,8 fis,8 g,4 fis,4 ~ fis,8 e,8 cis'8 bes8 cis8 bes,8
-	~ bes,16 a,16 ~ a,16 g,16 b,16 a,16 ~ a,16 gis,16 ~ gis,8 f,8
-	gis8 f8 ~ f16 e16 gis16 fis16 ais8 gis8 ais16 gis16
-	b16 a16 c8 b,8 cis'16 bes16 dis16 c16 fis'4 g'4
+	\clef bass \key g \major \time 4/4
+	r8 ees,8 cis'8 bes8 cis'8 b8 ~ b16 a16 ~ a16 g16
+	bes,16 a,16 ~ a,16 gis,16 ~ gis,8 fis,8 gis8 fis8 ~ fis16 ees16
+	gis16 fis16 a,8 g,8 ~ g,16 f,16 ais16 gis16 b8 aes8
+	a,16 gis,16 f,16 ees,16 a8 gis8 ~ gis4. fis4. ~ fis8 ees8
+	c'8 b8 c8 bes,8 ~ bes,16 aes,16 ais16 gis16 bes16 aes16
+	a16 gis16 ~ gis8 f8 g,8 f,8 ~ f,16 e,16 g16 f16
+	ais8 gis8 ~ gis16 f16 ais16 gis16 b,8 a,8 ~ a,16 g,16
+	fis,16 e,16 cis'2 b2 f8 ees8 c'8 b8 cis8 bes,8
+	~ bes,16 aes,16 a16 g16 bes16 a16 ~ a16 gis16 ~ gis8 fis8
+	g8 f8 ~ f16 ees16 gis16 f16 a,8 gis,8 ~ gis,16 f,16
+	a16 g16 bes8 a8 ~ a16 gis16 f,16 ees,16 a8 g8
+	~ g8 fis8 g,4 f,4 ~ f,8 e,8 cis8 bes,8 cis8 b,8
+	~ b,16 a,16 ~ a,16 g,16 bes,16 a,16 ~ a,16 gis,16 ~ gis,8 fis,8
+	g,8 fis,8 ~ fis,16 ees,16 gis16 fis16 a,8 gis,8 ais16 g16
+	b,16 aes,16 cis'8 bes8 c'16 b16 dis'16 cis'16 ~ cis'4 g'4
 }
 
 PartPOneVoiceOne =  {

@@ -45,7 +45,7 @@ void FourthSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, 
                   melodic_interval.quantitative == 8);
 
   if(((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or
-      previous_counterpoint_note.note == "r") and is_valid_passing_or_neighbor)
+      previous_counterpoint_note.rest()) and is_valid_passing_or_neighbor)
     possible_intervals.push_back(interval);
 }
 
@@ -75,7 +75,7 @@ bool FourthSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     auto linked_interval = Interval(note, previous_counterpoint_note);
 
     int size = 0;
-    if(note.note != "r"){
+    if(not note.rest()){
       if(compass_position == 0){
         if(linked_interval.is_dissonant()) {
           possible_intervals.push_back(linked_interval);
@@ -123,10 +123,10 @@ bool FourthSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
       c_note.duration /= 2;
-      if(!compass_position && interval.is_dissonant()) c_note.linked = true;
+      c_note.linked = (c_note == counterpoint.back());
       Interval melodic_interval(previous_counterpoint_note, note);
 
-      par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
+      par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10));
       sm = same_movements - (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
       counterpoint.notes.push_back(c_note);
@@ -141,7 +141,7 @@ bool FourthSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
 
-    if(note.note != "r"){
+    if(not note.rest()){
       analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P1", ascendant), &counterpoint);
       if(previous_interval != "P8")
         analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P8", ascendant), &counterpoint);

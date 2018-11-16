@@ -81,7 +81,6 @@ bool Interval::is_dissonant(){
 
   // while(quant > N_NOTES + 1)
   //   quant -= N_NOTES;
-  // TODO: avaliar baseado nas half notes
   return dissonant_half_tones.find(note_with_accidental_diff) != dissonant_half_tones.end();
 }
 
@@ -98,8 +97,7 @@ string Interval::full_description() const{
 }
 
 Note Interval::interval_to_note(Note note, Interval interval){
-  // TODO pegar qualitativo e checar enarmonias
-  if(note.note == "r"){
+  if(note.rest()){
     return note;
   }
 

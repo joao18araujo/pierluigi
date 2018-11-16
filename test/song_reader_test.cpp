@@ -166,6 +166,7 @@ TEST_CASE("Song Reader can receive a string in lilypond format and return a note
   SECTION("when is a rest"){
     Note note = SongReader::string_to_note(Note(), "r4");
     REQUIRE(note.note == "r");
+    REQUIRE(note.rest() == true);
     REQUIRE(note.midi_number == 0);
     REQUIRE(note.note_number == 0);
     REQUIRE(note.octave == 0);

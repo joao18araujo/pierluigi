@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-bool Counterpoint::dp[201][32][90][5][101];
+bool Counterpoint::dp[201][4][90][5][101];
 Song * Counterpoint::song;
 
 vector<Note> Counterpoint::generate_first_species_counterpoint(Song & c_song, bool ascendant){
@@ -90,7 +90,7 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
   }
   Interval melodic_interval(previous_counterpoint_note, next_note);
   bool can_jump = (reverse_movement or melodic_interval.quantitative <= 4 or melodic_interval.quantitative == 8);
-  if((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or previous_counterpoint_note.note == "r")
+  if((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or previous_counterpoint_note.rest())
     possible_intervals.push_back(interval);
 }
 

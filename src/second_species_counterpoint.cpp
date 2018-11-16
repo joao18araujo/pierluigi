@@ -44,7 +44,7 @@ void SecondSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, 
                   melodic_interval.quantitative == 8);
 
   if(((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or
-      previous_counterpoint_note.note == "r") and is_valid_or_passing)
+      previous_counterpoint_note.rest()) and is_valid_or_passing)
     possible_intervals.push_back(interval);
 }
 
@@ -59,6 +59,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     return true;
   }
 
+  if(position + compass_position) printf("[%d][%d][%d][%d][%d]\n", position, compass_position, counterpoint.back().midi_number, paralels, same_movements);
   if((position + compass_position) &&!dp[position][compass_position][counterpoint.back().midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;
@@ -73,7 +74,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
-    if(note.note != "r"){
+    if(not note.rest()){
       if(previous != "P8")
         analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P8", ascendant), &counterpoint);
 
@@ -143,7 +144,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
-    if(note.note != "r"){
+    if(not note.rest()){
       analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P1", ascendant), &counterpoint);
       if(previous != "P8")
         analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P8", ascendant), &counterpoint);

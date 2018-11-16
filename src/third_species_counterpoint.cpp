@@ -45,7 +45,7 @@ void ThirdSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, b
                   melodic_interval.quantitative == 8);
 
   if(((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or
-      previous_counterpoint_note.note == "r") and is_valid_passing_or_neighbor)
+      previous_counterpoint_note.rest()) and is_valid_passing_or_neighbor)
     possible_intervals.push_back(interval);
 }
 
@@ -74,7 +74,7 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
-    if(note.note != "r"){
+    if(not note.rest()){
       if(previous != "P8")
         analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P8", ascendant), &counterpoint);
 
@@ -144,7 +144,7 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
 
-    if(note.note != "r"){
+    if(not note.rest()){
       analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P1", ascendant), &counterpoint);
       if(previous != "P8")
         analyse_and_add_interval(true, melodic_ascendant, possible_intervals, previous_note, note, Interval("P8", ascendant), &counterpoint);

@@ -52,6 +52,7 @@ Note::Note(const Note & note){
   this->octave = note.octave;
   this->midi_number = note.midi_number;
   this->note_number = note.note_number;
+  this->linked = note.linked;
 }
 
 //TODO criar construtor que só recebe uma string
@@ -125,4 +126,8 @@ bool Note::operator==(const Note & note) const{
 
 bool Note::operator!=(const Note & note) const{
   return full_note_with_octave() != note.full_note_with_octave();
+}
+
+bool Note::rest() {
+  return this->note == "r";
 }

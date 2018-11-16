@@ -14,7 +14,7 @@ using std::random_shuffle;
 
 class Counterpoint{
 public:
-  static bool dp[201][32][90][5][101];
+  static bool dp[201][4][90][5][101];
   static Song * song;
 
   static vector<Note> generate_first_species_counterpoint(Song & song, bool ascendant);

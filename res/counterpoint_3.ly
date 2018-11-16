@@ -27,36 +27,36 @@
 
 CounterpointVoice = {
 	\key g \major \time 4/4
-	g16 g,16 e16 b,16 d16 fis16 b16 fis16 b16 b16
-	b,16 fis16 e32 a32 e32 a32 d32 g32 g,32 g32
-	a32 e32 a32 a32 b,32 g32 g,32 d32 fis,16 a,16
-	c16 fis16 c16 fis16 fis,16 c16 e,32 g,32 e32 e,32
-	a,32 fis32 c32 fis32 d16 g16 g,16 g16 fis,32 fis32
-	c32 fis32 d32 g32 g,32 g32 e16 a16 a,16 a16
-	b,32 d32 g32 g,32 g,32 e32 b,32 e32 d16 g16
-	g,16 d16 a,8. c8. fis8. fis,8. g,16 e16 e,16 g,16
-	b,16 b16 fis16 b16 b,16 fis16 b16 fis16 a,32 c32
-	a32 a,32 b,32 g32 d32 g32 e32 a32 a,32 a32
-	g,32 b,32 g32 g,32 a,16 c16 fis16 c16 fis16 fis,16
-	c16 fis16 e,32 g,32 b,32 e32 c32 fis32 fis,32 a,32
-	d16 g16 d16 g16 a,32 c32 fis32 c32 g32 g,32
-	b,32 g32 e16 a16 e16 a16 g,32 b,32 g32 d32
-	g,32 b,32 e32 b,32 b4 b,4 d4 fis4 e16 b,16
-	e16 e,16 fis16 b16 fis16 b16 fis16 b16 fis16 b16
-	e32 a32 e32 a32 d32 g32 g,32 b,32 a32 e32
-	a32 a,32 d32 g32 g,32 g32 fis,16 fis16 fis,16 fis16
-	fis,16 c16 fis16 c16 g,32 b,32 e32 e,32 a,32 fis32
-	c32 fis32 d16 g16 d16 g16 a,32 c32 fis32 fis,32
-	b,32 d32 g32 d32 a16 a,16 e16 a16 b,32 d32
-	g32 d32 e,32 b,32 e32 e,32 d16 g16 g,16 b,16
-	fis,16 a,16 c16 fis16 fis,8 fis8 c8 fis8 b,16 e16
-	e,16 b,16 d16 fis16 b16 b,16 fis16 b16 b,16 b16
-	e32 a32 e32 a32 g,32 b,32 g32 d32 a32 a,32
-	a32 a,32 d32 g32 g,32 b,32 fis,16 fis16 fis,16 c16
-	fis16 fis,16 fis16 fis,16 b,32 e32 b,32 e32 c32 fis32
-	fis,32 c32 g16 g,16 d16 g16 d32 g32 g,32 b,32
-	e32 a32 e32 a32 fis16 b16 fis16 b16 fis32 b32
-	fis32 b32 g32 c'32 c32 e32 g'2
+	g,16 b,16 e16 e16 b16 fis16 b16 b,16 fis16 b16
+	b,16 d16 a,32 a32 a32 e32 d32 g32 g,32 g32
+	e32 a32 e32 a32 b,32 g32 d32 g32 a,16 c16
+	fis16 c16 fis16 fis,16 c16 fis16 e,32 b,32 e32 b,32
+	fis32 fis,32 fis32 fis,32 g16 g,16 d16 g16 a,32 c32
+	fis32 c32 g32 d32 g32 g,32 a16 a,16 e16 a16
+	g,32 b,32 g32 g,32 g,32 e32 b,32 e32 d16 g16
+	g,16 g16 fis,8. c8. fis8. c8. e,16 e16 b,16 e16
+	fis16 b16 b,16 d16 fis16 b16 fis16 b16 c32 e32
+	a32 a,32 b,32 d32 g32 g,32 a32 a,32 e32 a32
+	b,32 g32 d32 g32 fis,16 a,16 c16 fis16 c16 fis16
+	c16 fis16 g,32 b,32 e32 e,32 c32 fis32 c32 fis32
+	d16 g16 d16 g16 c32 fis32 c32 fis32 d32 g32
+	d32 g32 e16 a16 e16 a16 d32 g32 d32 g32
+	g,32 e32 b,32 e32 fis4 b4 fis4 b4 b,16 e16
+	b,16 e16 fis16 b16 fis16 b16 fis16 b16 b,16 d16
+	a,32 c32 e32 a32 d32 g32 g,32 g32 e32 a32
+	e32 a32 b,32 g32 g,32 g32 a,16 fis16 c16 fis16
+	c16 fis16 fis,16 a,16 e,32 e32 b,32 e32 c32 fis32
+	fis,32 fis32 d16 g16 d16 g16 a,32 fis32 c32 fis32
+	d32 g32 d32 g32 e16 a16 e16 a16 b,32 d32
+	g32 g,32 g,32 b,32 e32 b,32 g16 d16 g16 g,16
+	a,16 c16 fis16 fis,16 fis8 fis,8 c8 fis8 b,16 e16
+	e,16 e16 fis16 b16 fis16 b16 fis16 b16 fis16 b16
+	c32 a32 a,32 e32 b,32 d32 g32 d32 a32 e32
+	a32 a,32 b,32 g32 d32 g32 c16 fis16 fis,16 c16
+	fis16 fis,16 c16 fis16 e,32 g,32 b,32 e32 c32 fis32
+	fis,32 a,32 d16 g16 d16 g16 d32 g32 g,32 g32
+	e32 a32 a,32 c32 b16 b,16 fis16 b16 b,32 d32
+	b32 fis32 c'32 g32 c'32 g32 g'2
 }
 
 PartPOneVoiceOne =  {

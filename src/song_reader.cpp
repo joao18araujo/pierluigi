@@ -78,7 +78,10 @@ string SongReader::note_to_string(Note note){
 
   s += duration;
 
-  if(note.linked) s += "~";
+  if(note.linked){
+    s += "~";
+    printf("linked");
+  }
 
   return s;
 }

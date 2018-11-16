@@ -15,6 +15,7 @@ public:
   Song(Scale s, CompassTime t) : scale(s), time(t) {}
 
   unsigned size();
+  Note back();
   unsigned size_without_rest();
   unsigned trailing_rests();
 };

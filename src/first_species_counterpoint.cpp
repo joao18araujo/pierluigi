@@ -2,7 +2,7 @@
 
 Song FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool ascendant, int paralels, int same_movements){
   song = &c_song;
-  Song counterpoint;
+  Song counterpoint(c_song.scale, c_song.time);
   if(song->size() > 201 || paralels > 4 || same_movements > 101)
     return Song();
 
@@ -76,11 +76,6 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
       random_shuffle(possible_intervals.begin() + size, possible_intervals.end());
     }else{
       possible_intervals.push_back(Interval("P1"));
-    }
-
-    if(possible_intervals.empty()){
-      dp[position][0][counterpoint.back().midi_number][paralels][same_movements] = false;
-      return false;
     }
 
     int par, sm;

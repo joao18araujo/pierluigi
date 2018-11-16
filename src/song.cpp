@@ -18,3 +18,7 @@ unsigned Song::trailing_rests(){
 
   return tr;
 }
+
+Note Song::back() {
+  return notes.back();
+}

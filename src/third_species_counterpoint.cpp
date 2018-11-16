@@ -50,7 +50,7 @@ void ThirdSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, b
 }
 
 bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_position, int paralels, int same_movements, bool ascendant, Song & counterpoint){
-  if(position == 0){
+  if(position + compass_position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());
   }
@@ -60,7 +60,7 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     return true;
   }
 
-  if(!dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements]) return false;
+  if((position + compass_position) && !dp[position][compass_position][counterpoint.back().midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;
 
@@ -120,11 +120,6 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     }
 
     // printf("[%u][%u][%d][%d][%d]\n", position - 1 + compass_position, compass_position, song->notes[position - 1 + compass_position].midi_number, paralels, same_movements);
-    if(possible_intervals.empty()){
-      dp[position - 1 + (compass_position != 0)][(compass_position + 3)%4][song->notes[position - 1 + (compass_position != 0)].midi_number][paralels][same_movements] = false;
-
-      return false;
-    }
 
     int par, sm;
     for(auto interval : possible_intervals){
@@ -198,6 +193,6 @@ bool ThirdSpeciesCounterpoint::solve(unsigned position, unsigned compass_positio
     }
   }
 
-  dp[position][compass_position][song->notes[position].midi_number][paralels][same_movements] = false;
+  dp[position][compass_position][counterpoint.back().midi_number][paralels][same_movements] = false;
   return false;
 }

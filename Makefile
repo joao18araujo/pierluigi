@@ -64,7 +64,7 @@ $(TEST_OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 
 run:
-	$(TARGET) res/only_notes.ly
+	$(TARGET) res/1675666-Top_Gun_Theme.ly 5 false
 
 run-test:
 	$(TESTS)

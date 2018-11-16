@@ -3,10 +3,11 @@
 Song FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool ascendant, int paralels, int same_movements){
   song = &c_song;
   Song counterpoint(c_song.scale, c_song.time);
-  if(song->size() > 201 || paralels > 4 || same_movements > 101)
+  if(song->size() > 200 || paralels > 4 || same_movements > 600)
     return Song();
 
   FirstSpeciesCounterpoint::solve(0, paralels, same_movements, counterpoint, ascendant);
+  printf("First species generated\n");
   return counterpoint;
 }
 

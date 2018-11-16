@@ -26,15 +26,15 @@
 
 
 CounterpointVoice = {
-	\clef treble \key g \major \time 4/4
-	g'4 fis'4 b'4 c''8 d''8 g'8 d''8 a'4 c''4 b'8
-	a'8 g'4 c''8 d'8 e'4 g'8 b'8 d'4 e'2. g'4
-	fis'4 b'4 c''8 d''8 c''8 d''8 a'4 c''4 g'8 c'8
-	d'4 fis'8 d'8 g'4 b'8 b'8 fis'1 b'4 fis'4 a'4
-	e''8 b'8 e'8 b'8 c''4 a'4 b'8 a'8 g'4 c''8
-	b'8 g'4 d''8 d'8 d'4 a'4 c''2 g'4 fis'4 b'4
-	c''8 d''8 c''8 d''8 a'4 c''4 b'8 c'8 fis'4 b'8
-	g'8 fis'4 b'8 b'8 g'2
+	\clef bass \key g \major \time 4/4
+	g4 d4 fis4 a8 g8 c8 d8 fis4 fis,4 g,8
+	fis,8 g,4 c8 g,8 c4 g8 g,8 g,4 c2. e4
+	b,4 d4 a8 g8 e8 g8 fis4 fis,4 e8 fis,8
+	b,4 c8 b,8 a,4 g8 g,8 b,1 e4 d4 fis4
+	c8 g8 c8 d8 fis4 c4 e8 c8 g,4 c8
+	b,8 a,4 g8 g,8 g,4 fis4 fis,2 g,4 b,4 fis4
+	c8 g8 a,8 b,8 fis4 fis,4 e8 fis,8 b,4 g8
+	c8 b,4 b8 g8 g2
 }
 
 PartPOneVoiceOne =  {

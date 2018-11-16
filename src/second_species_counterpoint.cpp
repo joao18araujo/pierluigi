@@ -59,7 +59,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     return true;
   }
 
-  if(position + compass_position) printf("[%d][%d][%d][%d][%d]\n", position, compass_position, counterpoint.back().midi_number, paralels, same_movements);
+  // if(position + compass_position) printf("[%d][%d][%d][%d][%d]\n", position, compass_position, counterpoint.back().midi_number, paralels, same_movements);
   if((position + compass_position) &&!dp[position][compass_position][counterpoint.back().midi_number][paralels][same_movements]) return false;
 
   vector<Interval> possible_intervals;

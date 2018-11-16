@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-bool Counterpoint::dp[201][4][90][5][101];
+bool Counterpoint::dp[151][4][90][5][601];
 Song * Counterpoint::song;
 
 vector<Note> Counterpoint::generate_first_species_counterpoint(Song & c_song, bool ascendant){

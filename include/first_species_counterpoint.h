@@ -6,7 +6,7 @@
 class FirstSpeciesCounterpoint : public Counterpoint {
 public:
   static Song dfs_generate_counterpoint(Song & song, bool ascendant, int paralels, int same_movements);
-  static bool solve(unsigned position, int paralels, int same_movements, vector<Note> & counterpoint, bool ascendant);
+  static bool solve(unsigned position, int paralels, int same_movements, Song & counterpoint, bool ascendant);
 };
 
 #endif

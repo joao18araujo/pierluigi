@@ -36,26 +36,33 @@ int main(int argc, char *argv[]){
 
   cout << "\nGenerating counterpoint...\n";
 
-  Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
+  Song counterpoint = FirstSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size());
 
   cout << "First species generated\n";
 
-  Song second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
+  Song second_counterpoint = SecondSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size() * 2);
 
   cout << "Second species generated\n";
 
-  Song third_counterpoint = ThirdSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
+  Song third_counterpoint = ThirdSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size() * 4);
 
   cout << "Third species generated\n";
 
-  Song fourth_counterpoint = FourthSpeciesCounterpoint::dfs_generate_counterpoint(song, false, 4, song.size());
+  Song fourth_counterpoint = FourthSpeciesCounterpoint::dfs_generate_counterpoint(song, true, 4, song.size() * 2);
 
     cout << "Fourth species generated\n";
 
-  LyParser::add_counterpoint_to_lilypond(counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_1.ly");
-  LyParser::add_counterpoint_to_lilypond(second_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_2.ly");
-  LyParser::add_counterpoint_to_lilypond(third_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_3.ly");
-  LyParser::add_counterpoint_to_lilypond(fourth_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_4.ly");
+  if(counterpoint.size())
+    LyParser::add_counterpoint_to_lilypond(counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_1.ly");
+
+  if(second_counterpoint.size())
+    LyParser::add_counterpoint_to_lilypond(second_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_2.ly");
+
+  if(third_counterpoint.size())
+    LyParser::add_counterpoint_to_lilypond(third_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_3.ly");
+
+  if(fourth_counterpoint.size())
+    LyParser::add_counterpoint_to_lilypond(fourth_counterpoint, "res/1675666-Top_Gun_Theme.ly", "res/counterpoint_4.ly");
 
 
   if(counterpoint.size()){

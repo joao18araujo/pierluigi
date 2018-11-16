@@ -20,5 +20,8 @@ unsigned Song::trailing_rests(){
 }
 
 Note Song::back() {
-  return notes.back();
+  if(notes.size() > 0)
+    return notes.back();
+  else
+    return Note();
 }

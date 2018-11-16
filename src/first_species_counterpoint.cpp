@@ -6,11 +6,11 @@ Song FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool asc
   if(song->size() > 201 || paralels > 4 || same_movements > 101)
     return Song();
 
-  FirstSpeciesCounterpoint::solve(0, paralels, same_movements, counterpoint.notes, ascendant);
+  FirstSpeciesCounterpoint::solve(0, paralels, same_movements, counterpoint, ascendant);
   return counterpoint;
 }
 
-bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_movements, vector<Note> & counterpoint, bool ascendant){
+bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_movements, Song & counterpoint, bool ascendant){
   if(position == 0){
     memset(dp, true, sizeof dp);
     srand(clock());
@@ -88,9 +88,9 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
       par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
       sm = same_movements - (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
-      counterpoint.push_back(c_note);
+      counterpoint.notes.push_back(c_note);
       if(solve(position + 1, par, sm, counterpoint, ascendant)) return true;
-      counterpoint.pop_back();
+      counterpoint.notes.pop_back();
     }
   }else{
     possible_intervals.push_back(Interval("P1", ascendant));
@@ -100,9 +100,9 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
 
     for(auto interval : possible_intervals){
       auto c_note = Interval::interval_to_note(note, interval);
-      counterpoint.push_back(c_note);
+      counterpoint.notes.push_back(c_note);
       if(solve(position + 1, paralels, same_movements, counterpoint, ascendant)) return true;
-      counterpoint.pop_back();
+      counterpoint.notes.pop_back();
     }
   }
 

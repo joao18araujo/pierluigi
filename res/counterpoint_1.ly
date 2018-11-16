@@ -27,14 +27,14 @@
 
 CounterpointVoice = {
 	\clef bass \key g \major \time 4/4
-	g4 d4 fis4 a8 g8 c8 d8 fis4 fis,4 g,8
-	fis,8 g,4 c8 g,8 c4 g8 g,8 g,4 c2. e4
-	b,4 d4 a8 g8 e8 g8 fis4 fis,4 e8 fis,8
-	b,4 c8 b,8 a,4 g8 g,8 b,1 e4 d4 fis4
-	c8 g8 c8 d8 fis4 c4 e8 c8 g,4 c8
-	b,8 a,4 g8 g,8 g,4 fis4 fis,2 g,4 b,4 fis4
-	c8 g8 a,8 b,8 fis4 fis,4 e8 fis,8 b,4 g8
-	c8 b,4 b8 g8 g2
+	g,4 b,4 fis4 a8 g8 e8 g8 fis4 fis,4 g,8
+	fis,8 g,4 fis8 b,8 a,4 b,8 e8 g,4 fis2. e4
+	b,4 d4 e8 g8 e8 b,8 fis4 c4 e8 fis,8
+	b,4 fis8 b,8 a,4 b,8 e8 b,1 e4 d4 fis4
+	c8 d8 a,8 d8 fis4 fis,4 e8 c8 g,4 a,8
+	g,8 c4 d8 e8 d4 fis4 fis,2 b,4 b,4 d4
+	e8 g8 a,8 b,8 c4 a,4 e8 fis,8 b,4 g8
+	a,8 d4 b8 g8 g2
 }
 
 PartPOneVoiceOne =  {

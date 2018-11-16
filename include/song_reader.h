@@ -30,6 +30,7 @@ public:
 
   static string song_to_voice_string(Song & song);
   static string new_staff_string();
+  static string midi_indicator();
 
   static int msb(int N);
   static int number_of_on_bits(int N);

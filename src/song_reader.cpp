@@ -130,8 +130,8 @@ string SongReader::song_clef_to_string(Song & song) {
     }
   }
 
-  Note treble("g", "", 4);
-  Note bass("f", "", 3);
+  Note treble("b", "", 4);
+  Note bass("d", "", 3);
 
   double mid = total_notes ? (1.0 * total_midi) / total_notes : 0;
   string clef;
@@ -168,4 +168,8 @@ string SongReader::song_to_voice_string(Song & song){
 
 string SongReader::new_staff_string(){
   return "\n\n\t\t\\new Staff <<\n\t\t\t\\set Staff.instrumentName = \"Piano\"\n\t\t\t\\set Staff.shortInstrumentName = \"Pno.\"\n\t\t\t\\context Staff <<\n\t\t\t\t\\context Voice = \"CounterpointVoice\" { \\CounterpointVoice }\n\t\t\t>>\n\t\t>>\n\n";
+}
+
+string SongReader::midi_indicator(){
+  return "\n\t\\midi { \\tempo 4 = 120 }\n";
 }

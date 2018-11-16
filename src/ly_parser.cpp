@@ -132,7 +132,7 @@ void LyParser::add_counterpoint_to_lilypond(Song & song, string file_path, strin
 
   string s_scale = "", s_time = "", s_notes = "";
   Note note, prev;
-  int score_end_position = 0, layout_end_position = 0;
+  int score_end_position = 0, layout_end_position = 0, midi_position = 0;
 
   while(file >> s){
     if(s == "\\layout" || s == "\\layout{") {
@@ -149,9 +149,11 @@ void LyParser::add_counterpoint_to_lilypond(Song & song, string file_path, strin
     }
   }
 
+  bool needs_midi_indicator = true;
   while(file >> s){
     if(!layout_end_position) layout_end_position = file.tellg();
     if(s == "\\score" || s == "\\score{") {
+      if(!midi_position) midi_position = file.tellg();
       int opened = (s == "\\score{");
       while(file >> s){
         if(s.find("<<") != string::npos){
@@ -168,10 +170,21 @@ void LyParser::add_counterpoint_to_lilypond(Song & song, string file_path, strin
     }
   }
 
+  file.clear();
+  file.seekg(0);
+  while(getline(file, s)){
+    if(file.tellg() >= midi_position and s.find("\\midi") < s.find("%")){
+      needs_midi_indicator = false;
+      break;
+    }
+  }
+
+  file.clear();
   file.seekg(0);
 
   bool printed_notes = false;
   bool printed_staff = false;
+
   while(getline(file, s)){
     if(file.tellg() >= layout_end_position and not printed_notes){
       output << SongReader::song_to_voice_string(song);
@@ -183,7 +196,13 @@ void LyParser::add_counterpoint_to_lilypond(Song & song, string file_path, strin
       output << SongReader::new_staff_string();
       printed_staff = true;
     }
+
     output << s << std::endl;
+
+    if(file.tellg() >= midi_position and needs_midi_indicator){
+      output << SongReader::midi_indicator();
+      needs_midi_indicator = false;
+    }
   }
 
   output.close();

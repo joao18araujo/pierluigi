@@ -69,7 +69,7 @@ bool FourthSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
   if(position and (position < song->size_without_rest() - 1 or compass_position == 0)){
     auto previous_note = song->notes[position - 1 + (compass_position != 0)];
     auto previous_counterpoint_note = counterpoint.notes.back();
-    auto melodic_cantus_interval = Interval(note, previous_note);
+    auto melodic_cantus_interval = Interval(previous_note, note);
     bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     auto linked_interval = Interval(note, previous_counterpoint_note);
@@ -137,7 +137,7 @@ bool FourthSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     //Última nota
     auto previous_note = song->notes[position - 1];
     auto previous_counterpoint_note = counterpoint.notes.back();
-    auto melodic_cantus_interval = Interval(note, previous_note);
+    auto melodic_cantus_interval = Interval(previous_note, note);
     bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
 

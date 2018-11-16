@@ -24,6 +24,7 @@ public:
   static void analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval, Song * counterpoint);
 
   static bool is_thesis(Note & note, int offset);
+  static bool is_thesis(Note & note, int offset, Song * song);
   static void add_trailing_rests(Song & counterpoint);
   // static vector<Note> dfs_generate_second_species_counterpoint(vector<Note> & song, bool ascendant, int paralels, int same_movements, Scale & scale);
 

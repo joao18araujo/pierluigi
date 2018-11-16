@@ -95,6 +95,11 @@ void Counterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_
 }
 
 bool Counterpoint::is_thesis(Note & note, int offset){
+  return is_thesis(note, offset, song);
+}
+
+
+bool Counterpoint::is_thesis(Note & note, int offset, Song * song){
   // printf("%d %d\n", song->time.compass_duration(), song->time.base_note_duration());
   int compass_position = (note.absolute_time + offset) % song->time.compass_duration();
   int time = compass_position / song->time.base_note_duration() + 1;

@@ -69,7 +69,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
   if((position || compass_position) && (position < song->size_without_rest() - 1)){
     auto previous_note = song->notes[position - 1 + compass_position];
     auto previous_counterpoint_note = counterpoint.notes.back();
-    auto melodic_cantus_interval = Interval(note, previous_note);
+    auto melodic_cantus_interval = Interval(previous_note, note);
     bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
@@ -139,7 +139,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
     //Última nota
     auto previous_note = song->notes[position - 1];
     auto previous_counterpoint_note = counterpoint.notes.back();
-    auto melodic_cantus_interval = Interval(note, previous_note);
+    auto melodic_cantus_interval = Interval(previous_note, note);
     bool melodic_ascendant = !melodic_cantus_interval.ascendant(); // XOR with true
     auto previous_interval = Interval(previous_note, previous_counterpoint_note);
     string previous = previous_interval.description();
@@ -170,7 +170,7 @@ bool SecondSpeciesCounterpoint::solve(unsigned position, unsigned compass_positi
       auto c_note = Interval::interval_to_note(note, interval);
       Interval melodic_interval(previous_counterpoint_note, note);
 
-      par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10)); //TODO: criar método retornando qualidade
+      par = paralels - (interval.quantitative == previous_interval.quantitative and (interval.quantitative == 3 || interval.quantitative == 6 || interval.quantitative == 10));
       sm = same_movements -  (melodic_interval.ascendant() != melodic_ascendant);
       if(par < 0 || sm < 0) continue;
       counterpoint.notes.push_back(c_note);

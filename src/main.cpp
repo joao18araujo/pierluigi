@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
   }
 
   string input_path(argv[1]);
-  string simple_input_path = "res/simple_input.ly";
+  string simple_input_path = "public/simple_input.ly";
   int species = atoi(argv[2]);
   bool ascendant = (string(argv[3]) == "true");
   printf("[%s] [%d] [%d]\n", input_path.c_str(), species, ascendant);
@@ -63,16 +63,16 @@ int main(int argc, char *argv[]){
   }
 
   if(counterpoint.size())
-    LyParser::add_counterpoint_to_lilypond(counterpoint, input_path, "res/counterpoint_1.ly");
+    LyParser::add_counterpoint_to_lilypond(counterpoint, input_path, "public/counterpoint.ly");
 
   if(second_counterpoint.size())
-    LyParser::add_counterpoint_to_lilypond(second_counterpoint, input_path, "res/counterpoint_2.ly");
+    LyParser::add_counterpoint_to_lilypond(second_counterpoint, input_path, "public/counterpoint_2.ly");
 
   if(third_counterpoint.size())
-    LyParser::add_counterpoint_to_lilypond(third_counterpoint, input_path, "res/counterpoint_3.ly");
+    LyParser::add_counterpoint_to_lilypond(third_counterpoint, input_path, "public/counterpoint_3.ly");
 
   if(fourth_counterpoint.size())
-    LyParser::add_counterpoint_to_lilypond(fourth_counterpoint, input_path, "res/counterpoint_4.ly");
+    LyParser::add_counterpoint_to_lilypond(fourth_counterpoint, input_path, "public/counterpoint_4.ly");
 
 
   if(counterpoint.size() == 0){

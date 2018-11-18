@@ -7,7 +7,6 @@ Song FirstSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool asc
     return Song();
 
   FirstSpeciesCounterpoint::solve(0, paralels, same_movements, counterpoint, ascendant);
-  printf("First species generated\n");
   return counterpoint;
 }
 
@@ -109,4 +108,15 @@ bool FirstSpeciesCounterpoint::solve(unsigned position, int paralels, int same_m
 
   dp[position][0][counterpoint.back().midi_number][paralels][same_movements] = false;
   return false;
+}
+
+void FirstSpeciesCounterpoint::analyse_and_add_interval(bool reverse_movement, bool melodic_ascendant, vector<Interval> & possible_intervals, Note previous_counterpoint_note, Note note, Interval interval, Song *){
+  Note next_note = Scale::interval_to_note_on_scale(note, interval, song->scale);
+  if(!next_note.valid){
+    return;
+  }
+  Interval melodic_interval(previous_counterpoint_note, next_note);
+  bool can_jump = (reverse_movement or melodic_interval.quantitative <= 4 or melodic_interval.quantitative == 8);
+  if((can_jump and (melodic_ascendant == melodic_interval.ascendant()) and note.valid) or previous_counterpoint_note.rest())
+    possible_intervals.push_back(interval);
 }

@@ -8,7 +8,6 @@ Song SecondSpeciesCounterpoint::dfs_generate_counterpoint(Song & c_song, bool as
 
   SecondSpeciesCounterpoint::solve(0, 0, paralels, same_movements, ascendant, counterpoint);
   SecondSpeciesCounterpoint::add_trailing_rests(counterpoint);
-  printf("Second species generated\n");
   return counterpoint;
 }
 

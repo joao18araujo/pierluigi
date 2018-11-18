@@ -167,7 +167,7 @@ string SongReader::song_to_voice_string(Song & song){
 }
 
 string SongReader::new_staff_string(){
-  return "\n\n\t\t\\new Staff <<\n\t\t\t\\set Staff.instrumentName = \"Piano\"\n\t\t\t\\set Staff.shortInstrumentName = \"Pno.\"\n\t\t\t\\context Staff <<\n\t\t\t\t\\context Voice = \"CounterpointVoice\" { \\CounterpointVoice }\n\t\t\t>>\n\t\t>>\n\n";
+  return "\n\n\t\t\\new Staff <<\n\t\t\t\\set Staff.instrumentName = \"Contraponto\"\n\t\t\t\\set Staff.shortInstrumentName = \"Ctp.\"\n\t\t\t\\context Staff <<\n\t\t\t\t\\context Voice = \"CounterpointVoice\" { \\CounterpointVoice }\n\t\t\t>>\n\t\t>>\n\n";
 }
 
 string SongReader::midi_indicator(){

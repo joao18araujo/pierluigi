@@ -31,19 +31,20 @@ class Note{
     bool valid = true;
     bool linked = false;
 
-    bool operator==(const Note & note) const;
-    bool operator!=(const Note & note) const;
-
     Note();
     Note(const Note & note);
     Note(int midi_number, int duration = 0);
 		Note(const string note, const string accidental = "", const int octave = 0, const int duration = 0, bool linked = false);
+
     string full_note() const;
     string full_note_with_octave() const;
     string description();
     void set_full_note(string s);
     vector<Note> enarmonies();
     bool rest();
+    
+    bool operator==(const Note & note) const;
+    bool operator!=(const Note & note) const;
 
 };
 

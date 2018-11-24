@@ -1,6 +1,6 @@
-# Palestrina-style Counterpoint Generator
+# Pierluigi: Palestrina-style Counterpoint Generator
 
-[![pipeline status](https://api.travis-ci.org/joao18araujo/ly_parser.svg?branch=master)](https://travis-ci.org/joao18araujo/ly_parser)
+[![pipeline status](https://api.travis-ci.org/joao18araujo/pierluigi.svg?branch=master)](https://travis-ci.org/joao18araujo/pierluigi)
 
 ### Dependencies
 
@@ -17,7 +17,7 @@
 
 __Step 1:__ Clone the repository
 
-`$ git clone https://github.com/joao18araujo/ly_parser.git`
+`$ git clone https://github.com/joao18araujo/pierluigi.git`
 
 __Step 2:__ Install C++ compiler
 
@@ -55,23 +55,5 @@ To run the compiled program with a previously defined test file, use the **run**
 To run the program with another .ly file, run **bin/prog**:
 
 `bin/prog $(FILE_PATH)`
-
-The .ly file must be in a simplified format and must have this structure:
-
-```
-  \key melody_scale
-  \time melody_tempo
-  melody_notes_in_Lilypond_format
-```
-An example of a correct format can be found in [only_notes.ly](https://github.com/joao18araujo/ly_parser/blob/master/only_notes.ly) file:
-
-```
-\key c \major
-\time 4/4
-g,4 c, g c
-g' c' g'' c''
-g' c' a c
-g, c, d,
-```
 
 Currently, the melody must be monophonic and its note with the shortest duration must be a 8th note with no dots.
